@@ -12,5 +12,22 @@ export default defineConfig({
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))
     }
-  }
+  },
+  // devServer: {
+  //   proxy: {
+  //     '/api': {
+  //       target: 'https://api.ihmeng.cn',
+  //       changeOrigin: true,
+  //       rewrite: (path) => path.replace(/^\/api/, '')
+  //     }
+  //   }
+  // },
+  // server: {
+  //   proxy: {
+  //     '/api': {
+  //       target: 'https://api.ihmeng.cn',
+  //       changeOrigin: true,
+  //     }
+  //   }
+  // }
 })

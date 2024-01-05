@@ -1,5 +1,4 @@
-import './assets/main.css'
-
+import './assets/css/variables.less'
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 // 引入 Element Plus+ 组件库
