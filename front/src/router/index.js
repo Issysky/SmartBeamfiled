@@ -5,13 +5,13 @@ const router = createRouter({
   routes: [
     // 打开应用跳转到登录页
     {
-      path: '/',
+      path: '/login',
       name: 'login',
       component: () => import('../views/LoginView.vue')
     },
     // 登录成功跳转首页
     {
-      path: '/home',
+      path: '/',
       name: 'home',
       component: () => import('../views/HomeView.vue')
     },

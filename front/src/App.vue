@@ -1,6 +1,7 @@
 <script setup>
 import { RouterLink, RouterView } from 'vue-router'
 import TopBar from './components/TopBar.vue';
+
 </script>
 
 <template>
@@ -15,6 +16,5 @@ import TopBar from './components/TopBar.vue';
 main{
     width: 100vw;
     height: 100vh;
-    font-size: 18px;
 }
 </style>

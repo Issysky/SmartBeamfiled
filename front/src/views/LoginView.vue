@@ -25,6 +25,7 @@
       <el-button class="login-btn" @click="login(username,pwd)" type="primary">登录</el-button>
     </div>
     <button @click="changeColor">切换颜色</button>
+    <!-- <a href="https://www.bilibili.com/" target='_blank'>bilibili</a> -->
   </div>
 </template>
 
@@ -90,7 +91,6 @@ onMounted(() => {
 })
 </script>
 <style scoped lang="less">
-@import '../assets/css/variables.less';
 .login-wrapper {
   width: 100%;
   height: 100%;
@@ -112,7 +112,7 @@ onMounted(() => {
     height: 60vh;
     top: 20vh;
     left: 15vw;
-    background-color: @primary-color;
+    background-color:#f1f6fd ;
     border-radius: 20px;
     box-shadow: 0 10px 40px rgba(255, 184, 158, 0.5);
     display: flex;
@@ -121,18 +121,18 @@ onMounted(() => {
     justify-content: space-around;
     .label-wrapper {
       width: 100%;
-      height: 20%;
+      height: 10%;
       text-align: center;
       margin-top: 8%;
       p {
         margin: 0;
       }
       .label {
-        font-size: 36px;
+        font-size: 1.8em;
         font-weight: 600;
       }
       .eng {
-        font-size: 20px;
+        font-size: 1em;
         margin-top: 3%;
       }
     }
@@ -155,6 +155,7 @@ onMounted(() => {
       }
       .remember-pwd {
         width: 75%;
+        font-size: 1em;
         display: flex;
         justify-content: flex-end;
       }
@@ -163,7 +164,7 @@ onMounted(() => {
     .login-btn {
       width: 60%;
       height: 9%;
-      font-size: 24px;
+      font-size: 1.2em;
     }
   }
 }
