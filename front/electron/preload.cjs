@@ -7,5 +7,15 @@ contextBridge.exposeInMainWorld('topBar', {
   close: () => ipcRenderer.send('close'),
   mini: () => ipcRenderer.send('mini'),
   max: () => ipcRenderer.send('max'),
-  unmax: () => ipcRenderer.send('unmax')
+  unmax: () => ipcRenderer.send('unmax'),
+  // 检测网络
+  pingInter: () =>
+    ipcRenderer.invoke('check-connection').then((connection) => {
+      if (connection) {
+        return 'connected'
+      } else {
+        return 'disconnected'
+      }
+    }),
+  getMenu:  () =>  ipcRenderer.send('show-context-menu')
 })

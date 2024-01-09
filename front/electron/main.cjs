@@ -1,8 +1,8 @@
 const { app, BrowserWindow, ipcMain } = require('electron')
 const path = require('path')
 const { spawn } = require('child_process')
-const dns = require('dns');
-
+const dns = require('dns')
+const { Menu } = require('electron')
 
 // 定义窗口
 let win
@@ -26,9 +26,15 @@ const createWindow = () => {
       contextIsolation: true, // 启用上下文隔离
       nodeIntegration: true
     },
+    // 打开开发者工具
     devTools: true,
+    // 禁止自定义缩放窗口
     resizable: false,
-    frame: false
+    // 禁用窗口外壳
+    frame: false,
+    // 禁用双击放大或缩小
+    fullscreenable: false,
+    maximizable: false
   })
 
   win.loadURL('http://localhost:5173/')
@@ -41,7 +47,22 @@ app.whenReady().then(() => {
   ipcMain.on('mini', () => win.minimize())
   ipcMain.on('max', () => win.maximize())
   ipcMain.on('unmax', () => win.unmaximize())
-
+  // 判断是否有网络,在预加载脚本中调用
+  ipcMain.handle('check-connection', async () => {
+    return new Promise((resolve, reject) => {
+      dns.resolve('www.ihmeng.cn', function (err) {
+        if (err) {
+          resolve(false)
+        } else {
+          resolve(true)
+        }
+      })
+    })
+  })
+  // 右键上下文菜单
+  ipcMain.on('show-context-menu', (event) => {
+    menu.popup({ window: BrowserWindow.fromWebContents(event.sender) })
+  })
   createWindow()
   // 启动后打开开发者工具
   win.webContents.openDevTools()
@@ -58,3 +79,17 @@ app.setUserTasks([
     description: 'Create a new window'
   }
 ])
+
+// 创建上下文菜单
+const template = [
+  {
+    label: 'Menu Item 1',
+    click: () => {
+      // event.sender.send('context-menu-command', 'menu-item-1')
+      console.log('Menu Item 1')
+    }
+  },
+  { type: 'separator' },
+  { label: 'Menu Item 2', type: 'checkbox', checked: true }
+]
+const menu = Menu.buildFromTemplate(template)

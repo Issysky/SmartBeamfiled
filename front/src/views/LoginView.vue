@@ -1,6 +1,7 @@
 <!-- 登陆页面 打开应用后的第一个页面-->
 <template>
   <div class="login-wrapper">
+    <TopBarLogin></TopBarLogin>
     <!-- 背景图片 -->
     <div class="bg"></div>
     <!-- 登陆卡片 -->
@@ -22,10 +23,8 @@
         </div>
       </div>
       <!-- 登陆 -->
-      <el-button class="login-btn" @click="login(username,pwd)" type="primary">登录</el-button>
+      <el-button class="login-btn" @click="login(username, pwd)" type="primary">登录</el-button>
     </div>
-    <button @click="changeColor">切换颜色</button>
-    <!-- <a href="https://www.bilibili.com/" target='_blank'>bilibili</a> -->
   </div>
 </template>
 
@@ -33,6 +32,8 @@
 import { onMounted, ref } from 'vue'
 import { useUserStore } from '../stores/user.js'
 import { useRouter } from 'vue-router'
+import TopBarLogin from '../components/TopBarLogin.vue'
+
 
 // 定义记住密码参数
 const rememberPwd = ref(false)
@@ -46,11 +47,10 @@ const pwd = ref('')
 // const username = ref('nameingishard')
 // const pwd = ref('ly1029384756')
 
-
 // 登录方法
-const login = (username,pwd) => {
+const login = (username, pwd) => {
   // 调用userstore的login方法，因为是promise方法所以使用then去处理后续逻辑
-  userStore.login(username,pwd).then(() => {
+  userStore.login(username, pwd).then(() => {
     // 状态码为200表示登录成功
     if (userStore.userData.status === 200) {
       // 登录成功
@@ -112,7 +112,7 @@ onMounted(() => {
     height: 60vh;
     top: 20vh;
     left: 15vw;
-    background-color:#f1f6fd ;
+    background-color: #f1f6fd;
     border-radius: 20px;
     box-shadow: 0 10px 40px rgba(255, 184, 158, 0.5);
     display: flex;

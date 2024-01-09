@@ -1,0 +1,14 @@
+:root {
+    /* 应用背景颜色 */
+  --BgColor: #252526;
+  /* 左侧边栏背景颜色 */
+  --LeftNavBgColor: #cfcdcd;
+  /* 中间内容区背景颜色 */
+  --MainContentBgColor: #3c3c3c;
+  /* 顶部栏字体颜色 */
+  --HeaderFontColor: #FFF;
+  /* 左侧边栏字体颜色 */
+  --LeftNavFontColor: #000;
+  /* 中间内容区背景颜色 */
+  --MainContentFontColor: #FFF;
+}

@@ -1,4 +1,3 @@
-import './assets/css/variables.css'
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 // 引入 Element Plus+ 组件库
