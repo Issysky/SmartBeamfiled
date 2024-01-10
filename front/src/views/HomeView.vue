@@ -19,16 +19,17 @@ import { useRouter } from 'vue-router'
 import LeftBar from '@/components/LeftBar.vue'
 import MainContent from '@/components/MainContent.vue'
 import TopBar from '../components/TopBar.vue'
+import { useUserStore } from '../stores/user.js'
 
 // 定义路由
 const router = useRouter()
 
+// 引入store
+const userStore = useUserStore()
 // 使用navigator.onLine判断是否联网
 const online = ref(navigator.onLine)
 
 onMounted(() => {
-  // window.addEventListener('online', () => (online.value = true))
-  // window.addEventListener('offline', () => (online.value = false))
 })
 </script>
 <style scoped lang="less">
@@ -38,12 +39,9 @@ onMounted(() => {
     height: 100vh;
     display: flex;
     padding-left: 1vw;
-    padding-right: 1vw;
+    padding-right: 5vw;
     flex-wrap: wrap;
-    .leftBar-wrapper {
-      width: 0;
-      visibility: hidden;
-    }
+    
   }
 }
 </style>

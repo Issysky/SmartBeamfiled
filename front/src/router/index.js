@@ -13,8 +13,28 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      component: () => import('../views/HomeView.vue')
-    },
+      component: () => import('../views/HomeView.vue'),
+      children: [
+        // 大屏
+        {
+          path: 'screen',
+          name: 'screen',
+          component: () => import('../views/secondViews/ScreenView.vue')
+        },
+        {
+          path: 'equip',
+          name: 'equip',
+          component: () => import('../views/secondViews/EquipView.vue'),
+          children: [
+            {
+              path: 'equip-steam',
+              name: 'equip-steam',
+              component: () => import('../views/thirdViews/EquipSteamView.vue')
+            }
+          ]
+        }
+      ]
+    }
   ]
 })
 
