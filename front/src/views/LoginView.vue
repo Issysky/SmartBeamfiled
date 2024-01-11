@@ -65,7 +65,7 @@ const login = (username, pwd) => {
         localStorage.removeItem('pwd')
       }
       // 跳转到首页
-      router.push('/home')
+      router.push('/home/screen')
     } else {
       // 登录失败
       // 提示错误信息
@@ -73,10 +73,6 @@ const login = (username, pwd) => {
     }
   })
 }
-// 改变主题色
-// const changeColor = () => {
-//   const card = document.querySelector('.card-wrapper')
-// }
 
 // 页面加载时判断是否记住密码
 onMounted(() => {

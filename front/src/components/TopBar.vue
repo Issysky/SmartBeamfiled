@@ -2,7 +2,7 @@
 <template>
   <div class="top-bar">
     <div class="label-wrapper">
-      <img src="../assets/logo.png" alt="" />
+      <img src="../assets/img/logo.png" alt="" />
       <p>郑州艾环梦工程科技有限公司</p>
     </div>
     <!-- 点击拖拽窗口区域 下方两个都是-->
@@ -19,7 +19,7 @@
     </div>
     <div class="drag dragbox dragable" ref="drag1"></div>
     <div class="box dragbox dragable" ref="drag"></div>
-    
+
     <!-- 功能按钮区域2 包含设置以及提醒信息按钮 -->
     <div class="function-wrapper2">
       <!-- 信息 -->
@@ -85,11 +85,11 @@ const changeActive = (index, router_name) => {
   nav.value[index].classList.add('active')
   if (router_name === 'screen') {
     hideLeftBar()
-    router.push('/' + router_name)
+    router.push('/home/' + router_name)
   } else {
     showLeftBar()
     userStore.changeSecondRouter(router_name)
-    router.push('/' + router_name )
+    router.push('/home/' + router_name + '/' + userStore.secRouter.children[0].router_name)
   }
 }
 
@@ -121,7 +121,7 @@ const hideLeftBar = () => {
 
 onMounted(() => {
   // 初始化顶部导航栏激活状态
-  nav.value[0].classList.add('active')
+  // nav.value[0].classList.add('active')
 })
 </script>
 <style scoped lang="less">

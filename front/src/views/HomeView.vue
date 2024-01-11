@@ -40,8 +40,6 @@ onMounted(() => {
     display: flex;
     padding-left: 1vw;
     padding-right: 5vw;
-    flex-wrap: wrap;
-    
   }
 }
 </style>

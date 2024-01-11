@@ -2,27 +2,28 @@
 <template>
   <div class="top-bar">
     <div class="label-wrapper">
-      <img src="../assets/logo.png" alt="" />
+      <img src="../assets/img/logo.png" alt="" />
       <p>郑州艾环梦工程科技有限公司</p>
     </div>
     <!-- 点击拖拽窗口区域 -->
-    <div class="drag dragable" ref="drag1"></div>
+    <div class="drag dragbox dragable" ref="drag1"></div>
+    <div class="box dragbox dragable" ref="drag"></div>
     <!-- 功能按钮区域1 包含关闭，放大，回复，最小化按钮 -->
     <div class="function-wrapper">
       <!-- 最小化 -->
-      <button class="min btn" @click="handleMini">
+      <button class="min btn" @click="topBarStore.handleMini">
         <el-icon><Minus /></el-icon>
       </button>
       <!-- 退出最大化 在最大化时候显示 -->
-      <button class="unmax btn" v-if="isMax" @click="handleUnmax">
+      <button class="unmax btn" v-if="topBarStore.isMax" @click="topBarStore.handleUnmax">
         <el-icon><Notification /></el-icon>
       </button>
       <!-- 最大化，在默认窗口显示 -->
-      <button class="max btn" v-if="!isMax" @click="handleMax">
+      <button class="max btn" v-if="!topBarStore.isMax" @click="topBarStore.handleMax">
         <el-icon><FullScreen /></el-icon>
       </button>
       <!-- 关闭 -->
-      <button class="close btn" @click="handleClose">
+      <button class="close btn" @click="topBarStore.handleClose">
         <el-icon><Close /></el-icon>
       </button>
     </div>
@@ -31,72 +32,19 @@
 
 <script setup lang="js">
 import { onMounted, ref } from 'vue'
-
+import { usetopBarStore } from '../stores/topBar.js'
+import { useUserStore } from '../stores/user.js'
 // 是否显示最大化/还原按钮
 let isMax = ref(false)
-// 导航路由数组
 
+// 引入store，内含顶部栏的关闭，最小化，最大化，还原事件
+const topBarStore = usetopBarStore()
+const userStore = useUserStore()
 // 获取顶部导航栏元素
 const nav = ref(null)
 // 获取可拖拽元素
 const drag = ref(null)
 const drag1 = ref(null)
-
-// 获取大字体文件元素和小字体文件元素，文件在index.html中引入
-const smallFs = document.querySelector('#smallFs')
-const largeFs = document.querySelector('#largeFs')
-
-
-// 四个按钮关闭，放大，还原，最小化事件
-const handleClose = () => {
-  // 清除本地存储
-  localStorage.removeItem('token')
-  window.topBar.close()
-}
-const handleMini = () => {
-  window.topBar.mini()
-}
-const handleMax = () => {
-  console.log('放大')
-  window.topBar.max()
-  isMax.value = true
-  // 放大的时候切换大字体文件，禁用小字体文件,禁用拖拽
-  changeFontSize('large')
-  changeDrag(false)
-}
-const handleUnmax = () => {
-  console.log('还原')
-  window.topBar.unmax()
-  isMax.value = false
-  // 还原的时候切换小字体文件，禁用大字体文件，启用拖拽
-  changeFontSize('small')
-  changeDrag(true)
-}
-// 改变窗口文字大小，接受一个size参数，size为目标字体大小，值为large或者small
-const changeFontSize = (size) => {
-  // 切换字体大小
-  if (size === 'large') {
-    smallFs.setAttribute('disabled', 'false')
-    largeFs.removeAttribute('disabled')
-  } else {
-    smallFs.removeAttribute('disabled')
-    largeFs.setAttribute('disabled', 'false')
-  }
-}
-// 改变拖拽许可,接受一个isDrag参数，isDrag为false时禁用拖拽，为true时启用拖拽
-const changeDrag = (isDrag) => {
-  if (!isDrag) {
-    drag.value.forEach((item) => {
-      item.classList.remove('dragable')
-    })
-    drag1.value.classList.remove('dragable')
-  } else {
-    drag.value.forEach((item) => {
-      item.classList.add('dragable')
-    })
-    drag1.value.classList.add('dragable')
-  }
-}
 </script>
 <style scoped lang="less">
 main {
@@ -129,6 +77,15 @@ main {
     .drag {
       flex: 1;
       height: 100%;
+      // -webkit-app-region: drag;
+    }
+    .box {
+      position: absolute;
+      top: 0;
+      width: 52vw;
+      left: 28vw;
+      height: 2vh;
+      // background-color: azure;
       // -webkit-app-region: drag;
     }
     .function-wrapper {

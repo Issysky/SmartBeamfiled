@@ -5,10 +5,15 @@
   --LeftNavBgColor: #cfcdcd;
   /* 中间内容区背景颜色 */
   --MainContentBgColor: #3c3c3c;
+  /* 悬浮按钮背景色 */
+  --HoverBtnBgColor: #3c3c3c;
+  /* 选中按钮背景色 */
+  --ActiveBtnBgColor: #3c3c3c;
   /* 顶部栏字体颜色 */
   --HeaderFontColor: #FFF;
   /* 左侧边栏字体颜色 */
   --LeftNavFontColor: #000;
-  /* 中间内容区背景颜色 */
+  /* 中间内容区字体颜色 */
   --MainContentFontColor: #FFF;
 }
+

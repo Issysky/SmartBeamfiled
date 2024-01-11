@@ -1,3 +1,4 @@
+// 顶部栏的store
 import { ref, computed, reactive } from 'vue'
 import { defineStore } from 'pinia'
 
@@ -34,12 +35,12 @@ export const usetopBarStore = defineStore('topBar', () => {
   // 改变窗口文字大小，接受一个size参数，size为目标字体大小，值为large或者small
   const changeFontSize = (size) => {
     // 切换字体大小
-    if (size === 'large') {
+    if (size === 'small') {
+      largeFs.setAttribute('disabled', 'false')
+      smallFs.removeAttribute('disabled')
+    } else if (size === 'large') {
       smallFs.setAttribute('disabled', 'false')
       largeFs.removeAttribute('disabled')
-    } else {
-      smallFs.removeAttribute('disabled')
-      largeFs.setAttribute('disabled', 'false')
     }
   }
   // 改变拖拽许可,接受一个isDrag参数，isDrag为false时禁用拖拽，为true时启用拖拽
