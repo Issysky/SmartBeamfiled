@@ -119,13 +119,12 @@ const hideLeftBar = () => {
   mainWrapper.style.marginLeft = '0'
 }
 
-onMounted(() => {
-  // 初始化顶部导航栏激活状态
-  // nav.value[0].classList.add('active')
-})
 </script>
 <style scoped lang="less">
-.top-bar {
+main{
+  transition: all 0.3s linear;
+
+  .top-bar {
   position: relative;
   width: 100%;
   height: 10vh;
@@ -250,6 +249,8 @@ onMounted(() => {
       }
     }
   }
+}
+
 }
 
 .dragable {

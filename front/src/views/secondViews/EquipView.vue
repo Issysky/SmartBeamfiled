@@ -11,10 +11,8 @@
 .equip-wrapper {
   width: 100%;
   height: 100%;
-  // background-color: #FFF;
   h1{
     height: 8%;
-    background-color: aliceblue;
     margin: 0;
   }
 }

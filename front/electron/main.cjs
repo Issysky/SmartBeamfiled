@@ -20,7 +20,7 @@ const createWindow = () => {
   win = new BrowserWindow({
     width: 1152,
     height: 648,
-    icon: path.join(__dirname, '../src/assets/logo.png'),
+    icon: path.join(__dirname, '../src/assets/img/logo.png'),
     webPreferences: {
       preload: path.join(__dirname, 'preload.cjs'),
       contextIsolation: true, // 启用上下文隔离
