@@ -20,6 +20,7 @@ def gen_frames(rtsp_stream_url):
 def video_feed():
     # 视频流路由。将视频流作为响应返回。
     rtsp_stream_url = request.args.get('rtsp_stream_url', '')  # 从URL参数中获取RTSP流地址
+    print(rtsp_stream_url)
     return Response(gen_frames(rtsp_stream_url),
                     mimetype='multipart/x-mixed-replace; boundary=frame')
     

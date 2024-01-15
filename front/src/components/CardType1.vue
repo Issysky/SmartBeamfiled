@@ -1,15 +1,13 @@
 <!-- 蒸养卡片 出现在三极路由蒸养棚中 -->
 <template>
-  <div class="card">
+  <div class="card" >
     <!-- 标题 -->
     <p class="label">一号蒸养棚</p>
     <!-- 左侧区域 -->
     <div class="left-wrapper">
-      <!-- <img src="" alt=""> -->
-      <!-- 是否开门的占位符 -->
-      <span>{{ equipStore.equipSteamData[0]?.door[0] ? '开门' : '关门' }}</span
-      ><span>{{ equipStore.equipSteamData[0]?.door[1] ? '大开门' : '关门' }}</span>
-      <el-button>一键蒸养</el-button>
+      <img class="door-img" src="" alt="" @click="monitorStore.showMonitor" />
+      <img class="door-img" src="" alt="" @click="monitorStore.showMonitor" />
+      <el-button class="contarl-steam">一键蒸养</el-button>
     </div>
     <!-- 右侧区域 -->
     <div class="right-wrapper">
@@ -20,7 +18,7 @@
       </div>
       <div class="data">
         <p class="label">24小时温湿度曲线</p>
-        <div class="chart" ref="chart" id="container"></div>
+        <div class="chart"  ref="chart" id="container"></div>
         <div class="info">
           <p>实时温度</p>
           <p>实时湿度</p>
@@ -39,7 +37,7 @@
 <script setup lang="js">
 import { onMounted, ref, watch } from 'vue'
 import { useEquipStore } from '../stores/equip.js'
-import { Chart } from '@antv/g2'
+import { useMonitorStore } from '../stores/monitor.js'
 import * as echarts from 'echarts'
 
 //定义时间范围
@@ -47,6 +45,9 @@ const timeRange = ref('')
 
 //  引入store
 const equipStore = useEquipStore()
+const monitorStore = useMonitorStore()
+// 定义key
+const componentKey = ref(0)
 // 定义isActive,控制按钮的样式
 const isActive = ref(true)
 // 定义图表数据
@@ -54,7 +55,7 @@ const chartData = ref(equipStore.equipTempData)
 // 定义图表dom
 const chart = ref(null)
 // const myChart = echarts.init(document.getElementById('container'))
-let myChart = ref()
+let myChart
 const option = ref({
   tooltip: {
     trigger: 'axis',
@@ -187,34 +188,6 @@ const option = ref({
     }
   ]
 })
-// const getAntVChart = () => {
-//   const chart = new Chart({
-//     container: 'container',
-//     autoFit: true
-//   })
-
-//   chart
-//     .data(chartData.value)
-//     .encode('x', 'time')
-//     .encode('y', 'value')
-//     .encode('color', 'name')
-//     .scale('x', {
-//       range: [0, 1]
-//     })
-//     .scale('y', {
-//       nice: true
-//     })
-//     .axis('y', { labelFormatter: (d) => d + '°C' })
-//   chart.axis('x', {
-//     tickCount: 3
-//   })
-
-//   chart.line().encode('shape', 'smooth')
-
-//   chart.point().encode('shape', 'point').tooltip(false)
-
-//   chart.render()
-// }
 
 // 点击切换按钮的事件
 const handle = () => {
@@ -262,7 +235,19 @@ onMounted(() => {
   .left-wrapper {
     width: 35%;
     height: 80%;
-    background-color: #bfc;
+    background-color: rgb(100, 110, 108);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+    .door-img {
+      width: 45%;
+      height: 45%;
+      background-color: #1e4570;
+      cursor: pointer;
+    }
+    .contarl-steam {
+    }
   }
   .right-wrapper {
     width: 60%;

@@ -2,9 +2,12 @@
 import { RouterLink, RouterView } from 'vue-router'
 import { onMounted } from 'vue'
 import { useRouter } from 'vue-router'
+import { usetopBarStore } from './stores/topBar.js'
+import Calendar from '@/components/Calendar.vue'
 
 const router = useRouter()
 
+const topBarStore = usetopBarStore()
 onMounted(() => {
   // 通过await async来获取网络状态
   async function checkConnection() {
@@ -13,10 +16,15 @@ onMounted(() => {
   }
   // 检查网络状态
   checkConnection()
-  // 绑定右键菜单事件
+  // 绑定右键菜单事件,
   window.addEventListener('contextmenu', (e) => {
     e.preventDefault()
     window.topBar.getMenu()
+  })
+  // 放大缩小字体
+  window.addEventListener('resize', (e) => {
+    // topBarStore.changeFontSize(!topBarStore.isMax ? 'small' : 'large')
+    
   })
   // router.push({ path: '/home' })
 })
@@ -24,6 +32,7 @@ onMounted(() => {
 
 <template>
   <main>
+    <!-- <Calendar /> -->
     <RouterView></RouterView>
   </main>
 </template>

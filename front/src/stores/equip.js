@@ -118,7 +118,6 @@ export const useEquipStore = defineStore('equip', () => {
       data.value.data5.push(item.hum[1])
       data.value.data6.push(item.hum[2])
     })
-
     equipTempData.value = data.value
   }
 

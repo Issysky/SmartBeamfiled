@@ -46,6 +46,24 @@ const router = createRouter({
               component: () => import('../views/thirdViews/EquipMonitorView.vue')
             }
           ]
+        },
+        // 生产数据
+        {
+          path:'production',
+          name:'生产数据',
+          component:()=>import('../views/secondViews/ProductionView.vue'),
+          children:[
+            {
+              path:'production__beam',
+              name:'梁体数据',
+              component:()=>import('../views/thirdViews/ProductionBeamView.vue')
+            },
+            {
+              path:'production__plan',
+              name:'计划制定',
+              component:()=>import('../views/thirdViews/ProductionPlanView.vue')
+            }
+          ]
         }
       ]
     }

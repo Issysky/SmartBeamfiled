@@ -89,6 +89,7 @@ const changeActive = (index, router_name) => {
   } else {
     showLeftBar()
     userStore.changeSecondRouter(router_name)
+    console.log(userStore.secRouter)
     router.push('/home/' + router_name + '/' + userStore.secRouter.children[0].router_name)
   }
 }

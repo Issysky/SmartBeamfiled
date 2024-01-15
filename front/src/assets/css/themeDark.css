@@ -15,5 +15,9 @@
   --LeftNavFontColor: #000;
   /* 中间内容区字体颜色 */
   --MainContentFontColor: #FFF;
+
+  /* fullCalendar */
+  --fc-small-font-size:1.8em;
+  --fc-event-bg-color: #3788d8;
 }
 

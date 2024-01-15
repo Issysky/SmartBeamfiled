@@ -16,6 +16,7 @@ export const usetopBarStore = defineStore('topBar', () => {
     // 放大的时候切换大字体文件，禁用小字体文件,禁用拖拽
     changeFontSize('large')
     changeDrag(false)
+    console.log('max',largeFs.disabled,smallFs.disabled)
   }
   const handleUnmax = () => {
     window.topBar.unmax()
@@ -23,6 +24,7 @@ export const usetopBarStore = defineStore('topBar', () => {
     // 还原的时候切换小字体文件，禁用大字体文件，启用拖拽
     changeFontSize('small')
     changeDrag(true)
+    console.log('unmax',largeFs.disabled,smallFs.disabled)
   }
   const handleMini = () => {
     window.topBar.mini()
@@ -57,5 +59,5 @@ export const usetopBarStore = defineStore('topBar', () => {
       })
     }
   }
-  return { handleMax, handleUnmax, isMax, handleMini, handleClose }
+  return { handleMax, handleUnmax, isMax, handleMini, handleClose, changeFontSize, changeDrag }
 })
