@@ -128,7 +128,7 @@ main{
   .top-bar {
   position: relative;
   width: 100%;
-  height: 10vh;
+  height: 50px;
   display: flex;
   justify-content: space-between;
   align-items: center;

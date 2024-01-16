@@ -4,11 +4,17 @@
     <!-- 月度计划 -->
     <div class="month-plan"></div>
     <Calendar></Calendar>
+    <CardType2 v-if="productionPlanStore.isShow"></CardType2>
   </div>
 </template>
 
 <script setup lang="js">
 import Calendar from '@/components/Calendar.vue'
+import CardType2 from '@/components/CardType2.vue'
+import {useProductionPlanStore} from '@/stores/production_plan'
+
+const productionPlanStore = useProductionPlanStore()
+
 </script>
 <style scoped lang="less">
 .production-plan-wrapper {

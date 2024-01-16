@@ -44,7 +44,7 @@ onMounted(() => {
   .video {
     width: 60%;
     height: 60%;
-    background-color: #fff;
+    background-color: transparent;
     position: absolute;
     top: 50%;
     left: 50%;

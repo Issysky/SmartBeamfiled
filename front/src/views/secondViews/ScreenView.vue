@@ -1,16 +1,18 @@
 <!--数字大屏 -->
 <template>
-  <el-button type="primary" @click="fullScreen()">{{
-    topBarStore.isMax ? '退出全屏' : '全屏'
-  }}</el-button>
+  <div>
+    <el-button type="primary" @click="fullScreen()">{{
+      topBarStore.isMax ? '退出全屏' : '全屏'
+    }}</el-button>
+  </div>
 </template>
 
 <script setup lang="js">
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import { usetopBarStore } from '../../stores/topBar.js'
+import CardType2 from '@/components/CardType2.vue'
 
 const topBarStore = usetopBarStore()
-
 // 全屏按钮点击事件
 const fullScreen = () => {
   topBarStore.isMax ? topBarStore.handleUnmax() : topBarStore.handleMax()
@@ -23,5 +25,9 @@ const fullScreen = () => {
   mainWrapper.style.marginLeft = topBarStore.isMax ? '-1vw' : '0'
   mainWrapper.style.borderRadius = topBarStore.isMax ? '0' : '15px'
 }
+
+onMounted(() => {
+  
+})
 </script>
 <style scoped lang="less"></style>

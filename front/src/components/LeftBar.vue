@@ -55,10 +55,9 @@ onMounted(() => {})
 <style scoped lang="less">
 .leftBar-wrapper {
   width: 0;
-  height: 83vh;
+  height: 92vh;
   border-radius: 15px;
   background: var(--LeftNavBgColor);
-  // display: flex;
   flex-direction: column;
   box-shadow: 7px 7px 10px #00000033;
   transition: all 0.3s ease-in-out;

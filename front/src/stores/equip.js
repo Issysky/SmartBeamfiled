@@ -1,13 +1,13 @@
 // 设备数据的store
 import { defineStore } from 'pinia'
 import axios from 'axios'
-import { ref } from 'vue'
+import { reactive, ref } from 'vue'
 
 export const useEquipStore = defineStore('equip', () => {
   // 蒸养棚数据
-  let equipSteamData = ref([])
+  let equipSteamData = reactive([])
   //  温湿度数据
-  let equipTempData = ref({})
+  let equipTempData = reactive({})
   // 获取蒸养数据的url
   const equipSreamUrl = '/steam/'
 

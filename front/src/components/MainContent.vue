@@ -11,7 +11,7 @@
 </script>
 <style scoped lang="less">
 .main-wrapper {
-  height: 83vh;
+  height: 92vh;
   flex: 1;
   // width: 98vw;
   background-color: var(--MainContentBgColor);

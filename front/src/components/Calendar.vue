@@ -6,31 +6,36 @@
 </template>
 
 <script setup lang="js">
-import { onMounted, ref } from 'vue'
+import { onMounted, reactive, ref } from 'vue'
 // import '@fullcalendar/core/vdom'
 import FullCalendar from '@fullcalendar/vue3'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import interactionPlugin from '@fullcalendar/interaction'
 import timeGridPlugin from '@fullcalendar/timegrid'
+import { useProductionPlanStore } from '@/stores/production_plan'
 
+const productionPlanStore = useProductionPlanStore()
+
+// 日期点击事件
 const handleDateClick = (arg) => {
-  // alert(arg.dateStr)
-  console.log('data')
+  productionPlanStore.changeTime(arg.dateStr)
+  productionPlanStore.changeShow(true)
 }
 const handleEventClick = (arg) => {
-  console.log('event')
+  productionPlanStore.changeTime(arg.dateStr)
+  productionPlanStore.changeShow(true)
 }
-const calendarOptions = ref({
+const calendarOptions = reactive({
   plugins: [dayGridPlugin, interactionPlugin, timeGridPlugin], // 需要用哪个插件引入后放到这个数组里
   height: 600, //日历高度
   initialDate: new Date('2024-01-01'), // 日历第一次加载时显示的初始日期。可以解析为Date的任何职包括ISO8601日期字符串，例如"2014-02-01"。
   initialView: 'dayGridMonth',
-  editable: true,
+  // editable: true,
   locale: 'zh-cn', // 设置日历的语言，中文为 “zh-cn”
   firstDay: '1', // 设置每周的第一天，默认值取决于当前语言环境，该值为代表星期几的数字，且值必须为整数，星期日=0
   buttonText: {
     // 文本将显示在headerToolbar / footerToolbar的按钮上。不支持HTML注入。所有特殊字符将被转义。
-    today: '今天',
+    today: '今',
     month: '月',
     week: '周',
     day: '天'
@@ -41,33 +46,14 @@ const calendarOptions = ref({
     center: 'title',
     left: ''
   },
-
-  events: [
-    {
-      title: '已完成:185',
-      start: '2024-01-15',
-      backgroundColor: 'transparent',
-      borderColor: 'transparent',
-      textColor: '#F9AE26'
-    },
-    {
-      title: '今日任务',
-      start: '2024-01-15',
-      backgroundColor: 'transparent',
-      borderColor: 'transparent',
-      textColor: '#F9AE26'
-    },
-    { title: '已完成 2', date: '2024-04-02' },
-    { title: '未完成:30', date: '2024-01-15' }
-  ],
+  events: [...productionPlanStore.calenderPlan],
   dateClick: handleDateClick,
   eventClick: handleEventClick
   // weekends: false
 })
 
 onMounted(() => {
-  const fullCalendar = ref(null)
-  const calendarApi = fullCalendar.value.getApi()
+  productionPlanStore.getCalenderPlan()
 })
 </script>
 
@@ -75,7 +61,6 @@ onMounted(() => {
 div {
   width: 40vw;
   font-size: 12px;
-  background-color: antiquewhite;
   height: 40vh;
   .fc-h-event .fc-event-title-container {
     height: 30px;
@@ -83,5 +68,9 @@ div {
 }
 .fc-day-other {
   background-color: #fff;
+}
+.fc-event,
+.fc-event-dot {
+  border: none !important;
 }
 </style>

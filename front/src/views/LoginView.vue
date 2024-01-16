@@ -24,6 +24,7 @@
       </div>
       <!-- 登陆 -->
       <el-button class="login-btn" @click="login(username, pwd)" type="primary">登录</el-button>
+      <el-alert v-if="alert" title="用户名或密码错误" type="error" @close="alert = false" />
     </div>
   </div>
 </template>
@@ -34,7 +35,6 @@ import { useUserStore } from '../stores/user.js'
 import { useRouter } from 'vue-router'
 import TopBarLogin from '../components/TopBarLogin.vue'
 
-
 // 定义记住密码参数
 const rememberPwd = ref(false)
 // 定义路由
@@ -44,8 +44,8 @@ const userStore = useUserStore()
 // 定义用户名和密码
 const username = ref('')
 const pwd = ref('')
-// const username = ref('nameingishard')
-// const pwd = ref('ly1029384756')
+// 错误提示框
+const alert = ref(false)
 
 // 登录方法
 const login = (username, pwd) => {
@@ -69,7 +69,7 @@ const login = (username, pwd) => {
     } else {
       // 登录失败
       // 提示错误信息
-      alert('用户名或密码错误')
+      alert.value = true
     }
   })
 }

@@ -1,6 +1,6 @@
 <!-- 蒸养卡片 出现在三极路由蒸养棚中 -->
 <template>
-  <div class="card" >
+  <div class="card">
     <!-- 标题 -->
     <p class="label">一号蒸养棚</p>
     <!-- 左侧区域 -->
@@ -18,7 +18,7 @@
       </div>
       <div class="data">
         <p class="label">24小时温湿度曲线</p>
-        <div class="chart"  ref="chart" id="container"></div>
+        <div class="chart" ref="chart" id="container"></div>
         <div class="info">
           <p>实时温度</p>
           <p>实时湿度</p>
@@ -35,7 +35,7 @@
 </template>
 
 <script setup lang="js">
-import { onMounted, ref, watch } from 'vue'
+import { onMounted, reactive, ref, watch } from 'vue'
 import { useEquipStore } from '../stores/equip.js'
 import { useMonitorStore } from '../stores/monitor.js'
 import * as echarts from 'echarts'
@@ -55,139 +55,140 @@ const chartData = ref(equipStore.equipTempData)
 // 定义图表dom
 const chart = ref(null)
 // const myChart = echarts.init(document.getElementById('container'))
+// 定义图表dom
 let myChart
-const option = ref({
-  tooltip: {
-    trigger: 'axis',
-    formatter: function (params) {
-      //定义显示内容
-      const text =
-        params[0].name +
-        '<br/>' +
-        params[0].marker +
-        params[0].seriesName +
-        ' : ' +
-        params[0].value +
-        '℃<br/>' +
-        params[1].marker +
-        params[1].seriesName +
-        ' : ' +
-        params[1].value +
-        '℃<br/>' +
-        params[2].marker +
-        params[2].seriesName +
-        ' : ' +
-        params[2].value +
-        '℃<br/>' +
-        params[3].marker +
-        params[3].seriesName +
-        ' : ' +
-        params[3].value +
-        '%RH<br/>' +
-        params[4].marker +
-        params[4].seriesName +
-        ' : ' +
-        params[4].value +
-        '%RH<br/>' +
-        params[5].marker +
-        params[5].seriesName +
-        ' : ' +
-        params[5].value +
-        '%RH<br/>'
-      return text
-    }
-  },
-  legend: {
-    data: ['温度1', '温度2', '温度3', '湿度1', '湿度2', '湿度3'],
-    itemHeight: 0,
-    itemWidth: 15,
-    textStyle: {
-      fontSize: 10 // 设置图例的字体大小
-    }
-  },
-  grid: {
-    top: '15%',
-    left: '3%',
-    right: '4%',
-    bottom: '3%',
-    containLabel: true
-  },
-  toolbox: {
-    feature: {
-      // saveAsImage: {}
-    }
-  },
-  xAxis: {
-    type: 'category',
-    boundaryGap: false,
-    data: equipStore.equipTempData.showTime,
-    axisLabel: {
-      interval: function (index, value) {
-        // 假设你的数据总量是 dataLength
-        let dataLength = equipStore.equipTempData.showTime.length
-        // 你想要显示的数据量 是 3
-        let displayDataCount = 3
-        // 计算间隔
-        let interval = Math.floor(dataLength / displayDataCount)
-        // 只有当 index 是 interval 的倍数时才显示标签
-        return index % interval === 0
-      }
-    }
-  },
-  yAxis: {
-    type: 'value'
-  },
-  series: [
-    {
-      name: '温度1',
-      type: 'line',
-      stack: '1',
-      smooth: true,
-      showSymbol: false,
-      data: equipStore.equipTempData.data1
-    },
-    {
-      name: '温度2',
-      type: 'line',
-      stack: '2',
-      smooth: true,
-      showSymbol: false,
-      data: equipStore.equipTempData.data2
-    },
-    {
-      name: '温度3',
-      type: 'line',
-      stack: '3',
-      smooth: true,
-      showSymbol: false,
-      data: equipStore.equipTempData.data3
-    },
-    {
-      name: '湿度1',
-      type: 'line',
-      stack: '4',
-      smooth: true,
-      showSymbol: false,
-      data: equipStore.equipTempData.data4
-    },
-    {
-      name: '湿度2',
-      type: 'line',
-      stack: '5',
-      smooth: true,
-      showSymbol: false,
-      data: equipStore.equipTempData.data5
-    },
-    {
-      name: '湿度3',
-      type: 'line',
-      stack: '6',
-      smooth: true,
-      showSymbol: false,
-      data: equipStore.equipTempData.data6
-    }
-  ]
-})
+// const option = reactive({
+//   tooltip: {
+//     trigger: 'axis',
+//     formatter: function (params) {
+//       //定义显示内容
+//       const text =
+//         params[0].name +
+//         '<br/>' +
+//         params[0].marker +
+//         params[0].seriesName +
+//         ' : ' +
+//         params[0].value +
+//         '℃<br/>' +
+//         params[1].marker +
+//         params[1].seriesName +
+//         ' : ' +
+//         params[1].value +
+//         '℃<br/>' +
+//         params[2].marker +
+//         params[2].seriesName +
+//         ' : ' +
+//         params[2].value +
+//         '℃<br/>' +
+//         params[3].marker +
+//         params[3].seriesName +
+//         ' : ' +
+//         params[3].value +
+//         '%RH<br/>' +
+//         params[4].marker +
+//         params[4].seriesName +
+//         ' : ' +
+//         params[4].value +
+//         '%RH<br/>' +
+//         params[5].marker +
+//         params[5].seriesName +
+//         ' : ' +
+//         params[5].value +
+//         '%RH<br/>'
+//       return text
+//     }
+//   },
+//   legend: {
+//     data: ['温度1', '温度2', '温度3', '湿度1', '湿度2', '湿度3'],
+//     itemHeight: 0,
+//     itemWidth: 15,
+//     textStyle: {
+//       fontSize: 10 // 设置图例的字体大小
+//     }
+//   },
+//   grid: {
+//     top: '15%',
+//     left: '3%',
+//     right: '4%',
+//     bottom: '3%',
+//     containLabel: true
+//   },
+//   toolbox: {
+//     feature: {
+//       // saveAsImage: {}
+//     }
+//   },
+//   xAxis: {
+//     type: 'category',
+//     boundaryGap: false,
+//     data: equipStore.equipTempData.showTime,
+//     axisLabel: {
+//       interval: function (index, value) {
+//         // 假设你的数据总量是 dataLength
+//         let dataLength = equipStore.equipTempData.showTime.length
+//         // 你想要显示的数据量 是 3
+//         let displayDataCount = 3
+//         // 计算间隔
+//         let interval = Math.floor(dataLength / displayDataCount)
+//         // 只有当 index 是 interval 的倍数时才显示标签
+//         return index % interval === 0
+//       }
+//     }
+//   },
+//   yAxis: {
+//     type: 'value'
+//   },
+//   series: [
+//     {
+//       name: '温度1',
+//       type: 'line',
+//       stack: '1',
+//       smooth: true,
+//       showSymbol: false,
+//       data: equipStore.equipTempData.data1
+//     },
+//     {
+//       name: '温度2',
+//       type: 'line',
+//       stack: '2',
+//       smooth: true,
+//       showSymbol: false,
+//       data: equipStore.equipTempData.data2
+//     },
+//     {
+//       name: '温度3',
+//       type: 'line',
+//       stack: '3',
+//       smooth: true,
+//       showSymbol: false,
+//       data: equipStore.equipTempData.data3
+//     },
+//     {
+//       name: '湿度1',
+//       type: 'line',
+//       stack: '4',
+//       smooth: true,
+//       showSymbol: false,
+//       data: equipStore.equipTempData.data4
+//     },
+//     {
+//       name: '湿度2',
+//       type: 'line',
+//       stack: '5',
+//       smooth: true,
+//       showSymbol: false,
+//       data: equipStore.equipTempData.data5
+//     },
+//     {
+//       name: '湿度3',
+//       type: 'line',
+//       stack: '6',
+//       smooth: true,
+//       showSymbol: false,
+//       data: equipStore.equipTempData.data6
+//     }
+//   ]
+// })
 
 // 点击切换按钮的事件
 const handle = () => {
@@ -196,7 +197,7 @@ const handle = () => {
   myChart.setOption(option.value)
 }
 
-onMounted(() => {
+onMounted(async () => {
   // 获取图表dom
   myChart = echarts.init(document.getElementById('container'))
   const requestData = {
@@ -206,13 +207,146 @@ onMounted(() => {
     time_to: '2024-01-01 12:40:00'
   }
   // 发送请求
-  equipStore.getEquipTempData(requestData)
+  await equipStore.getEquipTempData(requestData)
   // 窗口变化时图表自适应
-  window.addEventListener('resize', function (event) {
+  window.addEventListener('resize', () => {
     myChart.resize()
-    myChart.setOption(option.value)
   })
-  myChart.setOption(option.value)
+  setTimeout(() => {
+    myChart.clear()
+    myChart.setOption({
+      tooltip: {
+        trigger: 'axis',
+        formatter: function (params) {
+          //定义显示内容
+          const text =
+            params[0].name +
+            '<br/>' +
+            params[0].marker +
+            params[0].seriesName +
+            ' : ' +
+            params[0].value +
+            '℃<br/>' +
+            params[1].marker +
+            params[1].seriesName +
+            ' : ' +
+            params[1].value +
+            '℃<br/>' +
+            params[2].marker +
+            params[2].seriesName +
+            ' : ' +
+            params[2].value +
+            '℃<br/>' +
+            params[3].marker +
+            params[3].seriesName +
+            ' : ' +
+            params[3].value +
+            '%RH<br/>' +
+            params[4].marker +
+            params[4].seriesName +
+            ' : ' +
+            params[4].value +
+            '%RH<br/>' +
+            params[5].marker +
+            params[5].seriesName +
+            ' : ' +
+            params[5].value +
+            '%RH<br/>'
+          return text
+        }
+      },
+      legend: {
+        data: ['温度1', '温度2', '温度3', '湿度1', '湿度2', '湿度3'],
+        itemHeight: 0,
+        itemWidth: 15,
+        textStyle: {
+          fontSize: 10 // 设置图例的字体大小
+        }
+      },
+      grid: {
+        top: '15%',
+        left: '3%',
+        right: '4%',
+        bottom: '3%',
+        containLabel: true
+      },
+      toolbox: {
+        feature: {
+          // saveAsImage: {}
+        }
+      },
+      xAxis: {
+        type: 'category',
+        boundaryGap: false,
+        data: equipStore.equipTempData.showTime,
+        axisLabel: {
+          interval: function (index, value) {
+            // 假设你的数据总量是 dataLength
+            let dataLength = equipStore.equipTempData.showTime.length
+            // 你想要显示的数据量 是 3
+            let displayDataCount = 3
+            // 计算间隔
+            let interval = Math.floor(dataLength / displayDataCount)
+            // 只有当 index 是 interval 的倍数时才显示标签
+            return index % interval === 0
+          }
+        }
+      },
+      yAxis: {
+        type: 'value'
+      },
+      series: [
+        {
+          name: '温度1',
+          type: 'line',
+          stack: '1',
+          smooth: true,
+          showSymbol: false,
+          data: equipStore.equipTempData.data1
+        },
+        {
+          name: '温度2',
+          type: 'line',
+          stack: '2',
+          smooth: true,
+          showSymbol: false,
+          data: equipStore.equipTempData.data2
+        },
+        {
+          name: '温度3',
+          type: 'line',
+          stack: '3',
+          smooth: true,
+          showSymbol: false,
+          data: equipStore.equipTempData.data3
+        },
+        {
+          name: '湿度1',
+          type: 'line',
+          stack: '4',
+          smooth: true,
+          showSymbol: false,
+          data: equipStore.equipTempData.data4
+        },
+        {
+          name: '湿度2',
+          type: 'line',
+          stack: '5',
+          smooth: true,
+          showSymbol: false,
+          data: equipStore.equipTempData.data5
+        },
+        {
+          name: '湿度3',
+          type: 'line',
+          stack: '6',
+          smooth: true,
+          showSymbol: false,
+          data: equipStore.equipTempData.data6
+        }
+      ]
+    })
+  }, 1000)
 })
 </script>
 <style scoped lang="less">
@@ -245,8 +379,6 @@ onMounted(() => {
       height: 45%;
       background-color: #1e4570;
       cursor: pointer;
-    }
-    .contarl-steam {
     }
   }
   .right-wrapper {
@@ -294,7 +426,7 @@ onMounted(() => {
         text-align: left;
       }
       .chart {
-        width: 100%;
+        width: 95%;
         height: 80%;
       }
       .info {

@@ -14,17 +14,17 @@ export const usetopBarStore = defineStore('topBar', () => {
     window.topBar.max()
     isMax.value = true
     // 放大的时候切换大字体文件，禁用小字体文件,禁用拖拽
-    changeFontSize('large')
+    // changeFontSize('large')
     changeDrag(false)
-    console.log('max',largeFs.disabled,smallFs.disabled)
+    // console.log('max',largeFs.disabled,smallFs.disabled)
   }
   const handleUnmax = () => {
     window.topBar.unmax()
     isMax.value = false
     // 还原的时候切换小字体文件，禁用大字体文件，启用拖拽
-    changeFontSize('small')
+    // changeFontSize('small')
     changeDrag(true)
-    console.log('unmax',largeFs.disabled,smallFs.disabled)
+    // console.log('unmax',largeFs.disabled,smallFs.disabled)
   }
   const handleMini = () => {
     window.topBar.mini()
