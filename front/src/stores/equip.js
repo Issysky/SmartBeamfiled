@@ -8,8 +8,90 @@ export const useEquipStore = defineStore('equip', () => {
   let equipSteamData = reactive([])
   //  温湿度数据
   let equipTempData = reactive({})
+  // 定义图表的option
+  const option = reactive({
+    tooltip: {
+      trigger: 'axis'
+      // formatter: function (params) {
+      //   //定义显示内容
+      //   const text =
+      //     params[0].name +
+      //     '<br/>' +
+      //     params[0].marker +
+      //     params[0].seriesName +
+      //     ' : ' +
+      //     params[0].value +
+      //     '℃<br/>' +
+      //     params[1].marker +
+      //     params[1].seriesName +
+      //     ' : ' +
+      //     params[1].value +
+      //     '℃<br/>' +
+      //     params[2].marker +
+      //     params[2].seriesName +
+      //     ' : ' +
+      //     params[2].value +
+      //     '℃<br/>' +
+      //     params[3].marker +
+      //     params[3].seriesName +
+      //     ' : ' +
+      //     params[3].value +
+      //     '%RH<br/>' +
+      //     params[4].marker +
+      //     params[4].seriesName +
+      //     ' : ' +
+      //     params[4].value +
+      //     '%RH<br/>' +
+      //     params[5].marker +
+      //     params[5].seriesName +
+      //     ' : ' +
+      //     params[5].value +
+      //     '%RH<br/>'
+      //   return text
+      // }
+    },
+    legend: {
+      data: ['温度1', '温度2', '温度3', '湿度1', '湿度2', '湿度3'],
+      itemHeight: 0,
+      itemWidth: 15,
+      textStyle: {
+        fontSize: 10 // 设置图例的字体大小
+      }
+    },
+    grid: {
+      top: '15%',
+      left: '3%',
+      right: '4%',
+      bottom: '3%',
+      containLabel: true
+    },
+    toolbox: {
+      feature: {
+        // saveAsImage: {}
+      }
+    },
+    xAxis: {
+      type: 'category',
+      boundaryGap: false,
+      data: []
+    },
+    yAxis: {
+      type: 'value'
+    },
+    series: []
+  })
   // 获取蒸养数据的url
   const equipSreamUrl = '/steam/'
+
+  // 色彩生成器
+  function* colorGenerator(init_color) {
+    while (true) {
+      yield `hsl(${init_color},100%,50%)`
+      init_color += 5
+    }
+  }
+  const colorGen1 = colorGenerator(50)
+  const colorGen2 = colorGenerator(200)
 
   // 获取最新蒸养数据
   const getEquipSteamData = async (requestData) => {
@@ -28,98 +110,69 @@ export const useEquipStore = defineStore('equip', () => {
         console.error('获取设备数据失败，error', error.response)
       })
   }
-  // 获取最新温湿度数据,用于绘制图表
-  // const getEquipTempData = async (requestData) => {
-  //   await axios
-  //     .get(equipSreamUrl, {
-  //       params: requestData,
-  //       headers: {
-  //         Authorization: localStorage.getItem('token')
-  //       }
-  //     })
-  //     .then((response) => {
-  //       let data = ref({
-  //         trueTime: [],
-  //         showTime: [],
-  //         data1: [],
-  //         data2: [],
-  //         data3: [],
-  //         data4: [],
-  //         data5: [],
-  //         data6: []
-  //       })
-  //       console.log('获取温湿度成功，返回res', response.data)
-  //       // 设置antv的数据格式
-  //       // response.data.forEach((item) => {
-  //       //   for (let i = 0; i < 6; i++) {
-  //       //     let data
-  //       //     if (i < 3) {
-  //       //       data = {
-  //       //         value: item.tem[i],
-  //       //         time: item.time,
-  //       //         name:'温度'+(i+1)
-  //       //       }
-  //       //     } else {
-  //       //       data = {
-  //       //         value: item.hum[i - 3],
-  //       //         time: item.time,
-  //       //         name:'湿度'+(i-2)
-  //       //       }
-  //       //     }
 
-  //       //     equipTempData.value.push(data)
-  //       //   }
-  //       // })
-  //       // 设置echarts的数据格式
-  //       response.data.forEach((item) => {
-  //         data.value.trueTime.push(item.time.split('T').join(' '))
-  //         data.value.showTime.push(item.time.slice(5, 16).split('T').join(' '))
-  //         data.value.data1.push(item.tem[0])
-  //         data.value.data2.push(item.tem[1])
-  //         data.value.data3.push(item.tem[2])
-  //         data.value.data4.push(item.hum[0])
-  //         data.value.data5.push(item.hum[1])
-  //         data.value.data6.push(item.hum[2])
-  //       })
-  //       equipTempData.value = data.value
-
-  //     })
-  //     .catch((error) => {
-  //       console.error('获取温湿度失败，error', error)
-  //     })
-
-  // }
-  const getEquipTempData = async (requestData) => {
-    const response = await axios.get(equipSreamUrl, {
-      params: requestData,
-      headers: {
-        Authorization: localStorage.getItem('token')
-      }
-    })
-    let data = ref({
-      trueTime: [],
-      showTime: [],
-      data1: [],
-      data2: [],
-      data3: [],
-      data4: [],
-      data5: [],
-      data6: []
-    })
-    console.log('获取温湿度成功，返回res', response.data)
-    // 设置echarts的数据格式
-    response.data.forEach((item) => {
-      data.value.trueTime.push(item.time.split('T').join(' '))
-      data.value.showTime.push(item.time.slice(5, 16).split('T').join(' '))
-      data.value.data1.push(item.tem[0])
-      data.value.data2.push(item.tem[1])
-      data.value.data3.push(item.tem[2])
-      data.value.data4.push(item.hum[0])
-      data.value.data5.push(item.hum[1])
-      data.value.data6.push(item.hum[2])
-    })
-    equipTempData.value = data.value
+  // 获取温湿度数据用于绘图
+  const getEquipTempData = async (requestData, myChart) => {
+    await axios
+      .get(equipSreamUrl, {
+        params: requestData,
+        headers: {
+          Authorization: localStorage.getItem('token')
+        }
+      })
+      .then((response) => {
+        console.log('获取温湿度数据成功，返回res', response.data)
+        // 更新series数据
+        getSeriesData(response.data)
+        // 更新xAxis数据
+        getxAxisData(response.data)
+        console.log('option', option)
+        // setOption
+        setChartOption(myChart)
+      })
   }
+  // 获取option的series数据
+  const getSeriesData = (responseData) => {
+    let seriesData = []
+    responseData.forEach((item, index) => {
+      item.data.forEach((i, k) => {
+        if (index == 0) {
+          seriesData[k] = {
+            name: i.name,
+            type: 'line',
+            stack: k,
+            smooth: true,
+            lineStyle: {
+              color:
+                i.name.substring(0, 2) === '温度' ? colorGen1.next().value : colorGen2.next().value
+            },
+            showSymbol: false,
+            data: []
+          }
+        }
+        seriesData[k].data.push(i.value)
+      })
+    })
+    option.series = seriesData
+  }
+  // 获取option的xAxis数据
+  const getxAxisData = (responseData) => {
+    let xAxisData = []
+    responseData.forEach((item) => {
 
-  return { equipSteamData, equipTempData, getEquipSteamData, getEquipTempData }
+      xAxisData.push(item.time.substring(11, 16))
+    })
+    option.xAxis.data = xAxisData
+  }
+  // setOption
+  const setChartOption = (myChart) => {
+    myChart.setOption(option)
+  }
+  return {
+    equipSteamData,
+    equipTempData,
+    getEquipSteamData,
+    getEquipTempData,
+    option
+  }
 })

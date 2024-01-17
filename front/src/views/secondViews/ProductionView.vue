@@ -7,4 +7,11 @@
 </template>
 
 <script setup lang="js"></script>
-<style scoped lang="less"></style>
+<style scoped lang="less">
+.production-wrapper {
+  width: 100%;
+  height: 100%;
+  padding: 20px;
+
+}
+</style>

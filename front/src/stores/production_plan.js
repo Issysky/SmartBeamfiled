@@ -12,24 +12,19 @@ export const useProductionPlanStore = defineStore('productionPlan', () => {
   const planedList = reactive({})
   // 已计划生产列表的请求地址
   const planedUrl = '/beam_plan/'
-  const day_count = {
-    '2024-01-01': 2,
-    '2024-01-04': 1,
-    '2024-01-05': 9,
-    '2024-01-06': 1,
-    '2024-01-18': 3
-  }
 
   // 日历显示信息
-  const calenderPlan = ref([
-    {
-      date: '2024-01-13',
-      title: '计划值:100'
-    },
-    {}
-  ])
+  let calenderPlan = reactive({
+    events: [
+      {
+        date: '2024-01-13',
+        title: '计划值:100'
+      },
+      {}
+    ]
+  })
   // 获取已计划生产列表
-  const getPlanedList = async (params) => {
+  const getPlanedList = async () => {
     await axios
       .get(planedUrl, {
         params: {
@@ -83,11 +78,10 @@ export const useProductionPlanStore = defineStore('productionPlan', () => {
   // 修改时间
   const changeTime = (newTime) => {
     time.value = newTime
-    console.log(newTime, time.value)
   }
   // 返回日历信息
   const getCalenderPlan = async () => {
-    await axios
+    return await axios
       .get(planedUrl, {
         params: {
           query_month: time.value.substring(0, 7)
@@ -97,7 +91,6 @@ export const useProductionPlanStore = defineStore('productionPlan', () => {
         }
       })
       .then((res) => {
-        console.log(res.data)
         let arr = []
         for (let key in res.data.day_count) {
           arr.push({
@@ -105,8 +98,8 @@ export const useProductionPlanStore = defineStore('productionPlan', () => {
             title: '计划值' + res.data.day_count[key]
           })
         }
-        calenderPlan.value = arr
-        console.log(calenderPlan.value)
+        calenderPlan.events = [...arr]
+        return arr
       })
       .catch((error) => {
         console.error('获取日历信息失败', error.response)

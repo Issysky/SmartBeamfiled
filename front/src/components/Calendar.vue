@@ -6,15 +6,19 @@
 </template>
 
 <script setup lang="js">
-import { onMounted, reactive, ref } from 'vue'
+import { onMounted, reactive, ref, watch } from 'vue'
 // import '@fullcalendar/core/vdom'
 import FullCalendar from '@fullcalendar/vue3'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import interactionPlugin from '@fullcalendar/interaction'
 import timeGridPlugin from '@fullcalendar/timegrid'
 import { useProductionPlanStore } from '@/stores/production_plan'
+import { useRouter } from 'vue-router'
 
 const productionPlanStore = useProductionPlanStore()
+
+const fullCalendar = ref(null)
+let calendarApi
 
 // 日期点击事件
 const handleDateClick = (arg) => {
@@ -22,7 +26,7 @@ const handleDateClick = (arg) => {
   productionPlanStore.changeShow(true)
 }
 const handleEventClick = (arg) => {
-  productionPlanStore.changeTime(arg.dateStr)
+  productionPlanStore.changeTime(arg.event.startStr)
   productionPlanStore.changeShow(true)
 }
 const calendarOptions = reactive({
@@ -46,14 +50,30 @@ const calendarOptions = reactive({
     center: 'title',
     left: ''
   },
-  events: [...productionPlanStore.calenderPlan],
+  events: [...productionPlanStore.calenderPlan.events],
   dateClick: handleDateClick,
   eventClick: handleEventClick
   // weekends: false
 })
 
-onMounted(() => {
+watch(
+  productionPlanStore.calenderPlan,
+  (newVal) => {
+    console.log('重新渲染')
+
+    calendarApi.setOption('events', productionPlanStore.calenderPlan.events)
+  },
+  { deep: true }
+)
+
+onMounted(async () => {
+  const router = useRouter()
   productionPlanStore.getCalenderPlan()
+  calendarApi = fullCalendar.value.getApi()
+  await productionPlanStore.getCalenderPlan().then((res) => {
+    productionPlanStore.calenderPlan.events = res
+  })
+  calendarApi.setOption('events', productionPlanStore.calenderPlan.events)
 })
 </script>
 

@@ -42,311 +42,43 @@ import * as echarts from 'echarts'
 
 //定义时间范围
 const timeRange = ref('')
-
 //  引入store
 const equipStore = useEquipStore()
 const monitorStore = useMonitorStore()
-// 定义key
-const componentKey = ref(0)
 // 定义isActive,控制按钮的样式
 const isActive = ref(true)
-// 定义图表数据
-const chartData = ref(equipStore.equipTempData)
 // 定义图表dom
 const chart = ref(null)
-// const myChart = echarts.init(document.getElementById('container'))
 // 定义图表dom
 let myChart
-// const option = reactive({
-//   tooltip: {
-//     trigger: 'axis',
-//     formatter: function (params) {
-//       //定义显示内容
-//       const text =
-//         params[0].name +
-//         '<br/>' +
-//         params[0].marker +
-//         params[0].seriesName +
-//         ' : ' +
-//         params[0].value +
-//         '℃<br/>' +
-//         params[1].marker +
-//         params[1].seriesName +
-//         ' : ' +
-//         params[1].value +
-//         '℃<br/>' +
-//         params[2].marker +
-//         params[2].seriesName +
-//         ' : ' +
-//         params[2].value +
-//         '℃<br/>' +
-//         params[3].marker +
-//         params[3].seriesName +
-//         ' : ' +
-//         params[3].value +
-//         '%RH<br/>' +
-//         params[4].marker +
-//         params[4].seriesName +
-//         ' : ' +
-//         params[4].value +
-//         '%RH<br/>' +
-//         params[5].marker +
-//         params[5].seriesName +
-//         ' : ' +
-//         params[5].value +
-//         '%RH<br/>'
-//       return text
-//     }
-//   },
-//   legend: {
-//     data: ['温度1', '温度2', '温度3', '湿度1', '湿度2', '湿度3'],
-//     itemHeight: 0,
-//     itemWidth: 15,
-//     textStyle: {
-//       fontSize: 10 // 设置图例的字体大小
-//     }
-//   },
-//   grid: {
-//     top: '15%',
-//     left: '3%',
-//     right: '4%',
-//     bottom: '3%',
-//     containLabel: true
-//   },
-//   toolbox: {
-//     feature: {
-//       // saveAsImage: {}
-//     }
-//   },
-//   xAxis: {
-//     type: 'category',
-//     boundaryGap: false,
-//     data: equipStore.equipTempData.showTime,
-//     axisLabel: {
-//       interval: function (index, value) {
-//         // 假设你的数据总量是 dataLength
-//         let dataLength = equipStore.equipTempData.showTime.length
-//         // 你想要显示的数据量 是 3
-//         let displayDataCount = 3
-//         // 计算间隔
-//         let interval = Math.floor(dataLength / displayDataCount)
-//         // 只有当 index 是 interval 的倍数时才显示标签
-//         return index % interval === 0
-//       }
-//     }
-//   },
-//   yAxis: {
-//     type: 'value'
-//   },
-//   series: [
-//     {
-//       name: '温度1',
-//       type: 'line',
-//       stack: '1',
-//       smooth: true,
-//       showSymbol: false,
-//       data: equipStore.equipTempData.data1
-//     },
-//     {
-//       name: '温度2',
-//       type: 'line',
-//       stack: '2',
-//       smooth: true,
-//       showSymbol: false,
-//       data: equipStore.equipTempData.data2
-//     },
-//     {
-//       name: '温度3',
-//       type: 'line',
-//       stack: '3',
-//       smooth: true,
-//       showSymbol: false,
-//       data: equipStore.equipTempData.data3
-//     },
-//     {
-//       name: '湿度1',
-//       type: 'line',
-//       stack: '4',
-//       smooth: true,
-//       showSymbol: false,
-//       data: equipStore.equipTempData.data4
-//     },
-//     {
-//       name: '湿度2',
-//       type: 'line',
-//       stack: '5',
-//       smooth: true,
-//       showSymbol: false,
-//       data: equipStore.equipTempData.data5
-//     },
-//     {
-//       name: '湿度3',
-//       type: 'line',
-//       stack: '6',
-//       smooth: true,
-//       showSymbol: false,
-//       data: equipStore.equipTempData.data6
-//     }
-//   ]
-// })
 
 // 点击切换按钮的事件
 const handle = () => {
   isActive.value = !isActive.value
-  console.log(option.series[0])
-  myChart.setOption(option.value)
 }
 
-onMounted(async () => {
+// watch(equipStore.option, (newVal, oldVal) => {
+//   if (myChart) {
+//     myChart.setOption(equipStore.getChartOption())
+//     console.log('图表数据更新了')
+//   }
+// })
+onMounted(() => {
   // 获取图表dom
   myChart = echarts.init(document.getElementById('container'))
   const requestData = {
     type: 'tem_hum',
     name: 'room1',
     time_from: '2024-01-01 12:30:00',
-    time_to: '2024-01-01 12:40:00'
+    time_to: '2024-01-01 14:40:00',
+    is_simplify:'true'
   }
   // 发送请求
-  await equipStore.getEquipTempData(requestData)
+  equipStore.getEquipTempData(requestData, myChart)
   // 窗口变化时图表自适应
   window.addEventListener('resize', () => {
     myChart.resize()
   })
-  setTimeout(() => {
-    myChart.clear()
-    myChart.setOption({
-      tooltip: {
-        trigger: 'axis',
-        formatter: function (params) {
-          //定义显示内容
-          const text =
-            params[0].name +
-            '<br/>' +
-            params[0].marker +
-            params[0].seriesName +
-            ' : ' +
-            params[0].value +
-            '℃<br/>' +
-            params[1].marker +
-            params[1].seriesName +
-            ' : ' +
-            params[1].value +
-            '℃<br/>' +
-            params[2].marker +
-            params[2].seriesName +
-            ' : ' +
-            params[2].value +
-            '℃<br/>' +
-            params[3].marker +
-            params[3].seriesName +
-            ' : ' +
-            params[3].value +
-            '%RH<br/>' +
-            params[4].marker +
-            params[4].seriesName +
-            ' : ' +
-            params[4].value +
-            '%RH<br/>' +
-            params[5].marker +
-            params[5].seriesName +
-            ' : ' +
-            params[5].value +
-            '%RH<br/>'
-          return text
-        }
-      },
-      legend: {
-        data: ['温度1', '温度2', '温度3', '湿度1', '湿度2', '湿度3'],
-        itemHeight: 0,
-        itemWidth: 15,
-        textStyle: {
-          fontSize: 10 // 设置图例的字体大小
-        }
-      },
-      grid: {
-        top: '15%',
-        left: '3%',
-        right: '4%',
-        bottom: '3%',
-        containLabel: true
-      },
-      toolbox: {
-        feature: {
-          // saveAsImage: {}
-        }
-      },
-      xAxis: {
-        type: 'category',
-        boundaryGap: false,
-        data: equipStore.equipTempData.showTime,
-        axisLabel: {
-          interval: function (index, value) {
-            // 假设你的数据总量是 dataLength
-            let dataLength = equipStore.equipTempData.showTime.length
-            // 你想要显示的数据量 是 3
-            let displayDataCount = 3
-            // 计算间隔
-            let interval = Math.floor(dataLength / displayDataCount)
-            // 只有当 index 是 interval 的倍数时才显示标签
-            return index % interval === 0
-          }
-        }
-      },
-      yAxis: {
-        type: 'value'
-      },
-      series: [
-        {
-          name: '温度1',
-          type: 'line',
-          stack: '1',
-          smooth: true,
-          showSymbol: false,
-          data: equipStore.equipTempData.data1
-        },
-        {
-          name: '温度2',
-          type: 'line',
-          stack: '2',
-          smooth: true,
-          showSymbol: false,
-          data: equipStore.equipTempData.data2
-        },
-        {
-          name: '温度3',
-          type: 'line',
-          stack: '3',
-          smooth: true,
-          showSymbol: false,
-          data: equipStore.equipTempData.data3
-        },
-        {
-          name: '湿度1',
-          type: 'line',
-          stack: '4',
-          smooth: true,
-          showSymbol: false,
-          data: equipStore.equipTempData.data4
-        },
-        {
-          name: '湿度2',
-          type: 'line',
-          stack: '5',
-          smooth: true,
-          showSymbol: false,
-          data: equipStore.equipTempData.data5
-        },
-        {
-          name: '湿度3',
-          type: 'line',
-          stack: '6',
-          smooth: true,
-          showSymbol: false,
-          data: equipStore.equipTempData.data6
-        }
-      ]
-    })
-  }, 1000)
 })
 </script>
 <style scoped lang="less">
@@ -359,7 +91,6 @@ onMounted(async () => {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
-
   .label {
     font-size: 1em;
     width: 100%;

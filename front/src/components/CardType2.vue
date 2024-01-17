@@ -4,7 +4,7 @@
     <!-- 遮罩 -->
     <div class="mask"></div>
     <div class="card">
-      <button class="close" @click="productionPlanStore.changeShow(false)">X</button>
+      <button class="close" @click="closeCard()">X</button>
       <!-- 卡片内容区 -->
       <div class="content">
         <!-- 左侧区域 已有计划 可删除 -->
@@ -81,12 +81,11 @@ let unPlan = reactive({})
 const planList = reactive([])
 // 定义即将添加计划列表
 const addPlanList = ref([])
-const planedParmas = reactive({
-  that_day: '2024-01-05'
-})
-// 切换导航
+
+// 删除计划
 const deletePlan = (id) => {
   productionPlanStore.delPlanedList(id)
+  addPlan()
   console.log('删除计划')
 }
 // 点击按钮切换状态
@@ -116,26 +115,35 @@ const handleAddPlanList = (id) => {
   }
 }
 // 添加计划方法
-const addPlan = async() => {
+const addPlan = async () => {
   // 先把计划添加进已有计划列表
-  addPlanList.value.forEach((item,index)=>{
+  addPlanList.value.forEach((item, index) => {
     const data = {
-      date:productionPlanStore.time,
-      beam_code_id:item
+      date: productionPlanStore.time,
+      beam_code_id: item
     }
     // 发请求
     productionPlanStore.addPlanedList(data)
   })
   // 重新获取已有计划列表
-  await productionPlanStore.getPlanedList(planedParmas.value)
-  // 重新获取未计划列表
-  unPlan.value = productionPlanStore.planedList.value.rest_beam
-  handlePlanList()
-  // 日历显示数据
-  productionPlanStore.getCalenderPlan()
+  productionPlanStore.getPlanedList().then((res) => {
+    // 重新获取未计划列表
+    unPlan.value = productionPlanStore.planedList.value.rest_beam
+    handlePlanList()
+    // 添加数组清空
+    addPlanList.value = []
+    // 日历显示数据
+    productionPlanStore.getCalenderPlan()
+  })
+}
+
+// 关闭卡片
+const closeCard = () => {
+  productionPlanStore.changeShow(false)
+  addPlan()
 }
 onMounted(async () => {
-  await productionPlanStore.getPlanedList(planedParmas.value)
+  await productionPlanStore.getPlanedList()
   unPlan.value = productionPlanStore.planedList.value.rest_beam
 })
 </script>

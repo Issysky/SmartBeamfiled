@@ -62,6 +62,11 @@ const router = createRouter({
               path:'production__plan',
               name:'计划制定',
               component:()=>import('../views/thirdViews/ProductionPlanView.vue')
+            },
+            {
+              path:'blank',
+              name:'空白页',
+              component:()=>import('../views/thirdViews/BlankView.vue')
             }
           ]
         }

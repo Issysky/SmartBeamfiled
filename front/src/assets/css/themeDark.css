@@ -18,6 +18,7 @@
 
   /* fullCalendar */
   --fc-small-font-size:1.2em;
+  --fc-border-color: transparent;
 
 }
 
