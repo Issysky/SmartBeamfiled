@@ -84,14 +84,18 @@ export const useEquipStore = defineStore('equip', () => {
   const equipSreamUrl = '/steam/'
 
   // 色彩生成器
-  function* colorGenerator(init_color) {
-    while (true) {
-      yield `hsl(${init_color},100%,50%)`
-      init_color += 5
+  function* colorGenerator(colorType,init_color) {
+    while (colorType == 'tem') {
+      yield `hsl(50,${100-init_color}%,50%)`
+      init_color += 20
+    }
+    while (colorType == 'hum') {
+      yield `hsl(200,${100-init_color}%,50%)`
+      init_color += 20
     }
   }
-  const colorGen1 = colorGenerator(50)
-  const colorGen2 = colorGenerator(200)
+  const colorGen1 = colorGenerator('tem',5)
+  const colorGen2 = colorGenerator('hum',5)
 
   // 获取最新蒸养数据
   const getEquipSteamData = async (requestData) => {
@@ -160,7 +164,7 @@ export const useEquipStore = defineStore('equip', () => {
     let xAxisData = []
     responseData.forEach((item) => {
 
-      xAxisData.push(item.time.substring(11, 16))
+      xAxisData.push(item.time.substring(5, 16).split('T').join(''))
     })
     option.xAxis.data = xAxisData
   }

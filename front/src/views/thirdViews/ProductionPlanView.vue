@@ -8,6 +8,7 @@
       <CardType2 v-if="productionPlanStore.isShow"></CardType2>
     </div>
     <div class="right">
+      <ChartYear></ChartYear>
       <ChartMonth></ChartMonth>
     </div>
   </div>
@@ -17,6 +18,7 @@
 import Calendar from '@/components/Calendar.vue'
 import CardType2 from '@/components/CardType2.vue'
 import { useProductionPlanStore } from '@/stores/production_plan'
+import ChartYear from '@/components/ChartYear.vue'
 import ChartMonth from '@/components/ChartMonth.vue'
 
 const productionPlanStore = useProductionPlanStore()
@@ -29,6 +31,7 @@ const productionPlanStore = useProductionPlanStore()
   .left {
     width: 50%;
     height: 90%;
+    background-color: #fff;
     .month-plan {
       width: 100%;
       height: 100px;
@@ -42,6 +45,9 @@ const productionPlanStore = useProductionPlanStore()
     width: 50%;
     height: 90%;
     background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
   }
 }
 </style>

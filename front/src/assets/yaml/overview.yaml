@@ -1,0 +1,13 @@
+# 这是一个注释
+
+arr:
+  - label: 项目名称
+    text: 宁上智慧高速
+  - label: 项目标段
+    text: 宁上高速霞浦至福安段A4合同段
+  - label: 项目位置
+    text: 福建省宁德市霞浦县
+  - label: 制梁任务
+    text: 1595片
+  - label: 已完成制梁
+    text: 1595片

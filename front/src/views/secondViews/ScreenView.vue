@@ -1,18 +1,20 @@
 <!--数字大屏 -->
 <template>
-  <div>
-    <el-button type="primary" @click="fullScreen()">{{
-      topBarStore.isMax ? '退出全屏' : '全屏'
-    }}</el-button>
-    <!-- <ChartMonth /> -->
-    <!-- <BlankView /> -->
+  <div class="screen-wrapper">
+    <div class="label">
+      智慧大屏<el-button  type="primary" @click="fullScreen()">{{
+        topBarStore.isMax ? '退出全屏' : '全屏'
+      }}</el-button>
+    </div>
+
+    <Overview></Overview>
   </div>
 </template>
 
 <script setup lang="js">
 import { onMounted, ref } from 'vue'
 import { usetopBarStore } from '../../stores/topBar.js'
-import BlankView from '../thirdViews/BlankView.vue';
+import Overview from '../../components/screenComponents/Overview.vue'
 
 const topBarStore = usetopBarStore()
 // 全屏按钮点击事件
@@ -30,4 +32,17 @@ const fullScreen = () => {
 
 onMounted(() => {})
 </script>
-<style scoped lang="less"></style>
+<style scoped lang="less">
+.screen-wrapper {
+  width: 100%;
+  height: 100%;
+  .label {
+    height: 8%;
+    font-size: 4em;
+    font-weight: bold;
+    color: #fff;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+}
+</style>
