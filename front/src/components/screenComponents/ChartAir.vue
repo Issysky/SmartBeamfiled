@@ -1,0 +1,29 @@
+<!-- 空气污染指数图表 出现在大屏环境监测中 -->
+<template>
+  <div ref="chart" id="container"></div>
+</template>
+
+<script setup lang="js">
+import { ref, onMounted, reactive } from 'vue'
+import * as echarts from 'echarts'
+import { useEnvStore } from '../../stores/environment.js'
+// 定义图表实例
+const chart = ref(null)
+let myChart
+// 定义store
+const envStore = useEnvStore()
+
+onMounted(() => {
+  myChart = echarts.init(chart.value)
+  envStore.getEnvData(myChart, 'air')
+  window.addEventListener('resize', () => {
+    myChart.resize()
+  })
+})
+</script>
+<style scoped lang="less">
+#container {
+  width: 50%;
+  height: 100%;
+}
+</style>

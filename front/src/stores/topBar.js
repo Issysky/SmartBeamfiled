@@ -38,10 +38,10 @@ export const usetopBarStore = defineStore('topBar', () => {
   const changeFontSize = (size) => {
     // 切换字体大小
     if (size === 'small') {
-      largeFs.setAttribute('disabled', 'false')
+      largeFs.setAttribute('disabled', 'true')
       smallFs.removeAttribute('disabled')
     } else if (size === 'large') {
-      smallFs.setAttribute('disabled', 'false')
+      smallFs.setAttribute('disabled', 'true')
       largeFs.removeAttribute('disabled')
     }
   }

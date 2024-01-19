@@ -2,12 +2,13 @@
 <template>
   <div class="screen-wrapper">
     <div class="label">
-      智慧大屏<el-button  type="primary" @click="fullScreen()">{{
+      智慧大屏<el-button type="primary" @click="fullScreen()">{{
         topBarStore.isMax ? '退出全屏' : '全屏'
       }}</el-button>
     </div>
-
     <Overview></Overview>
+    <Video></Video>
+    <Environment> </Environment>
   </div>
 </template>
 
@@ -15,6 +16,8 @@
 import { onMounted, ref } from 'vue'
 import { usetopBarStore } from '../../stores/topBar.js'
 import Overview from '../../components/screenComponents/Overview.vue'
+import Video from '../../components/screenComponents/Video.vue'
+import Environment from '../../components/screenComponents/Environment.vue'
 
 const topBarStore = usetopBarStore()
 // 全屏按钮点击事件
@@ -36,6 +39,10 @@ onMounted(() => {})
 .screen-wrapper {
   width: 100%;
   height: 100%;
+  padding-left: 50px;
+  padding-right: 50px;
+  padding-bottom: 42px;
+  position: relative;
   .label {
     height: 8%;
     font-size: 4em;

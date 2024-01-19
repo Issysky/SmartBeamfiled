@@ -4,7 +4,6 @@
     <p class="label">年度生产曲线</p>
     <!-- 年份选择器 -->
     <div class="year-select">
-      
       <button class="last-year" @click="changeYear('last')">
         <el-icon><ArrowLeftBold /></el-icon>
       </button>

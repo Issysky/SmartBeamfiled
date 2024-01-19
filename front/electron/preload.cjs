@@ -17,5 +17,11 @@ contextBridge.exposeInMainWorld('topBar', {
         return 'disconnected'
       }
     }),
-  getMenu:  () =>  ipcRenderer.send('show-context-menu')
+  getMenu: () => ipcRenderer.send('show-context-menu')
+})
+
+// 读写 YAML 文件的方法
+contextBridge.exposeInMainWorld('rwYaml', {
+  readYamlFile: (path) => ipcRenderer.invoke('read-yaml-file', path),
+  writeYamlFile: (path, data) => ipcRenderer.invoke('write-yaml-file', path, data)
 })

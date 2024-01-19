@@ -3,6 +3,7 @@ const path = require('path')
 const { spawn } = require('child_process')
 const dns = require('dns')
 const { Menu } = require('electron')
+const { readYamlFile, writeYamlFile } = require('./rwYaml.cjs')
 
 // 定义窗口
 let win
@@ -47,6 +48,13 @@ app.whenReady().then(() => {
   ipcMain.on('mini', () => win.minimize())
   ipcMain.on('max', () => win.maximize())
   ipcMain.on('unmax', () => win.unmaximize())
+  // 注册读写 YAML 文件的方法
+  ipcMain.handle('read-yaml-file', (path) => {
+    readYamlFile(path)
+  })
+  ipcMain.handle('write-yaml-file', (path,data) => {
+    writeYamlFile(path,data)
+  })
   // 判断是否有网络,在预加载脚本中调用
   ipcMain.handle('check-connection', async () => {
     return new Promise((resolve, reject) => {
