@@ -1,9 +1,6 @@
 <!-- 登陆页面 打开应用后的第一个页面-->
 <template>
   <div class="login-wrapper">
-    <TopBarLogin></TopBarLogin>
-    <!-- 背景图片 -->
-    <div class="bg"></div>
     <!-- 登陆卡片 -->
     <div class="card-wrapper">
       <!-- 标题框 -->
@@ -66,6 +63,7 @@ const login = (username, pwd) => {
       }
       // 跳转到首页
       router.push('/home/screen')
+      window.topBar.max()
     } else {
       // 登录失败
       // 提示错误信息
@@ -91,25 +89,10 @@ onMounted(() => {
   width: 100%;
   height: 100%;
   position: relative;
-  .bg {
-    position: absolute;
-    left: 0;
-    top: 0;
-    z-index: -1;
-    width: 100%;
-    height: 100%;
-    background-image: url('../assets/img/bg.png');
-    background-repeat: no-repeat;
-    background-size: cover;
-  }
   .card-wrapper {
     position: absolute;
-    width: 30vw;
-    height: 60vh;
-    top: 20vh;
-    left: 15vw;
-    background-color: #f1f6fd;
-    border-radius: 20px;
+    width: 100%;
+    height: 100%;
     box-shadow: 0 10px 40px rgba(255, 184, 158, 0.5);
     display: flex;
     flex-direction: column;
@@ -126,10 +109,12 @@ onMounted(() => {
       .label {
         font-size: 1.8em;
         font-weight: 600;
+        color: var(--label-font-color);
       }
       .eng {
         font-size: 1em;
         margin-top: 3%;
+        color: var(--label-font-color);
       }
     }
 

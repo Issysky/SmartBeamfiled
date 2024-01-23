@@ -2,7 +2,7 @@
 <template>
   <div class="top-bar">
     <div class="label-wrapper">
-      <img src="../assets/img/logo.png" alt="" />
+      <img src="../../public/logo.png" alt="" />
       <p>郑州艾环梦工程科技有限公司</p>
     </div>
     <!-- 点击拖拽窗口区域 下方两个都是-->
@@ -38,13 +38,13 @@
         <el-icon><Minus /></el-icon>
       </button>
       <!-- 退出最大化 在最大化时候显示 -->
-      <button class="unmax btn" v-if="topBarStore.isMax" @click="topBarStore.handleUnmax">
+      <!-- <button class="unmax btn" v-if="topBarStore.isMax" @click="topBarStore.handleUnmax">
         <el-icon><Notification /></el-icon>
-      </button>
+      </button> -->
       <!-- 最大化，在默认窗口显示 -->
-      <button class="max btn" v-if="!topBarStore.isMax" @click="topBarStore.handleMax">
+      <!-- <button class="max btn" v-if="!topBarStore.isMax" @click="topBarStore.handleMax">
         <el-icon><FullScreen /></el-icon>
-      </button>
+      </button> -->
       <!-- 关闭 -->
       <button class="close btn" @click="topBarStore.handleClose">
         <el-icon><Close /></el-icon>
@@ -139,13 +139,15 @@ main{
     height: 100%;
     display: flex;
     align-items: center;
+    padding-left: 2%;
     img {
       height: 80%;
       object-fit: contain;
+      margin-right: 2%  ;
     }
     p {
       color: var(--HeaderFontColor);
-      font-size: 1.6em;
+      font-size: 1.2em;
       font-weight: bold;
       margin: 0;
     }
@@ -173,12 +175,11 @@ main{
     align-items: center;
     flex-wrap: wrap;
     margin-right: 2%;
-    margin-bottom: -3vh;
+    margin-bottom: -2vh;
     color: var(--HeaderFontColor);
     .nav {
       height: 65%;
       width: 7vw;
-      padding-top: 10px;
       display: flex;
       justify-content: center;
       align-items: top;

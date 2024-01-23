@@ -19,8 +19,8 @@ spawn('python', ['py/main.py'])
 // });
 const createWindow = () => {
   win = new BrowserWindow({
-    width: 1152,
-    height: 648,
+    width: 480,
+    height: 600,
     icon: path.join(__dirname, '../src/assets/img/logo.png'),
     webPreferences: {
       preload: path.join(__dirname, 'preload.cjs'),

@@ -1,8 +1,11 @@
-<!-- 装饰线,出现于大屏页面组件中 -->
+<!-- 带装饰线的标题,出现于大屏页面组件中 -->
 <template>
-  <div class="line-wrapper" :style="{width:props.width}">
-    <div class="bold"></div>
-    <div class="light"></div>
+  <div class="label-wrapper" :style="{ width: width }">
+    <p class="label">{{ label }}</p>
+    <div class="line-wrapper">
+      <div class="bold"></div>
+      <div class="light"></div>
+    </div>
   </div>
 </template>
 
@@ -10,24 +13,34 @@
 import { defineProps } from 'vue'
 
 const props = defineProps({
-    width:{
-        default: '300px'
-    }
+  label: {
+    default: '标题'
+  },
+  width: {
+    default: '80%'
+  }
 })
 </script>
 <style scoped lang="less">
-.line-wrapper {
-  display: flex;
-  align-items: center;
-  .bold {
-    flex: 1;
-    height: 3px;
-    background-color: #000;
+.label-wrapper {
+  p {
+    font-size: 1.4em;
+    font-weight: bold;
+    margin: 0;
   }
-  .light {
-    flex: 6;
-    height: 1px;
-    background-color: #22222233;
+  .line-wrapper {
+    display: flex;
+    align-items: center;
+    .bold {
+      flex: 1;
+      height: 3px;
+      background-color: #000;
+    }
+    .light {
+      flex: 6;
+      height: 1px;
+      background-color: #22222233;
+    }
   }
 }
 </style>

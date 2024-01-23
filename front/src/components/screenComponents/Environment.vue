@@ -1,8 +1,7 @@
 <!-- 大屏中环境监测组件 -->
 <template>
   <div class="environment-wrapper">
-    <p class="title">环境监测</p>
-    <Line class="line" :width="'60%'"></Line>
+    <Line class="line" :width="'60%'" :label="'环境监测'"></Line>
     <div class="chart-wrapper">
       <ChartAir></ChartAir>
       <ChartNoise></ChartNoise>
@@ -49,7 +48,7 @@ onMounted(async () => {
 
 <style scoped lang="less">
 .environment-wrapper {
-  width: 28%;
+  width: 22%;
   height: 22%;
   position: absolute;
   background-color: #cdd0d6;
