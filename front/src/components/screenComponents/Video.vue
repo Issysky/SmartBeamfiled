@@ -23,20 +23,22 @@ function handleFileChange(event) {
 
 <style scoped lang="less">
 .video-wrapper {
-  width: 43%;
-  height: 46%;
+  width: 51%;
+  height: 60%;
   position: absolute;
-  background-color: transparent;
+  // background-color: #fff;
   top: 10%;
-  right: 29%;
+  right: 23%;
   video {
     position: absolute;
     border-radius: 20px;
     overflow: hidden;
     width: 100%;
     height: 100%;
-    top: 0;
-    left: 0;
+    top: 50%;
+    left: 50%;
+    background-color: #000;
+    transform: translateX(-50%) translateY(-50%);
   }
   input {
     visibility: hidden;

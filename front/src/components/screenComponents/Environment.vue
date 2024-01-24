@@ -49,14 +49,15 @@ onMounted(async () => {
 <style scoped lang="less">
 .environment-wrapper {
   width: 22%;
-  height: 22%;
+  height: 32%;
   position: absolute;
-  background-color: #cdd0d6;
-  top: 34%;
+  // background-color: #cdd0d6;
+  top: 38%;
   border-radius: 15px;
   box-shadow: 0px 0px 15px 0px rgba(255, 255, 255, 0.4);
   display: flex;
   flex-direction: column;
+  color:var(--screen-font-color);
 
   .title {
     width: 40%;

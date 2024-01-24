@@ -2,7 +2,7 @@
 <template>
   <div class="news-wrapper">
     <Line :width="'60%'" :label="'时事新闻'"></Line>
-    <ul class="news">
+    <ul class="news" ref="news">
       <li
         ref="li"
         v-for="(item, index) in newsData.data"
@@ -12,6 +12,9 @@
         <div class="label">
           <p class="title">{{ item.title }}</p>
           <p class="time">{{ item.time }}</p>
+        </div>
+        <div class="content">
+          <p class="memo">{{ item.memo }}</p>
         </div>
       </li>
     </ul>
@@ -35,35 +38,45 @@ const goToWebsite = (url) => {
 }
 
 const li = ref(null)
+// 无限轮播新闻
 const scrollNews = () => {
   setInterval(() => {
-    li.value.forEach((item, index) => {
-      item.style.transform = `translateY(-${index * 30}px)`
+    Array.from(li.value).forEach((item) => {
+      item.style.transition = 'all .5s'
+      item.style.transform = 'translateY(-100%)'
     })
-    // newsData.data.push(newsData.data.shift())
-  }, 2000)
+    setTimeout(() => {
+      newsData.data.push(newsData.data.shift())
+      Array.from(li.value).forEach((item) => {
+        item.style.transition = 'none'
+        item.style.transform = 'translateY(0%)'
+      })
+    }, 500)
+  }, 3000)
 }
 onMounted(async () => {
-  // scrollNews()
   newsData.data = await screenStore.getNewsData()
+  scrollNews()
 })
 </script>
 <style scoped lang="less">
 .news-wrapper {
-  width: 22%;
-  height: 34%;
+  width: 18%;
+  height: 21%;
   position: absolute;
-  top: 59%;
+  top: 72%;
   right: 2%;
   padding-left: 2%;
   padding-top: 1%;
-  background-color: #cdd0d6;
+  // background-color: #cdd0d6;
+  color:var(--screen-font-color);
   border-radius: 15px;
   box-shadow: 0px 0px 15px 0px rgba(255, 255, 255, 0.4);
   display: flex;
   flex-direction: column;
+
   .news {
-    width: 90%;
+    width: 95%;
     height: 82%;
     display: flex;
     flex-direction: column;
@@ -72,9 +85,14 @@ onMounted(async () => {
     overflow: hidden;
     margin: 0;
     padding: 0;
+
     li {
       width: 100%;
-      margin-top: 15px;
+      padding-top: 8px;
+      padding-bottom: 5px;
+      border-bottom: 1px solid #000;
+      position: relative;
+      transition: all 0.5s;
       &:hover {
         cursor: pointer;
       }
@@ -83,28 +101,35 @@ onMounted(async () => {
       }
       .label {
         width: 100%;
-        font-size: 0.9em;
+        font-size: 0.8em;
         font-weight: 600;
-        color: #000;
         display: flex;
         .title {
-          width: 80%;
+          width: 65%;
+          display: -webkit-box;
+          -webkit-line-clamp: 1;
+          -webkit-box-orient: vertical;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          margin-right: 10%;
+        }
+        .time {
+          width: 25%;
+          font-size: 0.6em;
+          margin-top: 5px;
+          line-height: 2;
+        }
+      }
+      .content {
+        width: 100%;
+        font-size: 0.6em;
+        .memo {
           display: -webkit-box;
           -webkit-line-clamp: 1;
           -webkit-box-orient: vertical;
           overflow: hidden;
           text-overflow: ellipsis;
         }
-        .time {
-          width: 20%;
-          font-size: 0.6em;
-          margin-top: 5px;
-          line-height: 2;
-          color: #333;
-        }
-      }
-      .text{
-        
       }
     }
   }

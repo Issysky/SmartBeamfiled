@@ -1,6 +1,7 @@
 <!-- 登陆页面 打开应用后的第一个页面-->
 <template>
-  <div class="login-wrapper">
+  <div class="login-wrapper" ref="loginWrapper">
+    <div class="drag"></div>
     <!-- 登陆卡片 -->
     <div class="card-wrapper">
       <!-- 标题框 -->
@@ -44,6 +45,8 @@ const pwd = ref('')
 // 错误提示框
 const alert = ref(false)
 
+const loginWrapper = ref(null)
+
 // 登录方法
 const login = (username, pwd) => {
   // 调用userstore的login方法，因为是promise方法所以使用then去处理后续逻辑
@@ -62,8 +65,9 @@ const login = (username, pwd) => {
         localStorage.removeItem('pwd')
       }
       // 跳转到首页
-      router.push('/home/screen')
+      loginWrapper.value.style.display = 'none'
       window.topBar.max()
+      router.push('/home/screen')
     } else {
       // 登录失败
       // 提示错误信息
@@ -89,6 +93,13 @@ onMounted(() => {
   width: 100%;
   height: 100%;
   position: relative;
+  .drag {
+    width: 100%;
+    height: 10%;
+    position: absolute;
+    z-index: 1;
+    -webkit-app-region: drag;
+  }
   .card-wrapper {
     position: absolute;
     width: 100%;

@@ -2,17 +2,6 @@
 <template>
   <div class="chart-wrapper">
     <!-- 月份选择器 -->
-    <div class="month-select">
-      <p>2024年</p>
-      <button class="last-month" @click="changeMonth('last')">
-        <el-icon><ArrowLeftBold /></el-icon>
-      </button>
-      <p class="year">{{ monthValue + '月' }}</p>
-      <button class="last-month" @click="changeMonth('next')">
-        <el-icon><ArrowRightBold /></el-icon>
-      </button>
-      <p>生产曲线</p>
-    </div>
     <div ref="chart" id="container"></div>
   </div>
 </template>
@@ -60,28 +49,11 @@ onMounted(() => {
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  .month-select {
-    width: 40%;
-    height: 10%;
-    font-size: 20px;
-    font-weight: 600;
-    color: #000;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    button {
-      border: none;
-      background-color: #fff;
-      cursor: pointer;
-      line-height: 20%;
-      &:hover {
-        color: #409eff;
-      }
-    }
-  }
+  position: relative;
+
   #container {
     width: 90%;
-    height: 60%;
+    height: 90%;
   }
 }
 </style>

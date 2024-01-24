@@ -17,6 +17,8 @@
   --MainContentFontColor: #FFF;
   /*字体颜色 */
   --label-font-color: #FFF;
+  /* 大屏字体颜色 */
+  --screen-font-color: #FFF;
 
   /* fullCalendar */
   --fc-small-font-size:1.2em;

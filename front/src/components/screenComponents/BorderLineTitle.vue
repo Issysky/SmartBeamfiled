@@ -36,12 +36,12 @@ onMounted(() => {
   width: 95%;
   height: 8%;
   top: 1%;
-  background-color: #181818;
+  // background-color: #181818;
   p {
     height: 8%;
     font-size: 2.5em;
     font-weight: bold;
-    color: #fff;
+    color:var(--screen-font-color) ;
     text-align: center;
     margin: 0;
   }
@@ -61,7 +61,7 @@ onMounted(() => {
       position: absolute;
       width: 0;
       height: 0;
-      left: 61%;
+      left:1092px;
       top: 60px;
       background-color: #fff;
       transform: rotate(145deg);
@@ -71,7 +71,7 @@ onMounted(() => {
       position: absolute;
       width: 2px;
       height: 0;
-      left: 1121px;
+      left: 1123px;
       top: 21px;
       background-color: #fff;
       transform: rotate(180deg);

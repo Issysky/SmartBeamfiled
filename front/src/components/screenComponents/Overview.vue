@@ -50,12 +50,14 @@ onMounted(async () => {
 <style scoped lang="less">
 .overview-wrapper {
   width: 22%;
-  height: 22%;
+  height: 26%;
   position: absolute;
-  top:10%;
-  background-color: #cdd0d6;
+  top: 10%;
+  // background-color: #cdd0d6;
+  color:var(--screen-font-color);
   border-radius: 15px;
-  box-shadow: 0px 0px 15px 0px rgba(255, 255, 255, 0.4);
+  // box-shadow: 0px 0px 15px 0px rgba(255, 255, 255, 0.4);
+  border: 1px solid #409EFF;
   .overview {
     width: 100%;
     height: 100%;
@@ -65,7 +67,7 @@ onMounted(async () => {
     padding-top: 2%;
     .title {
       width: 90%;
-      color: #303133;
+      color: var(--screen-font-color);
       font-size: 1.5em;
       font-weight: bold;
       margin: 0;
@@ -87,7 +89,7 @@ onMounted(async () => {
         height: 30px;
       }
       p {
-        color: #303133;
+        color: var(--screen-font-color);
         margin: 0;
         font-size: 0.7em;
       }
@@ -107,7 +109,7 @@ onMounted(async () => {
         height: 30px;
       }
       p {
-        color: #303133;
+        color: var(--screen-font-color);
         margin: 0;
         font-size: 0.7em;
       }

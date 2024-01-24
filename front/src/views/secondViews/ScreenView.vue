@@ -3,10 +3,12 @@
   <div class="screen-wrapper">
     <div class="label">
       <BorderLineTitle class="title"></BorderLineTitle>
-
-      <el-button type="primary" @click="fullScreen()">{{
-        topBarStore.isMax ? '退出全屏' : '全屏'
-      }}</el-button>
+      <button class="fullscreen" @click="fullScreen()" v-if="isMax">
+        <el-icon><FullScreen /></el-icon>
+      </button>
+      <button class="fullscreen" @click="fullScreen()" v-if="!isMax">
+        <el-icon><Notification /></el-icon>
+      </button>
     </div>
     <Overview></Overview>
     <Video></Video>
@@ -31,17 +33,18 @@ import MixStation from '@/components/screenComponents/MixStation.vue'
 import BorderLineTitle from '@/components/screenComponents/BorderLineTitle.vue'
 
 const topBarStore = usetopBarStore()
+const isMax = ref(false)
 // 全屏按钮点击事件
 const fullScreen = () => {
-  topBarStore.isMax ? topBarStore.handleUnmax() : topBarStore.handleMax()
   // 顶部栏的显示与隐藏
   const topBar = document.querySelector('.top-bar')
   const mainWrapper = document.querySelector('.main-wrapper')
-  topBar.style.display = topBarStore.isMax ? 'none' : 'flex'
-  mainWrapper.style.height = topBarStore.isMax ? 'auto' : '83vh'
-  mainWrapper.style.marginRight = topBarStore.isMax ? '1vw' : '2vw'
-  mainWrapper.style.marginLeft = topBarStore.isMax ? '-1vw' : '0'
-  mainWrapper.style.borderRadius = topBarStore.isMax ? '0' : '15px'
+  topBar.style.display = isMax.value ? 'none' : 'flex'
+  mainWrapper.style.height = isMax.value ? 'auto' : '92vh'
+  mainWrapper.style.marginRight = isMax.value ? '1vw' : '2vw'
+  mainWrapper.style.marginLeft = isMax.value ? '-1vw' : '0'
+  mainWrapper.style.borderRadius = isMax.value ? '0' : '15px'
+  isMax.value = !isMax.value
 }
 
 onMounted(() => {})
@@ -54,8 +57,18 @@ onMounted(() => {})
   padding-right: 50px;
   padding-bottom: 42px;
   position: relative;
-  .title {
-    
+  .fullscreen {
+    position: absolute;
+    right: 0;
+    top: 0;
+    margin-top: 10px;
+    margin-right: 10px;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    color: var(--screen-font-color);
+    font-size: 20px;
+    cursor: pointer;
   }
 }
 </style>

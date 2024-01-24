@@ -178,7 +178,7 @@ main{
     margin-bottom: -2vh;
     color: var(--HeaderFontColor);
     .nav {
-      height: 65%;
+      height: 90%;
       width: 7vw;
       display: flex;
       justify-content: center;
@@ -222,7 +222,7 @@ main{
     }
   }
   .function-wrapper {
-    width: 120px;
+    width: 80px;
     height: 80%;
     margin-right: 15px;
     display: flex;
@@ -231,7 +231,7 @@ main{
     // background-color: #ff4d4f;
     .btn {
       width: 40px;
-      height: 30px;
+      height: 40px;
       font-size: 18px;
       background-color: transparent;
       border: none;
