@@ -1,13 +1,13 @@
 <!-- 主页 -->
 <template>
   <div class="home-wrapper">
-    <!-- <div ref="videoWrapper" class="start-video-wrapper">
+    <div ref="videoWrapper" class="start-video-wrapper">
       <video
         autoplay
         ref="video"
         src="../assets/video/startVideo.mp4"
       ></video>
-    </div> -->
+    </div>
     <div class="header"><TopBar></TopBar></div>
     <div ref="container" class="container">
       <LeftBar></LeftBar>
@@ -37,10 +37,10 @@ const video = ref(null)
 const videoWrapper = ref(null)
 const container = ref(null)
 onMounted(() => {
-  // video.value.addEventListener('ended', () => {
-  //   videoWrapper.value.style.display = 'none'
-  //   container.value.style.opacity = '1'
-  // })
+  video.value.addEventListener('ended', () => {
+    videoWrapper.value.style.display = 'none'
+    container.value.style.opacity = '1'
+  })
 })
 </script>
 <style scoped lang="less">

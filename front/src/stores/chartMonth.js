@@ -6,9 +6,6 @@ import { reactive, ref } from 'vue'
 export const useChartMonthStore = defineStore('chartMonth', () => {
   // 定义图表option
   const option = reactive({
-    title: {
-      text: '近15天生产曲线'
-    },
     tooltip: {
       trigger: 'axis',
       axisPointer: {
@@ -41,7 +38,7 @@ export const useChartMonthStore = defineStore('chartMonth', () => {
     xAxis: [
       {
         type: 'category',
-        data: [],
+        data: []
         // minInterval: 4
       },
       {
@@ -56,7 +53,7 @@ export const useChartMonthStore = defineStore('chartMonth', () => {
     ],
     series: [
       {
-        name: '未完成',
+        name: '计划产量',
         type: 'bar',
         emphasis: {
           focus: 'series'
@@ -64,7 +61,7 @@ export const useChartMonthStore = defineStore('chartMonth', () => {
         data: []
       },
       {
-        name: '未完成',
+        name: '计划产量',
         type: 'line',
         data: [],
         xAxisIndex: 1,
@@ -74,7 +71,7 @@ export const useChartMonthStore = defineStore('chartMonth', () => {
         smooth: true
       },
       {
-        name: '已完成',
+        name: '完成产量',
         type: 'bar',
         emphasis: {
           focus: 'series'
@@ -82,7 +79,7 @@ export const useChartMonthStore = defineStore('chartMonth', () => {
         data: []
       },
       {
-        name: '已完成',
+        name: '完成产量',
         type: 'line',
         xAxisIndex: 1,
         data: [],
@@ -118,7 +115,7 @@ export const useChartMonthStore = defineStore('chartMonth', () => {
         getSeriesData(res.data.day_count)
         getxAxisData(res.data.day_count)
         chartSetOption(myChart)
-        console.log(option, 'option')
+        resetOption(myChart)
       })
       .catch((err) => {
         console.log(err, '请求错误')
@@ -160,6 +157,13 @@ export const useChartMonthStore = defineStore('chartMonth', () => {
       }
     })
     resData = res.data.day_count
+  }
+  // 图表重绘
+  const resetOption = (myChart) => {
+    setInterval(() => {
+      myChart.clear()
+      myChart.setOption(option)
+    }, 5000)
   }
   return {
     option,

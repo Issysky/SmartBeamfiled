@@ -2,19 +2,20 @@
 <template>
   <div class="overview-wrapper">
     <div class="overview">
+      <!-- 基本信息 -->
       <Line class="line" :width="'60%'" :label="'项目概况'"></Line>
-      <div class="product-info" v-for="item in yamlData.data" :key="item.label">
-        <img src="" alt="" />
-        <p class="label">{{ item.label + ':' }}</p>
-        <p class="text">{{ item.text }}</p>
+      <div class="product-info" v-for="item in overviewStore.projectInfo.data" :key="item.label">
+        <span class="iconfont" :class="`icon-${item.icon}`"></span>
+        <p class="label">{{ item.title + ':' }}</p>
+        <p class="text">{{ item.content }}</p>
       </div>
-      <div class="beam-info">
-        <img src="" alt="" />
-        <p class="label">制梁任务:</p>
-        <p class="text">1750片</p>
-        <img src="" alt="" />
-        <p class="label">已制梁:</p>
-        <p class="text">865片</p>
+      <!-- 制梁计划 -->
+      <div class="beam-info-wrapper">
+        <div class="beam-info" v-for="(item, index) in overviewStore.planInfo.data" :key="index">
+          <span class="iconfont" :class="item.icon"></span>
+          <p class="label">{{ item.title }}:</p>
+          <p class="text">{{ item.value + '片' }}</p>
+        </div>
       </div>
     </div>
   </div>
@@ -24,27 +25,14 @@
 import { ref, onMounted, onBeforeMount, reactive } from 'vue'
 import { load } from 'js-yaml'
 import Line from '../Line.vue'
+import { useOverviewStore } from '../../stores/overview.js'
 
-const yamlData = reactive({
-  data: [
-    {
-      label: '项目名称',
-      text: '宁上智慧高速'
-    },
-    {
-      label: '项目标段',
-      text: '宁上高速霞浦至福安段A4合同段'
-    },
-    {
-      label: '项目位置',
-      text: '福建省宁德市霞浦县'
-    }
-  ]
-})
+const overviewStore = useOverviewStore()
 
 onMounted(async () => {
-  // const response = await fetch('/src/assets/yaml/screen.yaml')
-  // yamlData.data = load(await response.text()).arr
+  // 获取项目基本信息和制梁计划
+  overviewStore.getProjectInfo()
+  overviewStore.getProjectPlan()
 })
 </script>
 <style scoped lang="less">
@@ -53,11 +41,9 @@ onMounted(async () => {
   height: 26%;
   position: absolute;
   top: 10%;
-  // background-color: #cdd0d6;
-  color:var(--screen-font-color);
+  background-color: var(--screen-card-color);
   border-radius: 15px;
-  // box-shadow: 0px 0px 15px 0px rgba(255, 255, 255, 0.4);
-  border: 1px solid #409EFF;
+  border: 1px solid #409eff;
   .overview {
     width: 100%;
     height: 100%;
@@ -65,60 +51,64 @@ onMounted(async () => {
     align-items: center;
     flex-direction: column;
     padding-top: 2%;
-    .title {
-      width: 90%;
-      color: var(--screen-font-color);
-      font-size: 1.5em;
-      font-weight: bold;
-      margin: 0;
-      display: flex;
-      justify-content: flex-start;
-      margin-bottom: 2%;
-    }
+
     .line {
       margin-left: -30%;
       margin-bottom: 2%;
+      color: var(--font-level-1);
     }
     .product-info {
       width: 100%;
-      height: 15%;
+      height: 20%;
       display: flex;
       align-items: center;
+      color: var(--font-level-2);
       img {
         width: 30px;
         height: 30px;
       }
       p {
-        color: var(--screen-font-color);
         margin: 0;
         font-size: 0.7em;
       }
+      .iconfont {
+        font-size: 1em;
+        margin-left: 5%;
+      }
       .label {
+        margin-left: 2%;
         width: 20%;
       }
       .text {
-        width: 60%;
+        width: 70%;
       }
     }
-    .beam-info {
+    .beam-info-wrapper {
       width: 100%;
       display: flex;
       align-items: center;
-      img {
-        width: 30px;
-        height: 30px;
-      }
-      p {
-        color: var(--screen-font-color);
-        margin: 0;
-        font-size: 0.7em;
-      }
-      .label {
-        width: 18%;
-      }
-      .text {
-        width: 20%;
-        margin-right: 5%;
+      margin-top: 3%;
+      color: var(--font-level-2);
+      .beam-info {
+        width: 50%;
+        display: flex;
+        align-items: center;
+        margin-left: 5%;
+        p {
+          margin: 0;
+          font-size: 0.7em;
+        }
+        .iconfont {
+          font-size: 1em;
+        }
+        .label {
+          width: auto;
+          margin-left: 5%;
+        }
+        .text {
+          width: 20%;
+          margin-right: 5%;
+        }
       }
     }
   }

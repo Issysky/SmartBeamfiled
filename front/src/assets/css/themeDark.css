@@ -1,10 +1,10 @@
 :root {
     /* 应用背景颜色 */
-  --BgColor: #252526;
+  --BgColor: #161d25;
   /* 左侧边栏背景颜色 */
   --LeftNavBgColor: #cfcdcd;
   /* 中间内容区背景颜色 */
-  --MainContentBgColor: #3c3c3c;
+  --MainContentBgColor: #1f1d2a;
   /* 悬浮按钮背景色 */
   --HoverBtnBgColor: #3c3c3c;
   /* 选中按钮背景色 */
@@ -19,6 +19,18 @@
   --label-font-color: #FFF;
   /* 大屏字体颜色 */
   --screen-font-color: #FFF;
+  /* 大屏卡片颜色 */
+  --screen-card-color: #003B6299;
+
+
+
+
+  /* 中性字体色分级 */
+  --font-level-1: #ffffff;
+  --font-level-2: #fafafadd;
+  --font-level-3: #f5f5f5aa;
+  --font-level-4: #f0f0f0;
+  --font-level-5: #d9d9d9;
 
   /* fullCalendar */
   --fc-small-font-size:1.2em;

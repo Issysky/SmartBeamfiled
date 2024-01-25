@@ -12,7 +12,7 @@
       </div>
     </div>
     <div class="data-wrapper">
-      <div class="data" v-for="(item, index) in formBeamStore.tableData.data" :key="index" :style="{backgroundColor:index%2==1?'#99a9bf':''}">
+      <div class="data" v-for="(item, index) in formBeamStore.tableData.data" :key="index" :style="{backgroundColor:index%2==1?'#597ef7':''}">
         <div
           class="data1"
           :title="item.beam_name"
@@ -83,13 +83,14 @@ onMounted(() => {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  color:var(--screen-font-color);
+
   .label-wrapper {
     width: 95%;
     height: 8%;
     display: flex;
     flex-direction: row;
     margin-bottom: 8px;
+    color: var(--font-level-2);
     .label {
       height: 100%;
       display: flex;
@@ -105,14 +106,14 @@ onMounted(() => {
     display: flex;
     flex-direction: column;
     overflow: hidden;
+    color: var(--font-level-3);
     .data {
       width: 100%;
       display: flex;
       border-bottom: 1px solid #000;
-      padding-top: 2px;
-      padding-bottom: 2px;
+      padding-top: 4px;
+      padding-bottom:5px;
       div {
-        font-size: 0.8em;
         overflow: hidden;
         white-space: nowrap;
         text-overflow: ellipsis;

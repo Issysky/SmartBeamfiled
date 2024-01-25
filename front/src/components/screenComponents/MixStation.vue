@@ -13,20 +13,21 @@
   </script>
   <style scoped lang="less">
   .mix-station-wrapper {
-    width: 20%;
-    height: 58%;
+    width: 21%;
+    height: 31%;
     position: absolute;
     right: 2%;
     top:10%;
-    padding-top: 1%;
-    // background-color: #cdd0d6;
+    padding: 1%;
+    background-color: var(--screen-card-color);
     border-radius: 15px;
-    box-shadow: 0px 0px 15px 0px rgba(255, 255, 255, 0.4);
+    // box-shadow: 0px 0px 15px 0px rgba(255, 255, 255, 0.4);
     display: flex;
     flex-direction: column;
     color:var(--screen-font-color);
     .line{
-      padding-left: 8%;
+      padding-left: 3%;
+      margin-bottom: 2%;
     }
   }
   </style>

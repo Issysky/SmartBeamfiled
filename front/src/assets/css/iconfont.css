@@ -1,8 +1,6 @@
 @font-face {
-  font-family: "iconfont"; /* Project id 4407773 */
-  src: url('iconfont.woff2?t=1704961053661') format('woff2'),
-       url('iconfont.woff?t=1704961053661') format('woff'),
-       url('iconfont.ttf?t=1704961053661') format('truetype');
+  font-family: "iconfont"; /* Project id  */
+  src: url('iconfont.ttf?t=1706086749040') format('truetype');
 }
 
 .iconfont {
@@ -13,51 +11,123 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-.icon-template:before {
+.icon-xingzhuang:before {
   content: "\e601";
 }
 
-.icon-steam:before {
+.icon-alarm_chart:before {
   content: "\e602";
 }
 
-.icon-cunliangxinxi:before {
+.icon-alarm_list:before {
   content: "\e603";
 }
 
-.icon-huanjingshuju:before {
+.icon-company_name:before {
   content: "\e604";
 }
 
-.icon-security:before {
+.icon-address:before {
   content: "\e605";
 }
 
-.icon-spreder:before {
+.icon-environment:before {
   content: "\e606";
 }
 
-.icon-mix_station:before {
+.icon-humidity:before {
   content: "\e607";
 }
 
-.icon-pedstal:before {
+.icon-bridging_schedule:before {
   content: "\e608";
 }
 
-.icon-torpedo:before {
+.icon-length:before {
   content: "\e609";
 }
 
-.icon-liangtishuju:before {
+.icon-schedule:before {
   content: "\e60a";
 }
 
-.icon-jihuazhiding:before {
+.icon-complete:before {
   content: "\e60b";
 }
 
-.icon-monitor:before {
+.icon-incomplete:before {
   content: "\e60c";
+}
+
+.icon-lot:before {
+  content: "\e60d";
+}
+
+.icon-set:before {
+  content: "\e60e";
+}
+
+.icon-temperature:before {
+  content: "\e60f";
+}
+
+.icon-save:before {
+  content: "\e610";
+}
+
+.icon-mix_station:before {
+  content: "\e611";
+}
+
+.icon-wind_speed:before {
+  content: "\e612";
+}
+
+.icon-template:before {
+  content: "\e613";
+}
+
+.icon-security:before {
+  content: "\e614";
+}
+
+.icon-steam:before {
+  content: "\e615";
+}
+
+.icon-torpedo:before {
+  content: "\e616";
+}
+
+.icon-beam:before {
+  content: "\e617";
+}
+
+.icon-pedstal:before {
+  content: "\e618";
+}
+
+.icon-plan:before {
+  content: "\e619";
+}
+
+.icon-spreder:before {
+  content: "\e61a";
+}
+
+.icon-monitor:before {
+  content: "\e61b";
+}
+
+.icon-temperature2:before {
+  content: "\e61c";
+}
+
+.icon-humidity2:before {
+  content: "\e61d";
+}
+
+.icon-wind_speed2:before {
+  content: "\e61e";
 }
 

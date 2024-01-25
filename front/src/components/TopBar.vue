@@ -119,16 +119,12 @@ const hideLeftBar = () => {
   mainWrapper.style.marginRight = '2vw'
   mainWrapper.style.marginLeft = '0'
 }
-
 </script>
 <style scoped lang="less">
-main{
-  transition: all 0.3s linear;
-
-  .top-bar {
+.top-bar {
   position: relative;
   width: 100%;
-  height: 50px;
+  height: 70px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -143,7 +139,7 @@ main{
     img {
       height: 80%;
       object-fit: contain;
-      margin-right: 2%  ;
+      margin-right: 2%;
     }
     p {
       color: var(--HeaderFontColor);
@@ -168,30 +164,29 @@ main{
   }
   .nav-wrapper {
     // width: 40%;
-    height: 100%;
+    height: 60%;
     position: relative;
     display: flex;
     justify-content: space-around;
     align-items: center;
     flex-wrap: wrap;
     margin-right: 2%;
-    margin-bottom: -2vh;
     color: var(--HeaderFontColor);
     .nav {
       height: 90%;
-      width: 7vw;
+      width: auto;
+      padding: 0 15px;
       display: flex;
       justify-content: center;
-      align-items: top;
-      font-size: 1.1em;
+      align-items: center;
+      font-size: 1em;
       font-weight: bold;
-      border-radius: 15px 15px 0 0;
       transition: all 0.2s;
+      border-radius: 15px;
       cursor: pointer;
     }
     .active {
-      background-color: var(--MainContentBgColor);
-      box-shadow: 0 -5px 10px -5px #33333366;
+      background-color: #409eff;
     }
   }
   .function-wrapper2 {
@@ -251,8 +246,6 @@ main{
       }
     }
   }
-}
-
 }
 
 .dragable {

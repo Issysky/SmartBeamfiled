@@ -5,18 +5,20 @@
       <div
         class="label"
         v-for="(item, index) in formMixStore.tableData.label"
-        :style="{ width: formMixStore.tableData.width[index] }"
+        :style="{ width: formMixStore.tableData.width[index],marginRight:index==0?'25px':'0' }"
         :key="index"
+        
       >
         {{ item.label }}
       </div>
     </div>
     <div class="data-wrapper">
+      <!-- 只取出前六条数据 -->
       <div
         class="data"
-        v-for="(item, index) in formMixStore.tableData.data.slice(0, 12)"
+        v-for="(item, index) in formMixStore.tableData.data.slice(0, 7)"
         :key="index"
-        :style="{ backgroundColor: index % 2 == 1 ? '#99a9bf' : '' }"
+        :style="{ backgroundColor: index % 2 == 1 ? '#597ef7' : '' }"
       >
         <div class="data1" :title="item.TaskId" :style="{ width: formMixStore.tableData.width[0] }">
           {{ item.TaskId }}
@@ -32,10 +34,11 @@
           class="data3"
           :style="{
             color: getExcessData(item.ExcessGrade).color,
-            width: formMixStore.tableData.width[2]
+            width: formMixStore.tableData.width[2],
+            backgroundImage: getExcessData(item.ExcessGrade).img?`url(${getExcessData(item.ExcessGrade).img})`:'' ,
           }"
         >
-          {{ getExcessData(item.ExcessGrade).text }}
+          {{ getExcessData(item.ExcessGrade).text?getExcessData(item.ExcessGrade).text:'' }}
         </div>
       </div>
     </div>
@@ -52,17 +55,20 @@ const getExcessData = (data) => {
   if (data === 0) {
     return {
       color: '#67C23A',
-      text: '无超标'
+      text: '无',
     }
   } else if (data === 1) {
     return {
-      color: '#E6A23C',
-      text: '一级超标'
+      img:'/src/assets/img/screenImg/数字1.svg'
     }
   } else if (data === 2) {
     return {
+      img:'/src/assets/img/screenImg/数字2.svg'
+    }
+  }else if (data === 3) {
+    return {
       color: '#F56C6C',
-      text: '二级超标'
+      img:'/src/assets/img/screenImg/数字3.svg'
     }
   }
   return {
@@ -82,19 +88,20 @@ onMounted(() => {
   padding-left: 2%;
   color:var(--screen-font-color);
   .label-wrapper {
-    width: 100%;
+    width: 95%;
     height: 8%;
     display: flex;
     flex-direction: row;
     margin-bottom: 2%;
+    color: var(--font-level-2);
     .label {
-      width: 33%;
       height: 100%;
       display: flex;
       justify-content: flex-start;
       align-items: center;
-      font-size: 16px;
+      font-size: .7em;
       font-weight: 600;
+
     }
   }
   .data-wrapper {
@@ -106,25 +113,28 @@ onMounted(() => {
     .data {
       width: 100%;
       display: flex;
-      border-bottom: 1px solid #000;
       padding-bottom: 8px;
       padding-top: 8px;
+      color: var(--font-level-3);
       div {
-        font-size: 0.8em;
+        font-size: 0.6em;
         overflow: hidden;
         white-space: nowrap;
         text-overflow: ellipsis;
         text-align: left;
       }
       .data1 {
-        width: 33%;
-        margin-right: 5px;
+        margin-right: 25px;
+        cursor:default;
       }
       .data2 {
-        width: 33%;
+        cursor:default;
       }
       .data3 {
-        width: 33%;
+        text-align: center;
+        background-repeat:no-repeat ;
+        background-size:contain ;
+        background-position:center;
       }
     }
   }

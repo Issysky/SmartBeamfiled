@@ -24,22 +24,24 @@ const props = defineProps({
 <style scoped lang="less">
 .label-wrapper {
   p {
-    font-size: 1.4em;
+    width: 120px;
+    font-size: 1em;
     font-weight: bold;
     margin: 0;
+    margin-bottom: 10px;
   }
   .line-wrapper {
     display: flex;
     align-items: center;
     .bold {
-      flex: 1;
+      width: 100px;
       height: 3px;
-      background-color: #000;
+      background-color: #37a2da;
     }
     .light {
-      flex: 6;
+      flex: 1;
       height: 1px;
-      background-color: #22222233;
+      background-color: #37a2da33;
     }
   }
 }

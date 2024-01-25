@@ -17,6 +17,7 @@
     <BeamData></BeamData>
     <ProductProgress></ProductProgress>
     <MixStation></MixStation>
+    <productionLine></productionLine>
   </div>
 </template>
 
@@ -31,6 +32,7 @@ import BeamData from '@/components/screenComponents/BeamData.vue'
 import ProductProgress from '@/components/screenComponents/ProductProgress.vue'
 import MixStation from '@/components/screenComponents/MixStation.vue'
 import BorderLineTitle from '@/components/screenComponents/BorderLineTitle.vue'
+import productionLine from '@/components/screenComponents/ProductionLine.vue'
 
 const topBarStore = usetopBarStore()
 const isMax = ref(false)
@@ -55,8 +57,11 @@ onMounted(() => {})
   height: 100%;
   padding-left: 50px;
   padding-right: 50px;
-  padding-bottom: 42px;
+  padding-bottom: 20px;
   position: relative;
+  border-radius: 20px;
+  background-image: linear-gradient(to right top, #06144c, #002c61, #004271, #00587d, #006e86, #197787, #2d8087, #3f8887, #438681, #48847c, #4c8277, #508072);
+  background-size:cover ;
   .fullscreen {
     position: absolute;
     right: 0;

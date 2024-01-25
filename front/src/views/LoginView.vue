@@ -2,6 +2,12 @@
 <template>
   <div class="login-wrapper" ref="loginWrapper">
     <div class="drag"></div>
+    <div class="close" @click="topBarStore.handleClose()">
+      <el-icon><Close /></el-icon>
+    </div>
+    <div class="minimize" @click="topBarStore.handleMini()">
+      <el-icon><Minus /></el-icon>
+    </div>
     <!-- 登陆卡片 -->
     <div class="card-wrapper">
       <!-- 标题框 -->
@@ -32,6 +38,7 @@ import { onMounted, ref } from 'vue'
 import { useUserStore } from '../stores/user.js'
 import { useRouter } from 'vue-router'
 import TopBarLogin from '../components/TopBarLogin.vue'
+import { usetopBarStore } from '@/stores/topBar'
 
 // 定义记住密码参数
 const rememberPwd = ref(false)
@@ -39,6 +46,7 @@ const rememberPwd = ref(false)
 const router = useRouter()
 // 定义userstore
 const userStore = useUserStore()
+const topBarStore = usetopBarStore()
 // 定义用户名和密码
 const username = ref('')
 const pwd = ref('')
@@ -99,6 +107,25 @@ onMounted(() => {
     position: absolute;
     z-index: 1;
     -webkit-app-region: drag;
+  }
+  .close {
+    position: absolute;
+    right: 0;
+    top: 0;
+    z-index: 2;
+    color: var(--label-font-color);
+    -webkit-app-region: no-drag;
+    cursor: pointer;
+  }
+  .minimize {
+    position: absolute;
+    right: 40px;
+    top: 0;
+    color: var(--label-font-color);
+    z-index: 2;
+    -webkit-app-region: no-drag;
+    cursor: pointer;
+
   }
   .card-wrapper {
     position: absolute;

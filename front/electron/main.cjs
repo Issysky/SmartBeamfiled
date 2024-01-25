@@ -13,7 +13,7 @@ spawn('python', ['py/main.py'])
 // dns.resolve('www.baidu.com', function(err) {
 //   if (err) {
 //     console.log("No connection");
-//   } else {
+//   } else {限公司
 //     console.log("Connected");
 //   }
 // });

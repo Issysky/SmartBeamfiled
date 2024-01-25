@@ -39,7 +39,7 @@ onMounted(() => {
   // background-color: #181818;
   p {
     height: 8%;
-    font-size: 2.5em;
+    font-size: 2em;
     font-weight: bold;
     color:var(--screen-font-color) ;
     text-align: center;

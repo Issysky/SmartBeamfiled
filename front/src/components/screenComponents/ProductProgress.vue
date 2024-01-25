@@ -1,7 +1,7 @@
 <!-- 工程进度 -->
 <template>
   <div class="product-process-wrapper">
-    <Line class="line" :width="'80%'" :label="'工程进度'"></Line>
+    <Line class="line" :width="'80%'" :label="'制梁进度'"></Line>
     <div class="chart-wrapper">
       <ChartMonth class="chart"></ChartMonth>
     </div>
@@ -15,16 +15,16 @@ import ChartMonth from '../../components/ChartMonth.vue'
 </script>
 <style scoped lang="less">
 .product-process-wrapper {
-  width: 28%;
+  width: 22%;
   height: 21%;
   position: absolute;
   top: 72%;
 
   padding-top: 1%;
-  // background-color: #cdd0d6;
+  background-color: var(--screen-card-color);
   color:var(--screen-font-color);
   border-radius: 15px;
-  box-shadow: 0px 0px 15px 0px rgba(255, 255, 255, 0.4);
+  // box-shadow: 0px 0px 15px 0px rgba(255, 255, 255, 0.4);
   display: flex;
   flex-direction: column;
   .line {

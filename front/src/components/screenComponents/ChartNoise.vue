@@ -24,7 +24,7 @@ onMounted(() => {
 </script>
 <style scoped lang="less">
 #container {
-  width: 45%;
+  width: 100%;
   height: 100%;
 }
 </style>

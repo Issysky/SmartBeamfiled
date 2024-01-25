@@ -7,7 +7,7 @@ export const useFormMixStore = defineStore('form', () => {
   const tableData = reactive({
     label: [
       {
-        label: '编号',
+        label: '工单号',
         prop: 'TaskId'
       },
       {
@@ -41,7 +41,7 @@ export const useFormMixStore = defineStore('form', () => {
         ExcessGrade: 2
       }
     ],
-    width: ['20%', '55%', '20%']
+    width: ['30%', '45%', '20%']
   })
   const url = '/mixStationData/'
   // 获取最新数据

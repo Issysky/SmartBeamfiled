@@ -2,25 +2,30 @@
 <template>
   <div class="environment-wrapper">
     <Line class="line" :width="'60%'" :label="'环境监测'"></Line>
+    <!-- 仪表盘图表 -->
     <div class="chart-wrapper">
-      <ChartAir></ChartAir>
-      <ChartNoise></ChartNoise>
+      <div class="chart-air">
+        <p class="title">PM2.5</p>
+        <ChartAir></ChartAir>
+      </div>
+      <div class="chart-noise">
+        <p class="title">噪音指数</p>
+        <ChartNoise></ChartNoise>
+      </div>
     </div>
+    <!-- 下方的温湿度风速显示 -->
     <div class="data-wrapper">
       <div class="data">
-        <p class="icon">○</p>
-        <p class="label">温度:</p>
+        <span class="iconfont icon-temperature"></span>
         <p class="value">{{ envData.data.temperature + '℃' }}</p>
       </div>
       <div class="data">
-        <p class="icon">○</p>
-        <p class="label">湿度:</p>
+        <span class="iconfont icon-humidity"></span>
         <p class="value">{{ envData.data.humidity + '%' }}</p>
       </div>
       <div class="data">
-        <p class="icon">○</p>
-        <p class="label">风速:</p>
-        <p class="value">{{ envData.data.wind_speed+'M/s' }}</p>
+        <span class="iconfont icon-wind_speed" ></span>
+        <p class="value">{{ envData.data.wind_speed?envData.data.wind_speed:'10' + 'M/s' }}</p>
       </div>
     </div>
   </div>
@@ -49,27 +54,20 @@ onMounted(async () => {
 <style scoped lang="less">
 .environment-wrapper {
   width: 22%;
-  height: 32%;
+  height: 30%;
   position: absolute;
-  // background-color: #cdd0d6;
+  background-color: var(--screen-card-color);
   top: 38%;
   border-radius: 15px;
-  box-shadow: 0px 0px 15px 0px rgba(255, 255, 255, 0.4);
+  padding-top: 1%;
+  // box-shadow: 0px 0px 15px 0px rgba(255, 255, 255, 0.4);
   display: flex;
   flex-direction: column;
-  color:var(--screen-font-color);
-
-  .title {
-    width: 40%;
-    font-size: 1.5em;
-    font-weight: bold;
-    margin: 0;
-    margin-top: 2%;
-    text-align: center;
-  }
+  
   .line {
     margin-left: 7%;
     margin-bottom: 2%;
+    color: var(--font-level-1);
   }
   .chart-wrapper {
     width: 100%;
@@ -77,14 +75,41 @@ onMounted(async () => {
     margin-top: -2%;
     display: flex;
     justify-content: space-around;
+    color: var(--font-level-2);
+    .chart-air {
+      width: 50%;
+      height: 100%;
+      position: relative;
+      .title{
+        position: absolute;
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 1em;
+      }
+    }
+    .chart-noise {
+      width: 50%;
+      height: 100%;
+      position: relative;
+
+      .title{
+        position: absolute;
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 1em;
+      }
+    }
   }
   .data-wrapper {
     position: absolute;
-    bottom: 0;
+    bottom: 2%;
     width: 100%;
     height: 15%;
     display: flex;
     font-size: 0.8em;
+    color: var(--font-level-2);
     .data {
       flex: 1;
       display: flex;
@@ -93,6 +118,11 @@ onMounted(async () => {
       align-items: center;
       p {
         margin: 0;
+        font-size: 1.3em;
+      }
+      .iconfont {
+        margin-right: 2%;
+        font-size: 1.5em;
       }
     }
   }

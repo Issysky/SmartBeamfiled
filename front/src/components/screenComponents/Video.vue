@@ -1,9 +1,15 @@
 <!-- 大屏中的视频组件 -->
 <template>
   <div class="video-wrapper">
-    <input type="file" id="fileInput" accept="video/*" @change="handleFileChange" />
-    <label for="fileInput" class="custom-file-upload">选择视频</label>
-    <video ref="videoPlayer" controls></video>
+    <div class="video">
+      <div class="left"></div>
+      <div class="content">
+        <input type="file" id="fileInput" accept="video/*" @change="handleFileChange" />
+        <label for="fileInput" class="custom-file-upload">选择视频</label>
+        <video ref="videoPlayer" controls></video>
+      </div>
+      <div class="right"></div>
+    </div>
   </div>
 </template>
 
@@ -12,6 +18,7 @@ import { ref } from 'vue'
 
 const videoPlayer = ref(null)
 
+// 选择播放视频
 function handleFileChange(event) {
   const file = event.target.files[0]
   if (file) {
@@ -23,38 +30,65 @@ function handleFileChange(event) {
 
 <style scoped lang="less">
 .video-wrapper {
-  width: 51%;
-  height: 60%;
+  width: 52%;
+  height: 59%;
   position: absolute;
   // background-color: #fff;
-  top: 10%;
-  right: 23%;
-  video {
-    position: absolute;
-    border-radius: 20px;
-    overflow: hidden;
+  top: 12%;
+  right: 24%;
+  .video {
     width: 100%;
     height: 100%;
-    top: 50%;
-    left: 50%;
-    background-color: #000;
-    transform: translateX(-50%) translateY(-50%);
-  }
-  input {
-    visibility: hidden;
-  }
-  .custom-file-upload {
-    display: inline-block;
-    font-size: 0.6em;
-    background-color: #4caf50;
-    color: white;
-    cursor: pointer;
-    border-radius: 5px;
-    text-align: center;
-    width: 80px;
-    position: absolute;
-    top: -5%;
-    right: 5px;
+    display: flex;
+    justify-content: center;
+    .left {
+      width: 7%;
+      height: 100%;
+      background-color: #fff;
+      background: url(../../assets/img/screenImg/视频装饰线.png);
+      background-position: right;
+      background-repeat: no-repeat;
+      background-size: contain;
+    }
+    .content {
+      height: 90%;
+      flex: 1;
+      // visibility: hidden;
+      video {
+        border-radius: 20px;
+        overflow: hidden;
+        width: 100%;
+        height: 100%;
+        background-color: #000;
+      }
+      input {
+        visibility: hidden;
+      }
+      .custom-file-upload {
+        display: inline-block;
+        font-size: 0.6em;
+        background-color: #4caf50;
+        color: white;
+        cursor: pointer;
+        border-radius: 5px;
+        text-align: center;
+        width: 80px;
+        position: absolute;
+        top: -5%;
+        right: 5px;
+      }
+    }
+    .right{
+      width: 7%;
+      height: 100%;
+      background-color: #fff;
+      background: url(../../assets/img/screenImg/视频装饰线.png);
+      background-position: right;
+      background-repeat: no-repeat;
+      background-size: contain;
+      transform: rotate(180deg);
+
+    }
   }
 }
 </style>

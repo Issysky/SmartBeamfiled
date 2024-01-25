@@ -61,17 +61,16 @@ onMounted(async () => {
 </script>
 <style scoped lang="less">
 .news-wrapper {
-  width: 18%;
+  width: 21%;
   height: 21%;
   position: absolute;
   top: 72%;
   right: 2%;
   padding-left: 2%;
   padding-top: 1%;
-  // background-color: #cdd0d6;
-  color:var(--screen-font-color);
+  background-color: var(--screen-card-color);
+  color: var(--screen-font-color);
   border-radius: 15px;
-  box-shadow: 0px 0px 15px 0px rgba(255, 255, 255, 0.4);
   display: flex;
   flex-direction: column;
 
@@ -104,6 +103,7 @@ onMounted(async () => {
         font-size: 0.8em;
         font-weight: 600;
         display: flex;
+        color: var(--font-level-2);
         .title {
           width: 65%;
           display: -webkit-box;
@@ -121,7 +121,7 @@ onMounted(async () => {
         }
       }
       .content {
-        width: 100%;
+        width: 70%;
         font-size: 0.6em;
         .memo {
           display: -webkit-box;
@@ -129,6 +129,7 @@ onMounted(async () => {
           -webkit-box-orient: vertical;
           overflow: hidden;
           text-overflow: ellipsis;
+          color: var(--font-level-3);
         }
       }
     }
