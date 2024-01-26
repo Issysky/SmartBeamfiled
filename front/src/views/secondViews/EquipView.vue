@@ -11,6 +11,8 @@
 .equip-wrapper {
   width: 100%;
   height: 100%;
+  background-color: var(--MainContentBgColor);
+  border-radius: 15px;
   h1{
     height: 8%;
     margin: 0;

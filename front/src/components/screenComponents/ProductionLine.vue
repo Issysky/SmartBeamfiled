@@ -14,9 +14,9 @@ import chartProductionLine from './chartProductionLine.vue'
 <style scoped lang="less">
 .product-line-wrapper {
   width: 21%;
-  height: 22%;
+  height: 30%;
   position: absolute;
-  top: 46%;
+  top: 38%;
   right: 2%;
   padding-left: 2%;
   padding-top: 1%;

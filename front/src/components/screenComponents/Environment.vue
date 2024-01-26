@@ -15,17 +15,17 @@
     </div>
     <!-- 下方的温湿度风速显示 -->
     <div class="data-wrapper">
-      <div class="data">
+      <div class="data tem">
         <span class="iconfont icon-temperature"></span>
         <p class="value">{{ envData.data.temperature + '℃' }}</p>
       </div>
-      <div class="data">
+      <div class="data hum">
         <span class="iconfont icon-humidity"></span>
         <p class="value">{{ envData.data.humidity + '%' }}</p>
       </div>
-      <div class="data">
-        <span class="iconfont icon-wind_speed" ></span>
-        <p class="value">{{ envData.data.wind_speed?envData.data.wind_speed:'10' + 'M/s' }}</p>
+      <div class="data wind">
+        <span class="iconfont icon-wind_speed"></span>
+        <p class="value">{{ envData.data.wind_speed ? envData.data.wind_speed : '10' + 'M/s' }}</p>
       </div>
     </div>
   </div>
@@ -63,7 +63,7 @@ onMounted(async () => {
   // box-shadow: 0px 0px 15px 0px rgba(255, 255, 255, 0.4);
   display: flex;
   flex-direction: column;
-  
+
   .line {
     margin-left: 7%;
     margin-bottom: 2%;
@@ -77,25 +77,25 @@ onMounted(async () => {
     justify-content: space-around;
     color: var(--font-level-2);
     .chart-air {
-      width: 50%;
+      width: 40%;
       height: 100%;
       position: relative;
-      .title{
+      .title {
         position: absolute;
-        top: 0;
+        top: -4%;
         left: 50%;
         transform: translateX(-50%);
         font-size: 1em;
       }
     }
     .chart-noise {
-      width: 50%;
+      width: 40%;
       height: 100%;
       position: relative;
 
-      .title{
+      .title {
         position: absolute;
-        top: 0;
+        top: -4%;
         left: 50%;
         transform: translateX(-50%);
         font-size: 1em;
@@ -108,22 +108,36 @@ onMounted(async () => {
     width: 100%;
     height: 15%;
     display: flex;
+    justify-content: space-evenly;
+    align-items: center;
     font-size: 0.8em;
     color: var(--font-level-2);
     .data {
-      flex: 1;
+      width: 24%;
       display: flex;
-      height: 100%;
+      height: 60%;
       justify-content: center;
       align-items: center;
+      border-radius: 20px;
       p {
         margin: 0;
-        font-size: 1.3em;
+        font-size: 0.9em;
+        color: var(--font-level-11);
       }
       .iconfont {
         margin-right: 2%;
-        font-size: 1.5em;
+        font-size: 1.2em;
+        color: var(--font-level-11);
       }
+    }
+    .tem {
+      background-color: #f7ea8e;
+    }
+    .hum {
+      background-color: #b0edef;
+    }
+    .wind {
+      background-color: #aefdae;
     }
   }
 }

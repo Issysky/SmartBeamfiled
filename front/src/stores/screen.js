@@ -19,10 +19,10 @@ export const useScreenStore = defineStore('screen', () => {
       legend: {
         orient: 'vertical',
         left: 'left',
-        textStyle:{
-          color:'#fafafa',
+        textStyle: {
+          color: '#fafafa'
         },
-        top:'10%'
+        top: '10%'
       },
       series: [
         {
@@ -31,11 +31,30 @@ export const useScreenStore = defineStore('screen', () => {
           radius: '70%',
           left: '30%',
           data: [
-            { value: 10, name: '一号生产线', label: { color: '#fafafa' } },
-            { value: 30, name: '二号生产线', label: { color: '#fafafa' } },
-            { value: 50, name: '三号生产线', label: { color: '#fafafa' } },
-            { value: 10, name: '四号生产线', label: { color: '#fafafa' } },
-            { value: 70, name: '五号生产线', label: { color: '#fafafa' } }
+            {
+              value: 10,
+              name: '一号生产线',
+              label: { color: '#f7ea8e' },
+              itemStyle: { color: '#f7ea8e' }
+            },
+            {
+              value: 30,
+              name: '二号生产线',
+              label: { color: '#b0edef' },
+              itemStyle: { color: '#b0edef' }
+            },
+            {
+              value: 50,
+              name: '三号生产线',
+              label: { color: '#aefdae' },
+              itemStyle: { color: '#aefdae' }
+            },
+            {
+              value: 10,
+              name: '四号生产线',
+              label: { color: '#F1B2B2' },
+              itemStyle: { color: '#F1B2B2' }
+            }
           ],
           emphasis: {
             itemStyle: {

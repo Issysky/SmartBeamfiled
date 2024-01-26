@@ -76,14 +76,14 @@ onMounted(async () => {
 
   .news {
     width: 95%;
-    height: 82%;
+    height: 140px;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     list-style: none;
     overflow: hidden;
     margin: 0;
-    padding: 0;
+    padding: 0 0 5% 0;
 
     li {
       width: 100%;
@@ -100,7 +100,7 @@ onMounted(async () => {
       }
       .label {
         width: 100%;
-        font-size: 0.8em;
+        font-size: 0.7em;
         font-weight: 600;
         display: flex;
         color: var(--font-level-2);
@@ -122,7 +122,7 @@ onMounted(async () => {
       }
       .content {
         width: 70%;
-        font-size: 0.6em;
+        font-size: 0.5em;
         .memo {
           display: -webkit-box;
           -webkit-line-clamp: 1;

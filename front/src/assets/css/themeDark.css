@@ -4,7 +4,7 @@
   /* 左侧边栏背景颜色 */
   --LeftNavBgColor: #cfcdcd;
   /* 中间内容区背景颜色 */
-  --MainContentBgColor: #1f1d2a;
+  --MainContentBgColor: #24263a;
   /* 悬浮按钮背景色 */
   --HoverBtnBgColor: #3c3c3c;
   /* 选中按钮背景色 */
@@ -20,7 +20,7 @@
   /* 大屏字体颜色 */
   --screen-font-color: #FFF;
   /* 大屏卡片颜色 */
-  --screen-card-color: #003B6299;
+  --screen-card-color: #24263a;
 
 
 
@@ -31,6 +31,14 @@
   --font-level-3: #f5f5f5aa;
   --font-level-4: #f0f0f0;
   --font-level-5: #d9d9d9;
+  --font-level-6: #bfbfbf;
+  --font-level-7: #8c8c8c;
+  --font-level-8: #595959;
+  --font-level-9: #434343;
+  --font-level-10: #262626;
+  --font-level-11: #1f1f1f;
+  --font-level-12: #141414;
+  --font-level-13: #000000;
 
   /* fullCalendar */
   --fc-small-font-size:1.2em;

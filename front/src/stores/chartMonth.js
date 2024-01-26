@@ -27,7 +27,12 @@ export const useChartMonthStore = defineStore('chartMonth', () => {
         )
       }
     },
-    legend: {},
+    legend: {
+      right:'1',
+      textStyle: {
+        color: '#fafafadd'
+      },
+    },
     grid: {
       left: '0%',
       right: '0%',
@@ -58,7 +63,10 @@ export const useChartMonthStore = defineStore('chartMonth', () => {
         emphasis: {
           focus: 'series'
         },
-        data: []
+        data: [],
+        itemStyle: {
+          color: '#E36255'
+        }
       },
       {
         name: '计划产量',
@@ -68,7 +76,13 @@ export const useChartMonthStore = defineStore('chartMonth', () => {
         emphasis: {
           focus: 'series'
         },
-        smooth: true
+        smooth: true,
+        lineStyle: {
+          color: '#E36255'
+        },
+        itemStyle:{
+          color: '#E36255'
+        }
       },
       {
         name: '完成产量',
@@ -76,7 +90,10 @@ export const useChartMonthStore = defineStore('chartMonth', () => {
         emphasis: {
           focus: 'series'
         },
-        data: []
+        data: [],
+        itemStyle: {
+          color: '#AEFDAE'
+        }
       },
       {
         name: '完成产量',
@@ -86,7 +103,13 @@ export const useChartMonthStore = defineStore('chartMonth', () => {
         emphasis: {
           focus: 'series'
         },
-        smooth: true
+        smooth: true,
+        lineStyle: {
+          color: '#AEFDAE'
+        },
+        itemStyle: {
+          color:'#AEFDAE'
+        }
       }
     ]
   })

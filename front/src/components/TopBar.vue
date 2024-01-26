@@ -104,7 +104,7 @@ const showLeftBar = () => {
   // 把主要内容区域设置为占据右侧
   mainWrapper.style.width = ''
   mainWrapper.style.marginRight = '4vw'
-  mainWrapper.style.marginLeft = '8px'
+  mainWrapper.style.marginLeft = '40px'
 }
 const hideLeftBar = () => {
   // 获取左侧边栏元素和主要内容区域元素

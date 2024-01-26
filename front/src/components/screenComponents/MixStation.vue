@@ -14,7 +14,7 @@
   <style scoped lang="less">
   .mix-station-wrapper {
     width: 21%;
-    height: 31%;
+    height: 22%;
     position: absolute;
     right: 2%;
     top:10%;

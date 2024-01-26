@@ -36,12 +36,12 @@ const props = defineProps({
     .bold {
       width: 100px;
       height: 3px;
-      background-color: #37a2da;
+      background-color: #f7ea8e;
     }
     .light {
       flex: 1;
       height: 1px;
-      background-color: #37a2da33;
+      background-color: #f7ea8e33;
     }
   }
 }

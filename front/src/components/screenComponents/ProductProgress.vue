@@ -19,7 +19,6 @@ import ChartMonth from '../../components/ChartMonth.vue'
   height: 21%;
   position: absolute;
   top: 72%;
-
   padding-top: 1%;
   background-color: var(--screen-card-color);
   color:var(--screen-font-color);
@@ -32,7 +31,9 @@ import ChartMonth from '../../components/ChartMonth.vue'
   }
   .chart-wrapper {
     width: 100%;
-    height: 80%;
+    height: 100%;
+    position: absolute;
+    top:0;
     .chart {
       height: 100%;
     }

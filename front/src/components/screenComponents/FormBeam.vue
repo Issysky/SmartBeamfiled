@@ -8,11 +8,21 @@
         :style="{ width: formBeamStore.tableData.width[index] }"
         :key="index"
       >
-        {{ item.label }}
+        <p>
+          {{ item.label }}
+        </p>
       </div>
     </div>
     <div class="data-wrapper">
-      <div class="data" v-for="(item, index) in formBeamStore.tableData.data" :key="index" :style="{backgroundColor:index%2==1?'#597ef7':''}">
+      <div
+        class="data"
+        v-for="(item, index) in formBeamStore.tableData.data.slice(0, 5)"
+        :key="index"
+        :style="{
+          backgroundColor: index % 2 == 1 ? '#333546' : '',
+          color: index % 2 == 1 ? '#fff' : ''
+        }"
+      >
         <div
           class="data1"
           :title="item.beam_name"
@@ -86,11 +96,15 @@ onMounted(() => {
 
   .label-wrapper {
     width: 95%;
-    height: 8%;
+    height: 10%;
     display: flex;
     flex-direction: row;
-    margin-bottom: 8px;
-    color: var(--font-level-2);
+    padding-top: 3px;
+    padding-bottom: 3px;
+    color: var(--font-level-11);
+    background-color: #b0edef;
+    color: #333546;
+    border-radius: 7px;
     .label {
       height: 100%;
       display: flex;
@@ -110,9 +124,9 @@ onMounted(() => {
     .data {
       width: 100%;
       display: flex;
-      border-bottom: 1px solid #000;
       padding-top: 4px;
-      padding-bottom:5px;
+      padding-bottom: 5px;
+      border-radius: 10px;
       div {
         overflow: hidden;
         white-space: nowrap;

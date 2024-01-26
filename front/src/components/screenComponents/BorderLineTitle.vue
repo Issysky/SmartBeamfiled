@@ -1,12 +1,12 @@
 <!-- 大屏标题带边框线 -->
 <template>
   <div class="border-wrapper">
-    <p>智慧梁场管理大屏</p>
-    <div class="bottom-line">
+    <p>智慧信息可视化大屏</p>
+    <!-- <div class="bottom-line">
       <div ref="line1" class="line1"></div>
       <div ref="line2" class="line2"></div>
       <div ref="line3" class="line3"></div>
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -18,16 +18,16 @@ const line2 = ref(null)
 const line3 = ref(null)
 
 onMounted(() => {
-  setTimeout(() => {
-    line1.value.style.width = '895px'
-    setTimeout(() => {
-      line2.value.style.width = '35px'
-      line2.value.style.height = '2px'
-      setTimeout(() => {
-        line3.value.style.height = '30px'
-      }, 100);
-    }, 690)
-  }, 300)
+  // setTimeout(() => {
+  //   line1.value.style.width = '895px'
+  //   setTimeout(() => {
+  //     line2.value.style.width = '35px'
+  //     line2.value.style.height = '2px'
+  //     setTimeout(() => {
+  //       line3.value.style.height = '30px'
+  //     }, 100);
+  //   }, 690)
+  // }, 300)
 })
 </script>
 <style scoped lang="less">
@@ -44,6 +44,8 @@ onMounted(() => {
     color:var(--screen-font-color) ;
     text-align: center;
     margin: 0;
+    letter-spacing: 15px;
+    line-height: 2;
   }
   .bottom-line {
     position: relative;

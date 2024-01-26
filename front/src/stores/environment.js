@@ -18,10 +18,10 @@ export const useEnvStore = defineStore('env', () => {
             lineStyle: {
               width: 15,
               color: [
-                [0.14, '#67e0e3'],
-                [0.3, '#37a2da'],
-                [0.7, '#E6A23C'],
-                [1, '#fd666d']
+                [0.14, '#aefdae'],
+                [0.3, '#b0edef'],
+                [0.7, '#f7ea8e'],
+                [1, '#F1B2B2']
               ]
             }
           },
@@ -40,14 +40,14 @@ export const useEnvStore = defineStore('env', () => {
           },
           splitLine: {
             distance: -15,
-            length: 10,
+            length:7,
             lineStyle: {
               color: '#fff',
               width: 3
             }
           },
           axisLabel: {
-            color: '#464646',
+            color: '#fafafadd',
             distance: -8,
             fontSize: 12,
             rotate: 'tangential',
@@ -67,18 +67,19 @@ export const useEnvStore = defineStore('env', () => {
 
           data: [
             {
-              name: 'PM2.5',
+              name: '',
               title: {
                 show: true,
                 fontSize: 8,
-                offsetCenter: [0, '45%']
+                offsetCenter: [0, '45%'],
+                color:'#fafafadd'
               },
               value: 60,
               detail: {
                 distance: -60,
                 valueAnimation: true,
                 formatter: '{value} μg/m3',
-                color: '#464646',
+                color: '#fafafadd',
                 offsetCenter: [0, '60%'],
                 fontSize: 8
               }
@@ -102,9 +103,9 @@ export const useEnvStore = defineStore('env', () => {
             lineStyle: {
               width: 15,
               color: [
-                [0.33, '#67e0e3'],
-                [0.66, '#37a2da'],
-                [1, '#ff0000']
+                [0.33, '#aefdae'],
+                [0.66, '#f7ea8e'],
+                [1, '#F1B2B2']
               ]
             }
           },
@@ -123,14 +124,14 @@ export const useEnvStore = defineStore('env', () => {
           },
           splitLine: {
             distance: -15,
-            length: 10,
+            length: 7,
             lineStyle: {
               color: '#fff',
               width: 3
             }
           },
           axisLabel: {
-            color: '#464646',
+            color: '#fafafadd',
             distance: -8,
             fontSize: 12,
             rotate: 'tangential',
@@ -146,18 +147,19 @@ export const useEnvStore = defineStore('env', () => {
 
           data: [
             {
-              name: '噪音等级',
+              name: '',
               title: {
                 show: true,
                 fontSize: 8,
-                offsetCenter: [0, '45%']
+                offsetCenter: [0, '45%'],
+                color:'#fafafadd'
               },
               value: 60,
               detail: {
                 distance: -60,
                 valueAnimation: true,
                 formatter: '{value} 分贝',
-                color: '#464646',
+                color: '#fafafadd',
                 offsetCenter: [0, '60%'],
                 fontSize: 8
               }
