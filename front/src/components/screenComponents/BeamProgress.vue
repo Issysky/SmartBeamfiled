@@ -7,7 +7,16 @@
     </div>
     <div class="progress">
       <div class="total">
-        <div class="complate" :style="{ width: getComplate(),backgroundColor:props.color }"></div>
+        <div
+          class="complate"
+          :style="{
+            width: isProgress ? getComplate() : '0',
+            backgroundColor: props.color,
+            transition: isProgress ? 'all 0.5s ease-in-out' : 'none'
+          }"
+        >
+          <div class="light"></div>
+        </div>
       </div>
       <div class="value">{{ complate + '/' + total + '片' }}</div>
     </div>
@@ -15,7 +24,9 @@
 </template>
 
 <script setup lang="js">
-import { defineProps } from 'vue'
+import { ref, defineProps, onMounted } from 'vue'
+let isProgress = ref(false)
+
 const props = defineProps({
   total: {
     default: 0
@@ -37,6 +48,16 @@ const props = defineProps({
 const getComplate = () => {
   return (props.complate / props.total) * 100 + '%'
 }
+
+onMounted(() => {
+  isProgress.value = true
+  setInterval(() => {
+    isProgress.value = false
+    setTimeout(() => {
+      isProgress.value = true
+    }, 100)
+  }, 6000)
+})
 </script>
 <style scoped lang="less">
 .beam-progress-wrapper {
@@ -54,8 +75,8 @@ const getComplate = () => {
     justify-content: center;
     align-items: center;
     padding-right: 6%;
-    .iconfont{
-        margin-right: 10%;
+    .iconfont {
+      margin-right: 10%;
     }
   }
   .progress {
@@ -70,11 +91,40 @@ const getComplate = () => {
       width: 100%;
       overflow: hidden;
       border-radius: 15px;
+
       .complate {
+        position: relative;
         width: 50%;
         height: 100%;
-        // background-color: #f7ea8e;
         border-radius: 15px;
+        overflow: hidden;
+        transition: all 0.5s ease-in-out;
+        .light {
+          position: absolute;
+          left: 0;
+          top: 0;
+          width: 30%;
+          height: 100%;
+          background: linear-gradient(
+            to right,
+            #ffffff33,
+            #ffffff77,
+            #ffffff99,
+            #ffffffcc,
+            #ffffff99,
+            #ffffff77,
+            #ffffff33
+          );
+          animation: slide 1.2s ease-in-out infinite;
+        }
+        @keyframes slide {
+          0% {
+            left: -20%;
+          }
+          100% {
+            left: 100%;
+          }
+        }
       }
     }
     .value {

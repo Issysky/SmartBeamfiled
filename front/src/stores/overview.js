@@ -11,44 +11,77 @@ export const useOverviewStore = defineStore('overview', () => {
   const planInfo = reactive({
     data: []
   })
+
+  const online = localStorage.getItem('online') === 'online'
   //   项目信息
   const infoUrl = '/projectInfo/1/'
   //   项目制梁计划
   const planUrl = '/projectBeamInfo/'
   //   获取项目基础信息
   const getProjectInfo = async () => {
-    const res = await axios.get(infoUrl, {
-      headers: { Authorization: localStorage.getItem('token') }
-    })
-    let tempdata = []
-    for (let i = 1; i <= 5; i++) {
-      if (res.data[`info${i}_title`] && res.data[`info${i}_content`] && res.data[`info${i}_img`]) {
-        tempdata.push({
-          title: res.data[`info${i}_title`],
-          content: res.data[`info${i}_content`],
-          icon: res.data[`info${i}_img`]
-        })
+    getProjectInfoFromLocalStorage()
+    // 在线情况
+    if (online) {
+      console.log('overview在线',online)
+      const res = await axios.get(infoUrl, {
+        headers: { Authorization: localStorage.getItem('token') }
+      })
+      let tempdata = []
+      for (let i = 1; i <= 5; i++) {
+        if (
+          res.data[`info${i}_title`] &&
+          res.data[`info${i}_content`] &&
+          res.data[`info${i}_img`]
+        ) {
+          tempdata.push({
+            title: res.data[`info${i}_title`],
+            content: res.data[`info${i}_content`],
+            icon: res.data[`info${i}_img`]
+          })
+        }
       }
+      projectInfo.data = tempdata
+      localStorage.setItem('projectInfo', JSON.stringify(projectInfo.data))
     }
-    projectInfo.data = tempdata
   }
   //   获取项目制梁计划
   const getProjectPlan = async () => {
-    const res = await axios.get(planUrl, {
-      headers: { Authorization: localStorage.getItem('token') }
-    })
-    let data = []
-    data.push({
-      title: '制梁任务',
-      value: res.data.beamDataCount,
-      icon: 'icon-incomplete'
-    })
-    data.push({
-      title: '已制梁',
-      value: res.data.beamDataUnfinishedCount,
-      icon: 'icon-complete'
-    })
-    planInfo.data = data
+    getProjectPlanFromLocalStorage()
+    // 在线情况
+    if (online) {
+      console.log('overview在线')
+      const res = await axios.get(planUrl, {
+        headers: { Authorization: localStorage.getItem('token') }
+      })
+      let data = {
+        title: '制梁任务',
+        total: res.data.beamDataCount,
+        beamValue: res.data.beamDataUnfinishedCount,
+        bridgeValue: res.data.beamDataBridgeCount,
+        iconBeam: 'icon-incomplete',
+        iconBridge: 'icon-complete'
+      }
+      planInfo.data = data
+      localStorage.setItem('planInfo', JSON.stringify(planInfo.data))
+    }
+  }
+  // 获取存储在localStorage中的信息,如果有网就存入,没网就获取
+  const getProjectInfoFromLocalStorage = () => {
+    if (!online) {
+      console.log('overview离线')
+      const data = localStorage.getItem('projectInfo')
+      if (data) {
+        projectInfo.data = JSON.parse(data)
+      }
+    }
+  }
+  const getProjectPlanFromLocalStorage = () => {
+    if (!online) {
+      const data = localStorage.getItem('planInfo')
+      if (data) {
+        planInfo.data = JSON.parse(data)
+      }
+    }
   }
   return { projectInfo, getProjectInfo, getProjectPlan, planInfo }
 })

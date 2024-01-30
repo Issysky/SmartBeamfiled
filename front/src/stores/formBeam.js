@@ -55,25 +55,35 @@ export const useFormBeamStore = defineStore('beam', () => {
     ],
     width: ['15%', '10%', '17%', '17%', '17%', '17%']
   })
+  // 在线状态
+  const online = localStorage.getItem('online') === 'online'
   const url = '/produced_beam/'
   // 获取最新数据
   const getTableData = async () => {
-    const res = await axios.get(url, {
-      params: { type: 'screen' },
-      headers: { Authorization: localStorage.getItem('token') }
-    })
-    res.data.forEach((item) => {
-      item.bind_start_time = handleTime(item.bind_start_time)
-      item.steam_start_time = handleTime(item.steam_start_time)
-      item.steam_end_time = handleTime(item.steam_end_time)
-      item.grouting_end_time = handleTime(item.grouting_end_time)
-    })
-    tableData.data = res.data
+    if(!online){
+      const data = JSON.parse(localStorage.getItem('formBeamData'))
+      tableData.data = data
+      console.log(tableData.data)
+    }
+    if (online) {
+      const res = await axios.get(url, {
+        params: { type: 'screen' },
+        headers: { Authorization: localStorage.getItem('token') }
+      })
+      res.data.forEach((item) => {
+        item.bind_start_time = handleTime(item.bind_start_time)
+        item.steam_start_time = handleTime(item.steam_start_time)
+        item.steam_end_time = handleTime(item.steam_end_time)
+        item.grouting_end_time = handleTime(item.grouting_end_time)
+      })
+      tableData.data = res.data
+      localStorage.setItem('formBeamData', JSON.stringify(tableData.data))
+    }
   }
 
   // 处理时间
   const handleTime = (time) => {
-    const hourtime = time.split('T')[1] 
+    const hourtime = time.split('T')[1]
     const fulltime = time.split('T').join(' ').substring(5, 19)
     return fulltime
   }

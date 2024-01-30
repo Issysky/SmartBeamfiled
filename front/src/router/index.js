@@ -11,6 +11,11 @@ const router = createRouter({
     },
     // 登录成功跳转首页
     {
+      path: '/startVideo',
+      name: 'startVideo',
+      component: () => import('../views/StartVideoView.vue')
+    },
+    {
       path: '/home',
       name: 'home',
       component: () => import('../views/HomeView.vue'),

@@ -1,6 +1,6 @@
 <!-- 大屏中的视频组件 -->
 <template>
-  <div class="video-wrapper">
+  <div class="video-wrapper" :style="{ opacity: show ? '1' : '0' }">
     <div class="video">
       <div class="left"></div>
       <div class="content">
@@ -14,9 +14,11 @@
 </template>
 
 <script setup lang="js">
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 
 const videoPlayer = ref(null)
+
+let show = ref(false)
 
 // 选择播放视频
 function handleFileChange(event) {
@@ -26,6 +28,11 @@ function handleFileChange(event) {
     videoPlayer.value.src = url
   }
 }
+onMounted(() => {
+  setTimeout(() => {
+    show.value = true
+  }, 1000)
+})
 </script>
 
 <style scoped lang="less">
@@ -36,6 +43,7 @@ function handleFileChange(event) {
   // background-color: #fff;
   top: 12%;
   right: 24%;
+  transition: var(--screen-card-transition);
   .video {
     width: 100%;
     height: 100%;
@@ -49,6 +57,7 @@ function handleFileChange(event) {
       background-position: right;
       background-repeat: no-repeat;
       background-size: contain;
+      opacity: 0.6;
     }
     .content {
       height: 90%;
@@ -60,6 +69,7 @@ function handleFileChange(event) {
         width: 100%;
         height: 100%;
         background-color: #000;
+        box-shadow: var(--screen-card-shadow);
       }
       input {
         visibility: hidden;
@@ -78,7 +88,7 @@ function handleFileChange(event) {
         right: 5px;
       }
     }
-    .right{
+    .right {
       width: 7%;
       height: 100%;
       background-color: #fff;
@@ -87,7 +97,7 @@ function handleFileChange(event) {
       background-repeat: no-repeat;
       background-size: contain;
       transform: rotate(180deg);
-
+      opacity: 0.6;
     }
   }
 }

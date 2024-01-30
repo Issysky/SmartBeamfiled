@@ -35,7 +35,9 @@ const changeMonth = (type) => {
 onMounted(() => {
   month = date.getMonth() + 1
   myChart = echarts.init(chart.value)
-  chartMonthStore.getChartData(myChart, monthValue.value)
+  setTimeout(() => {
+    chartMonthStore.getChartData(myChart, monthValue.value)
+  }, 1600)
   window.addEventListener('resize', () => {
     myChart.resize()
   })

@@ -28,10 +28,10 @@ export const useChartMonthStore = defineStore('chartMonth', () => {
       }
     },
     legend: {
-      right:'1',
+      right: '1',
       textStyle: {
         color: '#fafafadd'
-      },
+      }
     },
     grid: {
       left: '0%',
@@ -80,7 +80,7 @@ export const useChartMonthStore = defineStore('chartMonth', () => {
         lineStyle: {
           color: '#E36255'
         },
-        itemStyle:{
+        itemStyle: {
           color: '#E36255'
         }
       },
@@ -108,13 +108,18 @@ export const useChartMonthStore = defineStore('chartMonth', () => {
           color: '#AEFDAE'
         },
         itemStyle: {
-          color:'#AEFDAE'
+          color: '#AEFDAE'
         }
       }
     ]
   })
   // 定义已完成数据
   let resData = {}
+  let chartMonthData = reactive({
+    data: {}
+  })
+  // 在线状态
+  const online = localStorage.getItem('online') === 'online'
   // 定义请求地址
   const url = '/beam_plan/'
   const url2 = '/finished_beam/'
@@ -124,8 +129,10 @@ export const useChartMonthStore = defineStore('chartMonth', () => {
   }
   //   获取图表数据
   const getChartData = async (myChart) => {
-    await axios
-      .get(url, {
+    getChartDataFromLocalStorage(myChart)
+    if (online) {
+      console.log('chartMonth在线')
+      const res = await axios.get(url, {
         params: {
           latest_data: 'true'
         },
@@ -133,16 +140,10 @@ export const useChartMonthStore = defineStore('chartMonth', () => {
           Authorization: localStorage.getItem('token')
         }
       })
-      .then((res) => {
-        getFinishedData()
-        getSeriesData(res.data.day_count)
-        getxAxisData(res.data.day_count)
-        chartSetOption(myChart)
-        resetOption(myChart)
-      })
-      .catch((err) => {
-        console.log(err, '请求错误')
-      })
+      chartMonthData.data = res.data
+      localStorage.setItem('chartMonthData', JSON.stringify(chartMonthData.data))
+      getFinishedData(myChart)
+    }
   }
   // 获取option的xAxis数据
   const getxAxisData = (data) => {
@@ -160,6 +161,7 @@ export const useChartMonthStore = defineStore('chartMonth', () => {
     }
     option.series[0].data = arr
     option.series[1].data = arr
+    arr = []
     for (let key in resData) {
       arr.push(resData[key])
     }
@@ -170,23 +172,50 @@ export const useChartMonthStore = defineStore('chartMonth', () => {
     option.series[3].data = option.series[3].data.map((item, index) => [index * 100 + 70, item])
   }
   // 获取已完成数据
-  const getFinishedData = async () => {
-    const res = await axios.get(url2, {
-      params: {
-        type: 'latest'
-      },
-      headers: {
-        Authorization: localStorage.getItem('token')
-      }
-    })
-    resData = res.data.day_count
+  const getFinishedData = async (myChart) => {
+    if (!online) {
+      const data = localStorage.getItem('chartMonthResData')
+      resData = JSON.parse(data)
+    }
+    if (online) {
+      const res = await axios.get(url2, {
+        params: {
+          type: 'latest'
+        },
+        headers: {
+          Authorization: localStorage.getItem('token')
+        }
+      })
+      resData = res.data
+      localStorage.setItem('chartMonthResData', JSON.stringify(resData))
+    }
+    getSeriesData(chartMonthData.data.day_count)
+    getxAxisData(chartMonthData.data.day_count)
+    chartSetOption(myChart)
+    resetOption(myChart)
   }
   // 图表重绘
   const resetOption = (myChart) => {
+    // setTimeout(() => {
+    //   myChart.clear()
+    //   myChart.setOption(option)
+    // }, 10)
     setInterval(() => {
       myChart.clear()
       myChart.setOption(option)
-    }, 5000)
+    }, 8000)
+  }
+
+  //  离线状态从localStorage中获取数据
+  const getChartDataFromLocalStorage = (myChart) => {
+    if (!online) {
+      console.log('chartMonth离线')
+      const data = localStorage.getItem('chartMonthData')
+      chartMonthData.data = JSON.parse(data)
+      if (chartMonthData.data) {
+        getFinishedData(myChart)
+      }
+    }
   }
   return {
     option,

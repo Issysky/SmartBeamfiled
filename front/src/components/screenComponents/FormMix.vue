@@ -54,6 +54,7 @@ const formMixStore = useFormMixStore()
 const getExcessData = (data) => {
   if (data === 0) {
     return {
+      // text:'不超标',
       img:'/src/assets/img/screenImg/无.png'
     }
   } else if (data === 1) {
@@ -82,9 +83,9 @@ onMounted(() => {
 </script>
 <style scoped lang="less">
 .table-wrapper {
-  width: 100%;
+  width: 90%;
   height: 100%;
-  padding-left: 2%;
+  padding-left: 30px;
   color:var(--screen-font-color);
   .label-wrapper {
     width: 95%;
@@ -132,10 +133,12 @@ onMounted(() => {
         cursor:default;
       }
       .data3 {
+        height: 20px;
         text-align: center;
         background-repeat:no-repeat ;
         background-size:contain ;
         background-position:center;
+        // background-color: #88ffc3;
       }
     }
   }

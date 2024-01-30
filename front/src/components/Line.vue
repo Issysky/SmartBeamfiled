@@ -23,12 +23,14 @@ const props = defineProps({
 </script>
 <style scoped lang="less">
 .label-wrapper {
+  padding-left: 30px;
   p {
     width: 120px;
     font-size: 1em;
     font-weight: bold;
     margin: 0;
     margin-bottom: 10px;
+    color: var(--font-level-1);
   }
   .line-wrapper {
     display: flex;

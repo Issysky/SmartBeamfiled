@@ -1,5 +1,5 @@
 :root {
-    /* 应用背景颜色 */
+  /* 应用背景颜色 */
   --BgColor: #161d25;
   /* 左侧边栏背景颜色 */
   --LeftNavBgColor: #cfcdcd;
@@ -10,21 +10,26 @@
   /* 选中按钮背景色 */
   --ActiveBtnBgColor: #3c3c3c;
   /* 顶部栏字体颜色 */
-  --HeaderFontColor: #FFF;
+  --HeaderFontColor: #fff;
   /* 左侧边栏字体颜色 */
   --LeftNavFontColor: #000;
   /* 中间内容区字体颜色 */
-  --MainContentFontColor: #FFF;
+  --MainContentFontColor: #fff;
   /*字体颜色 */
-  --label-font-color: #FFF;
+  --label-font-color: #fff;
   /* 大屏字体颜色 */
-  --screen-font-color: #FFF;
+  --screen-font-color: #fff;
   /* 大屏卡片颜色 */
-  --screen-card-color: #24263a;
+  --screen-card-color: #24263a44;
+  /* --screen-card-color: transparent; */
+  /* --screen-card-color: #ffffff22; */
+  /* 大屏卡片阴影 */
+  --screen-card-shadow: 0 0 30px 0 #000000dd;
+  /* 大屏卡片入场动画时间 */
+  --screen-card-transition: all 1.5s ease-in-out;
 
 
-
-
+  
   /* 中性字体色分级 */
   --font-level-1: #ffffff;
   --font-level-2: #fafafadd;
@@ -41,8 +46,6 @@
   --font-level-13: #000000;
 
   /* fullCalendar */
-  --fc-small-font-size:1.2em;
+  --fc-small-font-size: 1.2em;
   --fc-border-color: transparent;
-
 }
-

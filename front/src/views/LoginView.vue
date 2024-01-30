@@ -12,23 +12,48 @@
     <div class="card-wrapper">
       <!-- 标题框 -->
       <div class="label-wrapper">
+        <img src="/public/logo.png" alt="" />
         <!-- 标题 -->
-        <p class="label">欢迎登陆系统</p>
-        <!-- 英文 -->
-        <p class="eng">WELCOME</p>
+        <p class="label">艾环梦智慧平台</p>
       </div>
       <!-- 账号密码框 -->
       <div class="input-wrapper">
-        <el-input class="userInput" v-model="username" placeholder="请输入用户名" />
-        <el-input class="pwdInput" show-password v-model="pwd" placeholder="请输入密码" />
+        <!-- <el-input class="userInput" v-model="username" placeholder="请输入用户名" />
+        <el-input class="pwdInput" show-password v-model="pwd" placeholder="请输入密码" /> -->
+        <input class="userInput" v-model="username" placeholder="请输入用户名" />
+        <input
+          class="pwdInput"
+          v-model="pwd"
+          :type="!isShowPwd ? 'password' : 'text'"
+          placeholder="请输入密码"
+        />
+        <div class="show-hide-pwd" @click="showHidePwd">
+          <el-icon v-if="isShowPwd"><View /></el-icon>
+          <el-icon v-if="!isShowPwd"><Hide /></el-icon>
+        </div>
         <!-- 记住密码 -->
         <div class="remember-pwd">
-          <el-checkbox v-model="rememberPwd" label="记住密码" size="large" />
+          <p class="outline-login" @click="outlineLogin()">离线登入</p>
+          <el-checkbox v-model="rememberPwd" label="记住密码" size="small" />
         </div>
       </div>
       <!-- 登陆 -->
-      <el-button class="login-btn" @click="login(username, pwd)" type="primary">登录</el-button>
-      <el-alert v-if="alert" title="用户名或密码错误" type="error" @close="alert = false" />
+      <button class="login-btn" @click="login(username, pwd)">登录</button>
+      <el-alert
+        class="login-err"
+        v-if="alertPwd"
+        title="用户名或密码错误"
+        type="error"
+        @close="alertPwd = false"
+      />
+      <el-alert
+        class="login-err"
+        v-if="alertOutline"
+        title="网络连接错误"
+        type="error"
+        @close="alertOutline = false"
+      />
+      <span class="linkUs" @click="toAhmHome" title="www.ihmeng.cn">联系我们</span>
     </div>
   </div>
 </template>
@@ -37,7 +62,6 @@
 import { onMounted, ref } from 'vue'
 import { useUserStore } from '../stores/user.js'
 import { useRouter } from 'vue-router'
-import TopBarLogin from '../components/TopBarLogin.vue'
 import { usetopBarStore } from '@/stores/topBar'
 
 // 定义记住密码参数
@@ -51,10 +75,13 @@ const topBarStore = usetopBarStore()
 const username = ref('')
 const pwd = ref('')
 // 错误提示框
-const alert = ref(false)
+const alertPwd = ref(false)
+const alertOutline = ref(false)
 
+// 定义登录框
 const loginWrapper = ref(null)
 
+let isShowPwd = ref(false)
 // 登录方法
 const login = (username, pwd) => {
   // 调用userstore的login方法，因为是promise方法所以使用then去处理后续逻辑
@@ -75,15 +102,47 @@ const login = (username, pwd) => {
       // 跳转到首页
       loginWrapper.value.style.display = 'none'
       window.topBar.max()
-      router.push('/home/screen')
+      localStorage.setItem('online', 'online')
+      router.push('/startVideo')
     } else {
       // 登录失败
       // 提示错误信息
-      alert.value = true
+      window.topBar.pingInter().then((res) => {
+        if (res === '离线') {
+          alertOutline.value = true
+        } else {
+          alertPwd.value = true
+        }
+      })
     }
   })
 }
 
+// 显隐密码
+const showHidePwd = () => {
+  isShowPwd.value = !isShowPwd.value
+  if (isShowPwd.value) {
+    pwd.type = 'text'
+  } else {
+    pwd.type = 'password'
+  }
+}
+
+// 跳转首页
+const toAhmHome = () => {
+  window.topBar.openExternal('http://www.ihmeng.cn/')
+}
+
+// 离线登录
+const outlineLogin = () => {
+  // 处理静态数据存入localstorage
+
+  // 跳转到首页
+  loginWrapper.value.style.display = 'none'
+  window.topBar.max()
+  localStorage.setItem('online', 'outline')
+  router.push('/startVideo')
+}
 // 页面加载时判断是否记住密码
 onMounted(() => {
   // 判断是否记住密码
@@ -125,27 +184,33 @@ onMounted(() => {
     z-index: 2;
     -webkit-app-region: no-drag;
     cursor: pointer;
-
   }
   .card-wrapper {
     position: absolute;
     width: 100%;
     height: 100%;
-    box-shadow: 0 10px 40px rgba(255, 184, 158, 0.5);
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-around;
+    justify-content: flex-start;
+    padding-top: 15%;
     .label-wrapper {
       width: 100%;
-      height: 10%;
+      height: 30%;
       text-align: center;
-      margin-top: 8%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      img {
+        object-fit: contain;
+        width: 22%;
+        margin-bottom: 15px;
+      }
       p {
         margin: 0;
       }
       .label {
-        font-size: 1.8em;
+        font-size: 1.3em;
         font-weight: 600;
         color: var(--label-font-color);
       }
@@ -157,33 +222,84 @@ onMounted(() => {
     }
 
     .input-wrapper {
+      position: relative;
       width: 100%;
-      height: 28%;
+      height: 33%;
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
+      justify-content: flex-start;
       align-items: center;
-      .userInput {
-        width: 75%;
-        height: 40%;
-        margin-bottom: 2%;
+      input {
+        height: 30px;
+        width: 60%;
+        border-radius: 30px;
+        padding-left: 5%;
+        border: none;
+        outline: none;
+        font-size: 0.8em;
+        color: var(--font-level-7);
+        &:hover {
+          box-shadow: 0 0 10px 0 #ffffff77;
+        }
       }
-      .pwdInput {
-        width: 75%;
-        height: 40%;
+      .userInput {
+        margin-bottom: 4%;
+      }
+
+      .show-hide-pwd {
+        position: absolute;
+        right: 20%;
+        top: 53px;
+        color: var(--font-level-7);
+        background-color: #fff;
+        transition: all 0.2s;
+        &:hover {
+          cursor: pointer;
+          color: var(--font-level-13);
+        }
       }
       .remember-pwd {
-        width: 75%;
+        width: 60%;
         font-size: 1em;
         display: flex;
-        justify-content: flex-end;
+        justify-content: space-between;
+        align-items: center;
+        .outline-login {
+          margin: 0;
+          font-size: 0.6em;
+          color: var(--font-level-7);
+          &:hover {
+            cursor: pointer;
+            color: var(--font-level-2);
+          }
+        }
       }
     }
 
     .login-btn {
       width: 60%;
-      height: 9%;
-      font-size: 1.2em;
+      height: 30px;
+      font-size: 0.7em;
+      letter-spacing: 1px;
+      background-color: #337ecc;
+      border: none;
+      color: var(--font-level-1);
+      border-radius: 30px;
+
+      &:hover {
+        cursor: pointer;
+        background-color: #409eff;
+      }
+    }
+    .linkUs {
+      position: absolute;
+      bottom: 80px;
+      font-size: 0.6em;
+      color: var(--font-level-3);
+      cursor: pointer;
+      &:hover {
+        color: var(--font-level-1);
+      }
     }
   }
 }

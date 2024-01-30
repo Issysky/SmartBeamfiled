@@ -1,6 +1,6 @@
 <!-- 工程进度 -->
 <template>
-  <div class="product-process-wrapper">
+  <div class="product-process-wrapper" :style="{ left: show ? '2%' : '-40%' }">
     <Line class="line" :width="'80%'" :label="'制梁进度'"></Line>
     <div class="chart-wrapper">
       <ChartMonth class="chart"></ChartMonth>
@@ -12,28 +12,34 @@
 import { ref, onMounted, onBeforeMount, reactive } from 'vue'
 import Line from '../Line.vue'
 import ChartMonth from '../../components/ChartMonth.vue'
+
+let show = ref(false)
+onMounted(() => {
+  setTimeout(() => {
+    
+  }, 100);
+  show.value = true
+})
 </script>
 <style scoped lang="less">
 .product-process-wrapper {
   width: 22%;
-  height: 21%;
+  height: 22%;
   position: absolute;
   top: 72%;
   padding-top: 1%;
   background-color: var(--screen-card-color);
-  color:var(--screen-font-color);
+  color: var(--screen-font-color);
   border-radius: 15px;
-  // box-shadow: 0px 0px 15px 0px rgba(255, 255, 255, 0.4);
+  box-shadow: var(--screen-card-shadow);
   display: flex;
   flex-direction: column;
-  .line {
-    padding-left: 6%;
-  }
+  transition: var(--screen-card-transition);
   .chart-wrapper {
     width: 100%;
     height: 100%;
     position: absolute;
-    top:0;
+    top: 0;
     .chart {
       height: 100%;
     }

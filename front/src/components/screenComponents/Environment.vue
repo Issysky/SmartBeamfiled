@@ -1,7 +1,7 @@
 <!-- 大屏中环境监测组件 -->
 <template>
-  <div class="environment-wrapper">
-    <Line class="line" :width="'60%'" :label="'环境监测'"></Line>
+  <div class="environment-wrapper" :style="{ left: show ? '2%' : '-40%' }">
+    <Line class="line" :width="'80%'" :label="'环境监测'"></Line>
     <!-- 仪表盘图表 -->
     <div class="chart-wrapper">
       <div class="chart-air">
@@ -17,15 +17,17 @@
     <div class="data-wrapper">
       <div class="data tem">
         <span class="iconfont icon-temperature"></span>
-        <p class="value">{{ envData.data.temperature + '℃' }}</p>
+        <p class="value">{{ envStore.envData.data.temperature + '℃' }}</p>
       </div>
       <div class="data hum">
         <span class="iconfont icon-humidity"></span>
-        <p class="value">{{ envData.data.humidity + '%' }}</p>
+        <p class="value">{{ envStore.envData.data.humidity + '%' }}</p>
       </div>
       <div class="data wind">
         <span class="iconfont icon-wind_speed"></span>
-        <p class="value">{{ envData.data.wind_speed ? envData.data.wind_speed : '10' + 'M/s' }}</p>
+        <p class="value">
+          {{ envStore.envData.data.wind_speed ? envStore.envData.data.wind_speed : '10' + 'M/s' }}
+        </p>
       </div>
     </div>
   </div>
@@ -40,14 +42,13 @@ import { onMounted, ref, reactive } from 'vue'
 
 // 定义store
 const envStore = useEnvStore()
-// 定义返回的环境数据
-const envData = reactive({
-  data: {}
-})
+// 定义展示状态
+let show = ref(false)
 
 onMounted(async () => {
-  // 获取环境数据,必须传值,但是可以为空
-  envData.data = await envStore.getEnvData('', '')
+  setTimeout(() => {
+    show.value = true
+  }, 200)
 })
 </script>
 
@@ -60,15 +61,10 @@ onMounted(async () => {
   top: 38%;
   border-radius: 15px;
   padding-top: 1%;
-  // box-shadow: 0px 0px 15px 0px rgba(255, 255, 255, 0.4);
+  box-shadow: var(--screen-card-shadow);
   display: flex;
   flex-direction: column;
-
-  .line {
-    margin-left: 7%;
-    margin-bottom: 2%;
-    color: var(--font-level-1);
-  }
+  transition: var(--screen-card-transition);
   .chart-wrapper {
     width: 100%;
     flex: 1;

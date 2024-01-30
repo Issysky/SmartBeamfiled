@@ -1,26 +1,29 @@
 <!--数字大屏 -->
 <template>
   <div class="screen-wrapper">
+    <div class="beam-screen-wrapper">
+      <div class="label">
+        <BorderLineTitle class="title"></BorderLineTitle>
+        <!-- <button class="fullscreen" @click="fullScreen()" v-if="isMax">
+          <el-icon><FullScreen /></el-icon>
+        </button>
+        <button class="fullscreen" @click="fullScreen()" v-if="!isMax">
+          <el-icon><Notification /></el-icon>
+        </button> -->
+        <div class="change-screen"><span class="left"><el-icon><DArrowLeft /></el-icon></span> 切换大屏</div>
+      </div>
+      <Overview></Overview>
+      <Video></Video>
+      <Environment> </Environment>
+      <News></News>
+      <BeamData></BeamData>
+      <ProductProgress></ProductProgress>
+      <MixStation></MixStation>
+      <productionLine></productionLine>
+    </div>
     <!-- <div ref="BgVideoWrapper" class="bg-video-wrapper">
       <video autoplay loop ref="video" src="/src/assets/video/bgVideo.mp4"></video>
     </div> -->
-    <div class="label">
-      <BorderLineTitle class="title"></BorderLineTitle>
-      <button class="fullscreen" @click="fullScreen()" v-if="isMax">
-        <el-icon><FullScreen /></el-icon>
-      </button>
-      <button class="fullscreen" @click="fullScreen()" v-if="!isMax">
-        <el-icon><Notification /></el-icon>
-      </button>
-    </div>
-    <Overview></Overview>
-    <Video></Video>
-    <Environment> </Environment>
-    <News></News>
-    <BeamData></BeamData>
-    <ProductProgress></ProductProgress>
-    <MixStation></MixStation>
-    <productionLine></productionLine>
   </div>
 </template>
 
@@ -58,44 +61,58 @@ onMounted(() => {})
 .screen-wrapper {
   width: 100%;
   height: 100%;
-  padding-left: 50px;
-  padding-right: 50px;
-  padding-bottom: 20px;
   position: relative;
-  border-radius: 20px;
-  // background-image: linear-gradient(to right top, #06144c, #002c61, #004271, #00587d, #006e86, #197787, #2d8087, #3f8887, #438681, #48847c, #4c8277, #508072);
-  // background-image: radial-gradient(circle at center, #282E46, #3D445C);
-  // background-color: #0b0b1688;
-  background-color: #3867A100;
-  // background-size: cover;
-  // .bg-video-wrapper {
-  //   position: absolute;
-  //   background-color: #000;
-  //   top: 0;
-  //   left: 0;
-  //   widows: 100%;
-  //   height: 100%;
-  //   z-index: 0;
-  //   overflow: hidden;
-  //   border-radius: 15px;
-  //   video {
-  //     width: 100%;
-  //     height: 112%;
-  //   }
-  // }
-  
-  .fullscreen {
-    position: absolute;
-    right: 0;
-    top: 0;
-    margin-top: 10px;
-    margin-right: 10px;
-    background-color: transparent;
-    border: none;
-    outline: none;
-    color: var(--screen-font-color);
-    font-size: 20px;
-    cursor: pointer;
+  // border-radius: 20px;
+  // background-color: #3867a100;
+
+  .beam-screen-wrapper {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    // border-radius: 20px;
+    .label {
+      .title{
+        width: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        border-radius: 15px;
+        // background-color: #bfc;
+      }
+      .fullscreen {
+        position: absolute;
+        right: 0;
+        top: 0;
+        margin-top: 10px;
+        margin-right: 10px;
+        background-color: transparent;
+        border: none;
+        outline: none;
+        color: var(--screen-font-color);
+        font-size: 20px;
+        cursor: pointer;
+      }
+      .change-screen{
+        width: 80px;
+        position: absolute;
+        right: -100px;
+        top: 3%;
+        background-color: transparent;
+        color: var(--screen-font-color);
+        font-size: .7em;
+        cursor: pointer; 
+        transition: all .5s ease-in-out;
+        &:hover{
+          right: -40px;
+        }
+        .left{
+          font-size: 1em;
+          position: absolute;
+          left: -12px;
+          line-height: 1.7em;
+        }
+      }
+    }
   }
 }
 </style>

@@ -1,9 +1,9 @@
-<!-- 大屏概况组件 -->
+ <!-- 大屏概况组件 -->
 <template>
-  <div class="overview-wrapper">
+  <div class="overview-wrapper" ref="wrapper" :style="{ left: show ? '2%' : '-40%' }">
     <div class="overview">
       <!-- 基本信息 -->
-      <Line class="line" :width="'60%'" :label="'项目概况'"></Line>
+      <Line class="line" :width="'90%'" :label="'项目概况'"></Line>
       <div class="product-info" v-for="item in overviewStore.projectInfo.data" :key="item.label">
         <span class="iconfont" :class="`icon-${item.icon}`"></span>
         <p class="label">{{ item.title + ':' }}</p>
@@ -17,10 +17,22 @@
           <p class="text">{{ item.value + '片' }}</p>
         </div> -->
         <div class="beam-progress">
-          <BeamProgress :total="1000" :label="'制梁进度'" :complate="220" :icon="overviewStore.planInfo.data[0]?.icon" :color="'#f7ea8e'"></BeamProgress>
+          <BeamProgress
+            :total="overviewStore.planInfo.data.total"
+            :label="'制梁进度'"
+            :complate="overviewStore.planInfo.data.beamValue"
+            :icon="overviewStore.planInfo.data.iconBeam"
+            :color="'#f7ea8e'"
+          ></BeamProgress>
         </div>
         <div class="beam-progress">
-          <BeamProgress :total="1000" :label="'架桥进度'" :complate="220" :icon="overviewStore.planInfo.data[1]?.icon" :color="'#b0edef'"></BeamProgress>
+          <BeamProgress
+            :total="overviewStore.planInfo.data.total"
+            :label="'架桥进度'"
+            :complate="overviewStore.planInfo.data.bridgeValue"
+            :icon="overviewStore.planInfo.data.iconBridge"
+            :color="'#b0edef'"
+          ></BeamProgress>
         </div>
       </div>
     </div>
@@ -36,7 +48,15 @@ import BeamProgress from './BeamProgress.vue'
 
 const overviewStore = useOverviewStore()
 
-onMounted(async () => {
+const click = () => {
+  show.value = !show.value
+}
+let show = ref(false)
+onMounted(() => {
+  setTimeout(() => {
+    show.value = true
+  }, 300)
+
   // 获取项目基本信息和制梁计划
   overviewStore.getProjectInfo()
   overviewStore.getProjectPlan()
@@ -47,11 +67,13 @@ onMounted(async () => {
   width: 22%;
   height: 26%;
   position: absolute;
+  // left: -50%;
   top: 10%;
   background-color: var(--screen-card-color);
   border-radius: 15px;
-  // background-image: radial-gradient(circle at center, #282E46, #3D445C);
-  box-shadow: 0 0 15px 0 #00000095;
+  // box-shadow: 0 0 30px 0 #000000dd;
+  box-shadow: var(--screen-card-shadow);
+  transition:var(--screen-card-transition);
   .overview {
     width: 100%;
     height: 100%;
@@ -60,11 +82,6 @@ onMounted(async () => {
     flex-direction: column;
     padding-top: 2%;
 
-    .line {
-      margin-left: -30%;
-      margin-bottom: 2%;
-      color: var(--font-level-1);
-    }
     .product-info {
       width: 100%;
       height: 16%;

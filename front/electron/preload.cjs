@@ -12,12 +12,14 @@ contextBridge.exposeInMainWorld('topBar', {
   pingInter: () =>
     ipcRenderer.invoke('check-connection').then((connection) => {
       if (connection) {
-        return 'connected'
+        return '在线'
       } else {
-        return 'disconnected'
+        return '离线'
       }
     }),
-  getMenu: () => ipcRenderer.send('show-context-menu')
+  getMenu: () => ipcRenderer.send('show-context-menu'),
+  // 打开外链
+  openExternal: (url) => ipcRenderer.send('open-external-link', url)
 })
 
 // 读写 YAML 文件的方法

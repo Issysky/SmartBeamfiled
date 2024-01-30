@@ -17,9 +17,6 @@
         {{ item.name }}
       </div>
     </div>
-    <div class="drag dragbox dragable" ref="drag1"></div>
-    <div class="box dragbox dragable" ref="drag"></div>
-
     <!-- 功能按钮区域2 包含设置以及提醒信息按钮 -->
     <div class="function-wrapper2">
       <!-- 信息 -->
@@ -30,6 +27,7 @@
       <button class="setting btn">
         <el-icon><Tools /></el-icon>
       </button>
+      <div class="online" v-html="online ? '在线' : '离线'" :style="{backgroundColor:online?'#67C23A':'#F56C6C'}"></div>
     </div>
     <!-- 功能按钮区域1 包含关闭，放大，回复，最小化按钮 -->
     <div class="function-wrapper">
@@ -37,14 +35,6 @@
       <button class="min btn" @click="topBarStore.handleMini">
         <el-icon><Minus /></el-icon>
       </button>
-      <!-- 退出最大化 在最大化时候显示 -->
-      <!-- <button class="unmax btn" v-if="topBarStore.isMax" @click="topBarStore.handleUnmax">
-        <el-icon><Notification /></el-icon>
-      </button> -->
-      <!-- 最大化，在默认窗口显示 -->
-      <!-- <button class="max btn" v-if="!topBarStore.isMax" @click="topBarStore.handleMax">
-        <el-icon><FullScreen /></el-icon>
-      </button> -->
       <!-- 关闭 -->
       <button class="close btn" @click="topBarStore.handleClose">
         <el-icon><Close /></el-icon>
@@ -73,6 +63,9 @@ const nav = ref(null)
 const drag = ref(null)
 const drag1 = ref(null)
 
+// 定义是否联网
+const online = ref(false)
+
 // 获取大字体文件元素和小字体文件元素，文件在index.html中引入
 const smallFs = document.querySelector('#smallFs')
 const largeFs = document.querySelector('#largeFs')
@@ -100,11 +93,12 @@ const showLeftBar = () => {
   const leftBar = document.querySelector('.leftBar-wrapper')
   const mainWrapper = document.querySelector('.main-wrapper')
   leftBar.style.width = '12vw'
+  leftBar.style.marginLeft = '1vw'
   // leftBar.style.visibility = 'visible'
   // 把主要内容区域设置为占据右侧
   mainWrapper.style.width = ''
-  mainWrapper.style.marginRight = '4vw'
-  mainWrapper.style.marginLeft = '40px'
+  mainWrapper.style.marginRight = '3vw'
+  mainWrapper.style.marginLeft = '20px'
 }
 const hideLeftBar = () => {
   // 获取左侧边栏元素和主要内容区域元素
@@ -119,17 +113,37 @@ const hideLeftBar = () => {
   mainWrapper.style.marginRight = '2vw'
   mainWrapper.style.marginLeft = '0'
 }
+
+// 测试是否联网
+const pingInter = async () => {
+  window.topBar.pingInter().then((res) => {
+      online.value = res === '在线' ? true : false
+      console.log('监测在线状态',online.value)
+    })
+  setInterval(() => {
+    window.topBar.pingInter().then((res) => {
+      online.value = res === '在线' ? true : false
+      console.log('监测在线状态',online.value)
+    })
+  }, 10000)
+}
+onMounted(() => {
+  pingInter()
+})
 </script>
 <style scoped lang="less">
 .top-bar {
   position: relative;
   width: 100%;
-  height: 70px;
+  height: 50px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   z-index: 0;
+  // box-shadow: var(--screen-card-shadow);
   // display: none;
+  // background-color: #67C23A;
+  margin-bottom: 20px;
   .label-wrapper {
     width: 31%;
     height: 100%;
@@ -163,15 +177,14 @@ const hideLeftBar = () => {
     // -webkit-app-region: drag;
   }
   .nav-wrapper {
-    // width: 40%;
+    width: 55%;
     height: 60%;
     position: relative;
     display: flex;
-    justify-content: space-around;
+    justify-content: flex-end;
     align-items: center;
     flex-wrap: wrap;
-    margin-right: 2%;
-    color: var(--HeaderFontColor);
+    color: var(--font-level-1);
     .nav {
       height: 90%;
       width: auto;
@@ -182,16 +195,20 @@ const hideLeftBar = () => {
       font-size: 1em;
       font-weight: bold;
       transition: all 0.2s;
-      border-radius: 15px;
+      border-radius: 30px;
       cursor: pointer;
     }
     .active {
-      background-color: #409eff;
+      background-color: #3b7c8d;
     }
   }
   .function-wrapper2 {
-    width: 60px;
-    height: 80%;
+    width: 120px;
+    height: 30px;
+    // padding-bottom: 25px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
     color: var(--HeaderFontColor);
     .btn {
       width: 30px;
@@ -215,18 +232,28 @@ const hideLeftBar = () => {
         transform: rotate(180deg);
       }
     }
+    .online{
+      width: 40px;
+      height: 20px;
+      line-height: 20px;
+      text-align: center;
+      border-radius: 10px;
+      background-color: #67C23A;
+      font-size: .6em;
+      cursor: default;
+    }
   }
   .function-wrapper {
-    width: 80px;
+    width: 60px;
     height: 80%;
     margin-right: 15px;
     display: flex;
     justify-content: space-around;
-
+    align-items: center;
     // background-color: #ff4d4f;
     .btn {
-      width: 40px;
-      height: 40px;
+      width: 30px;
+      height: 30px;
       font-size: 18px;
       background-color: transparent;
       border: none;
@@ -237,9 +264,7 @@ const hideLeftBar = () => {
         background-color: #dadada;
       }
     }
-    .min {
-      border-left: 1px solid var(--HeaderFontColor);
-    }
+
     .close {
       &:hover {
         background-color: #ff4d4f;

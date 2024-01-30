@@ -17,11 +17,17 @@ export const useEnvStore = defineStore('env', () => {
           axisLine: {
             lineStyle: {
               width: 15,
+              // color: [
+              //   [0.14, '#aefdae'],
+              //   [0.3, '#b0edef'],
+              //   [0.7, '#f7ea8e'],
+              //   [1, '#F1B2B2']
+              // ]
               color: [
-                [0.14, '#aefdae'],
-                [0.3, '#b0edef'],
-                [0.7, '#f7ea8e'],
-                [1, '#F1B2B2']
+                [0.14, '#7CFFB2'],
+                [0.3, '#58D9F9'],
+                [0.7, '#FDDD60'],
+                [1, '#FF6E76']
               ]
             }
           },
@@ -40,7 +46,7 @@ export const useEnvStore = defineStore('env', () => {
           },
           splitLine: {
             distance: -15,
-            length:7,
+            length: 7,
             lineStyle: {
               color: '#fff',
               width: 3
@@ -72,7 +78,7 @@ export const useEnvStore = defineStore('env', () => {
                 show: true,
                 fontSize: 8,
                 offsetCenter: [0, '45%'],
-                color:'#fafafadd'
+                color: '#fafafadd'
               },
               value: 60,
               detail: {
@@ -97,15 +103,15 @@ export const useEnvStore = defineStore('env', () => {
           type: 'gauge',
           startAngle: 225,
           endAngle: -45,
-          min: 50,
-          max: 65,
+          min: 30,
+          max: 60,
           axisLine: {
             lineStyle: {
               width: 15,
               color: [
-                [0.33, '#aefdae'],
-                [0.66, '#f7ea8e'],
-                [1, '#F1B2B2']
+                [0.33, '#7CFFB2'],
+                [0.66, '#FDDD60'],
+                [1, '#FF6E76']
               ]
             }
           },
@@ -136,9 +142,9 @@ export const useEnvStore = defineStore('env', () => {
             fontSize: 12,
             rotate: 'tangential',
             formatter: function (value) {
-              if (value === 51.5) {
+              if (value === 36) {
                 return '优'
-              }  else if (value === 63.5) {
+              } else if (value === 54) {
                 return '重'
               }
               return ''
@@ -152,7 +158,7 @@ export const useEnvStore = defineStore('env', () => {
                 show: true,
                 fontSize: 8,
                 offsetCenter: [0, '45%'],
-                color:'#fafafadd'
+                color: '#fafafadd'
               },
               value: 60,
               detail: {
@@ -169,22 +175,36 @@ export const useEnvStore = defineStore('env', () => {
       ]
     }
   })
-
+  // 在线状态
+  const online = localStorage.getItem('online') === 'online'
+  const envData = reactive({
+    data: {
+      humidity: 0,
+      wind_speed: 0,
+      temperature: 0
+    }
+  })
   const url = '/environmentData/'
   //   获取环境数据
   const getEnvData = async (chart, type) => {
-    const res = await axiox.get(url, {
-      params: { type: 'latest_data' },
-      headers: { Authorization: localStorage.getItem('token') }
-    })
-    getOption(res.data[0])
-    if (type == 'air') {
-      chartSetOption(chart, airOption.option)
-    } else if (type == 'noise') {
-      chartSetOption(chart, noiseOption.option)
+    getEnvDataFromLocalStorage(chart, type)
+    // 在线状态存储数据
+    if (online) {
+      const res = await axiox.get(url, {
+        params: { type: 'latest_data' },
+        headers: { Authorization: localStorage.getItem('token') }
+      })
+      getOption(res.data[0])
+      if (type == 'air') {
+        chartSetOption(chart, airOption.option)
+        resetOption(chart, airOption.option)
+      } else if (type == 'noise') {
+        chartSetOption(chart, noiseOption.option)
+        resetOption(chart, noiseOption.option)
+      }
+      envData.data = res.data[0]
+      localStorage.setItem('envData', JSON.stringify(envData.data))
     }
-    
-    return res.data[0]
   }
   //   图表渲染
   const chartSetOption = (chart, option) => {
@@ -196,6 +216,31 @@ export const useEnvStore = defineStore('env', () => {
     airOption.option.series[0].data[0].value = data.pm2_5
     noiseOption.option.series[0].data[0].value = data.noise
   }
+  // 图表重绘
+  const resetOption = (myChart, option) => {
+    setInterval(() => {
+      myChart.clear()
+      myChart.setOption(option)
+    }, 5000)
+  }
+  // 离线状态从localStorage中获取数据
+  const getEnvDataFromLocalStorage = (chart, type) => {
+    if (!online) {
+      console.log('env离线')
+      const data = localStorage.getItem('envData')
+      envData.data = JSON.parse(data)
+      if (envData.data) {
+        getOption(envData.data)
+      }
+      if (type == 'air') {
+        chartSetOption(chart, airOption.option)
+        resetOption(chart, airOption.option)
+      } else if (type == 'noise') {
+        chartSetOption(chart, noiseOption.option)
+        resetOption(chart, noiseOption.option)
+      }
+    }
+  }
 
-  return { getEnvData }
+  return { getEnvData, envData }
 })

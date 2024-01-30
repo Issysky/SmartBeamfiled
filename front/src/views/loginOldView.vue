@@ -73,6 +73,12 @@
       }
     })
   }
+
+  // 离线登录
+  const offlineLogin = () => {
+    // 跳转到首页
+    router.push('/startVideo')
+  }
   
   // 页面加载时判断是否记住密码
   onMounted(() => {

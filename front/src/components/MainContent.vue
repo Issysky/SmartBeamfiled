@@ -8,15 +8,13 @@
 <script setup lang="js"></script>
 <style scoped lang="less">
 .main-wrapper {
-  height: 92vh;
+  height: 90vh;
   flex: 1;
-  // background-color: var(--MainContentBgColor);
-  // background-image: linear-gradient(to right top, #141414, #242424, #353535, #474747, #595959);
   background-size: contain;
   background-repeat:no-repeat ;
   display: flex;
   border-radius: 15px;
-  box-shadow: 7px 7px 10px #00000033;
+  // box-shadow: 7px 7px 15px #000000;
   transition: all 0.3s linear;
   margin-right: 2vw;
 }

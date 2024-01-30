@@ -1,9 +1,10 @@
-const { app, BrowserWindow, ipcMain } = require('electron')
+const { app, BrowserWindow, ipcMain,shell } = require('electron')
 const path = require('path')
 const { spawn } = require('child_process')
 const dns = require('dns')
 const { Menu } = require('electron')
 const { readYamlFile, writeYamlFile } = require('./rwYaml.cjs')
+  
 
 // 定义窗口
 let win
@@ -19,8 +20,8 @@ spawn('python', ['py/main.py'])
 // });
 const createWindow = () => {
   win = new BrowserWindow({
-    width: 480,
-    height: 600,
+    width: 400,
+    height: 420,
     icon: path.join(__dirname, '../src/assets/img/logo.png'),
     webPreferences: {
       preload: path.join(__dirname, 'preload.cjs'),
@@ -57,7 +58,7 @@ app.whenReady().then(() => {
   })
   // 判断是否有网络,在预加载脚本中调用
   ipcMain.handle('check-connection', async () => {
-    return new Promise((resolve, reject) => {
+    return  new Promise((resolve, reject) => {
       dns.resolve('www.ihmeng.cn', function (err) {
         if (err) {
           resolve(false)
@@ -70,6 +71,10 @@ app.whenReady().then(() => {
   // 右键上下文菜单
   ipcMain.on('show-context-menu', (event) => {
     menu.popup({ window: BrowserWindow.fromWebContents(event.sender) })
+  })
+  // 打开外链
+  ipcMain.on('open-external-link', (event, url) => {
+    shell.openExternal(url)
   })
   createWindow()
   // 启动后打开开发者工具

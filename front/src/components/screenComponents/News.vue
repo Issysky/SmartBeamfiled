@@ -1,7 +1,7 @@
 <!-- 大屏时事新闻组件 -->
 <template>
-  <div class="news-wrapper">
-    <Line :width="'60%'" :label="'时事新闻'"></Line>
+  <div class="news-wrapper" :style="{ right: show ? '2%' : '-40%' }">
+    <Line :width="'80%'" :label="'时事新闻'"></Line>
     <ul class="news" ref="news">
       <li
         ref="li"
@@ -31,10 +31,11 @@ const screenStore = useScreenStore()
 const newsData = reactive({
   data: []
 })
-
+// 卡片是否展示
+let show = ref(false)
 // 点击跳转到新的网站
 const goToWebsite = (url) => {
-  window.open('https://' + url, '_blank')
+  window.topBar.openExternal('https://' + url)
 }
 
 const li = ref(null)
@@ -55,27 +56,31 @@ const scrollNews = () => {
   }, 3000)
 }
 onMounted(async () => {
+  setTimeout(() => {
+    show.value = true
+  }, 100);
   newsData.data = await screenStore.getNewsData()
   scrollNews()
 })
 </script>
 <style scoped lang="less">
 .news-wrapper {
-  width: 21%;
-  height: 21%;
+  width: 23%;
+  height: 22%;
   position: absolute;
   top: 72%;
   right: 2%;
-  padding-left: 2%;
   padding-top: 1%;
   background-color: var(--screen-card-color);
+  box-shadow: var(--screen-card-shadow);
   color: var(--screen-font-color);
   border-radius: 15px;
   display: flex;
   flex-direction: column;
+  transition: var(--screen-card-transition);
 
   .news {
-    width: 95%;
+    width: 85%;
     height: 140px;
     display: flex;
     flex-direction: column;
@@ -83,6 +88,7 @@ onMounted(async () => {
     list-style: none;
     overflow: hidden;
     margin: 0;
+    margin-left: 30px;
     padding: 0 0 5% 0;
 
     li {
