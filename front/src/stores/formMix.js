@@ -43,14 +43,23 @@ export const useFormMixStore = defineStore('form', () => {
     ],
     width: ['30%', '45%', '20%']
   })
+  // 在线状态
+  const online = localStorage.getItem('online') === 'online' ? true : false
   const url = '/mixStationData/'
   // 获取最新数据
   const getTableData = async () => {
-    const res = await axios.get(url, {
-      params: { type: 'latest' },
-      headers: { Authorization: localStorage.getItem('token') }
-    })
-    tableData.data = res.data
+    if (!online) {
+      console.log('拌合站离线状态')
+      tableData.data = JSON.parse(localStorage.getItem('formMixData'))
+    } else {
+      console.log('拌合站在线状态')
+      const res = await axios.get(url, {
+        params: { type: 'latest' },
+        headers: { Authorization: localStorage.getItem('token') }
+      })
+      tableData.data = res.data
+      localStorage.setItem('formMixData', JSON.stringify(res.data))
+    }
   }
   return { tableData, getTableData }
 })

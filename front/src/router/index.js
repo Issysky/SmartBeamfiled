@@ -24,9 +24,9 @@ const router = createRouter({
         {
           path: 'screen',
           name: 'screen',
-          component: () => import('../views/secondViews/ScreenView.vue')
+          component: () => import('../views/secondViews/ScreenView.vue'),
         },
-        // 设备数据
+        // 设备管理
         {
           path: 'equip',
           name: 'equip',
@@ -54,28 +54,59 @@ const router = createRouter({
         },
         // 生产数据
         {
-          path:'production',
-          name:'生产数据',
-          component:()=>import('../views/secondViews/ProductionView.vue'),
-          children:[
+          path: 'production',
+          name: '生产数据',
+          component: () => import('../views/secondViews/ProductionView.vue'),
+          children: [
             {
-              path:'production__beam',
-              name:'梁体数据',
-              component:()=>import('../views/thirdViews/ProductionBeamView.vue')
+              path: 'production__beam',
+              name: '梁片数据',
+              component: () => import('../views/thirdViews/ProductionBeamView.vue')
             },
             {
-              path:'production__plan',
-              name:'计划制定',
-              component:()=>import('../views/thirdViews/ProductionPlanView.vue')
+              path: 'production__beam__plan',
+              name: '梁片计划排程',
+              component: () => import('../views/thirdViews/ProductionPlanView.vue')
             },
             {
-              path:'blank',
-              name:'空白页',
-              component:()=>import('../views/thirdViews/BlankView.vue')
+              path: 'blank',
+              name: '空白页',
+              component: () => import('../views/thirdViews/BlankView.vue')
+            }
+          ]
+        },
+        // 安全
+        {
+          path: 'security',
+          name: 'security',
+          component: () => import('../views/secondViews/SecurityView.vue'),
+          children: [
+            {
+              path: 'alarm__chart',
+              name: 'alarm__chart',
+              component: () => import('../views/thirdViews/AlarmChartView.vue')
+            }
+          ]
+        },
+        // AI问答
+        {
+          path: 'ai',
+          name: 'ai',
+          component: () => import('../views/secondViews/AIQAView.vue'),
+          children: [
+            {
+              path: 'ai__production',
+              name: 'ai__production',
+              component: () => import('../views/thirdViews/AIProductionView.vue')
             }
           ]
         }
       ]
+    },
+    // 通配符路由，用于捕获所有未匹配的路由
+    {
+      path: '/:pathMatch(.*)*',
+      redirect: '/home/equip/equip__template'
     }
   ]
 })

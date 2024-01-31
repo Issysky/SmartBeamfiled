@@ -7,11 +7,17 @@ export const useScreenStore = defineStore('screen', () => {
   // 获取新闻信息api
   const newsUrl = '/news/'
 
+  // 获取在线状态
+  const online = localStorage.getItem('online') === 'online' ? true : false
   // 定义卡片是否展示的
   let cardShow = reactive({
     type1: false,
     type2: false,
     type3: false
+  })
+
+  const newsData = reactive({
+    data: {}
   })
   // 获取生产线占用率图表option
   const productionLineOption = reactive({
@@ -80,10 +86,19 @@ export const useScreenStore = defineStore('screen', () => {
 
   // 获取新闻信息
   const getNewsData = async () => {
-    const res = await axios.get(newsUrl, {
-      headers: { Authorization: localStorage.getItem('token') }
-    })
-    return res.data
+    if (!online) {
+      console.log('新闻离线')
+      const data = JSON.parse(localStorage.getItem('newsData'))
+      return data
+    }
+    if (online) {
+      console.log('新闻在线')
+      const res = await axios.get(newsUrl, {
+        headers: { Authorization: localStorage.getItem('token') }
+      })
+      localStorage.setItem('newsData', JSON.stringify(res.data))
+      return res.data
+    }
   }
   // 渲染图表
   const chartSetOption = (chart, option) => {
@@ -98,17 +113,5 @@ export const useScreenStore = defineStore('screen', () => {
       myChart.setOption(option)
     }, 7000)
   }
-  // 更改卡片是否展示
-  // const changeCardShow = (type) => {
-  //   setTimeout(() => {
-  //     cardShow.type1 = type
-  //   }, 300)
-  //   setTimeout(() => {
-  //     cardShow.type2 = type
-  //   }, 200)
-  //   setTimeout(() => {
-  //     cardShow.type3 = type
-  //   }, 100)
-  // }
   return { getNewsData, productionLineOption, chartSetOption }
 })

@@ -2,8 +2,9 @@
 <template>
   <div class="home-wrapper">
     <div ref="BgVideoWrapper" class="bg-video-wrapper">
-      <video autoplay loop src="/src/assets/video/bgVideo5.mp4"></video>
+      <video autoplay loop src="/src/assets/video/bgVideo8.mp4"></video>
     </div>
+    <LogoutAlert v-if="userStore.logoutAlert"></LogoutAlert>
     <div class="header"><TopBar></TopBar></div>
     <div ref="container" class="container">
       <LeftBar></LeftBar>
@@ -21,6 +22,7 @@ import LeftBar from '@/components/LeftBar.vue'
 import MainContent from '@/components/MainContent.vue'
 import TopBar from '../components/TopBar.vue'
 import { useUserStore } from '../stores/user.js'
+import LogoutAlert from '@/components/LogoutAlert.vue'
 
 // 定义路由
 const router = useRouter()

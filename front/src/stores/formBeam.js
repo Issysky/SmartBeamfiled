@@ -61,11 +61,13 @@ export const useFormBeamStore = defineStore('beam', () => {
   // 获取最新数据
   const getTableData = async () => {
     if(!online){
+      console.log('制梁离线状态')
       const data = JSON.parse(localStorage.getItem('formBeamData'))
       tableData.data = data
       console.log(tableData.data)
     }
     if (online) {
+      console.log('制梁在线状态')
       const res = await axios.get(url, {
         params: { type: 'screen' },
         headers: { Authorization: localStorage.getItem('token') }

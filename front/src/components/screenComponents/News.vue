@@ -58,7 +58,7 @@ const scrollNews = () => {
 onMounted(async () => {
   setTimeout(() => {
     show.value = true
-  }, 100);
+  }, 100)
   newsData.data = await screenStore.getNewsData()
   scrollNews()
 })

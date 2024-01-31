@@ -10,10 +10,10 @@ contextBridge.exposeInMainWorld('topBar', {
   unmax: () => ipcRenderer.send('unmax'),
   // 检测网络
   pingInter: () =>
-    ipcRenderer.invoke('check-connection').then((connection) => {
-      if (connection) {
+    ipcRenderer.invoke('check-connection').then((res) => {
+      if(res){
         return '在线'
-      } else {
+      }else{
         return '离线'
       }
     }),

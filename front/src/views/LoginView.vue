@@ -86,35 +86,36 @@ let isShowPwd = ref(false)
 const login = (username, pwd) => {
   // 调用userstore的login方法，因为是promise方法所以使用then去处理后续逻辑
   userStore.login(username, pwd).then(() => {
-    // 状态码为200表示登录成功
-    if (userStore.userData.status === 200) {
-      // 登录成功
-      // 判断是否记住密码
-      if (rememberPwd.value) {
-        // 记住密码
-        localStorage.setItem('username', username)
-        localStorage.setItem('pwd', pwd)
+    window.topBar.pingInter().then((res) => {
+      if (res === '离线') {
+        alertOutline.value = true
       } else {
-        // 不记住密码
-        localStorage.removeItem('username')
-        localStorage.removeItem('pwd')
-      }
-      // 跳转到首页
-      loginWrapper.value.style.display = 'none'
-      window.topBar.max()
-      localStorage.setItem('online', 'online')
-      router.push('/startVideo')
-    } else {
-      // 登录失败
-      // 提示错误信息
-      window.topBar.pingInter().then((res) => {
-        if (res === '离线') {
-          alertOutline.value = true
+        // 状态码为200表示登录成功
+        if (userStore.userData.status === 200) {
+          // 登录成功
+          // 判断是否记住密码
+          if (rememberPwd.value) {
+            // 记住密码
+            localStorage.setItem('username', username)
+            localStorage.setItem('pwd', pwd)
+          } else {
+            // 不记住密码
+            localStorage.removeItem('username')
+            localStorage.removeItem('pwd')
+          }
+          // 跳转到首页
+          loginWrapper.value.style.display = 'none'
+          window.topBar.max()
+          localStorage.setItem('online', 'online')
+          router.push('/startVideo')
+          // router.push('/home/AItalk/AI__production')
         } else {
+          // 登录失败
+          // 提示错误信息
           alertPwd.value = true
         }
-      })
-    }
+      }
+    })
   })
 }
 
@@ -136,11 +137,12 @@ const toAhmHome = () => {
 // 离线登录
 const outlineLogin = () => {
   // 处理静态数据存入localstorage
-
+  userStore.login()
   // 跳转到首页
   loginWrapper.value.style.display = 'none'
   window.topBar.max()
   localStorage.setItem('online', 'outline')
+  userStore.changeLogoutAlert(false)
   router.push('/startVideo')
 }
 // 页面加载时判断是否记住密码

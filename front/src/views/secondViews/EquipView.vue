@@ -13,7 +13,6 @@
   height: 100%;
   background-color: var(--MainContentBgColor);
   box-shadow: 7px 7px 15px #000000;
-
   border-radius: 15px;
   h1{
     height: 8%;

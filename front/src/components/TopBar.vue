@@ -27,7 +27,11 @@
       <button class="setting btn">
         <el-icon><Tools /></el-icon>
       </button>
-      <div class="online" v-html="online ? '在线' : '离线'" :style="{backgroundColor:online?'#67C23A':'#F56C6C'}"></div>
+      <div
+        class="online"
+        v-html="online ? '在线' : '离线'"
+        :style="{ backgroundColor: online ? '#67C23A' : '#F56C6C' }"
+      ></div>
     </div>
     <!-- 功能按钮区域1 包含关闭，放大，回复，最小化按钮 -->
     <div class="function-wrapper">
@@ -64,7 +68,7 @@ const drag = ref(null)
 const drag1 = ref(null)
 
 // 定义是否联网
-const online = ref(false)
+const online = ref(localStorage.getItem('online') === 'online' ? true : false)
 
 // 获取大字体文件元素和小字体文件元素，文件在index.html中引入
 const smallFs = document.querySelector('#smallFs')
@@ -82,7 +86,6 @@ const changeActive = (index, router_name) => {
   } else {
     showLeftBar()
     userStore.changeSecondRouter(router_name)
-    console.log(userStore.secRouter)
     router.push('/home/' + router_name + '/' + userStore.secRouter.children[0].router_name)
   }
 }
@@ -104,10 +107,7 @@ const hideLeftBar = () => {
   // 获取左侧边栏元素和主要内容区域元素
   const leftBar = document.querySelector('.leftBar-wrapper')
   const mainWrapper = document.querySelector('.main-wrapper')
-  // leftBar.style.visibility = 'hidden'
-  // setTimeout(() => {
   leftBar.style.width = '0'
-  // }, 100)
   // 把主要内容区域设置为占满全屏
   mainWrapper.style.flex = '1'
   mainWrapper.style.marginRight = '2vw'
@@ -116,18 +116,23 @@ const hideLeftBar = () => {
 
 // 测试是否联网
 const pingInter = async () => {
-  window.topBar.pingInter().then((res) => {
-      online.value = res === '在线' ? true : false
-      console.log('监测在线状态',online.value)
-    })
-  setInterval(() => {
-    window.topBar.pingInter().then((res) => {
-      online.value = res === '在线' ? true : false
-      console.log('监测在线状态',online.value)
-    })
-  }, 10000)
+  if (online.value) {
+    setInterval(async () => {
+      window.topBar.pingInter().then((res) => {
+        online.value = res === '在线' ? true : false
+        // 监测到离线就登出
+        if (!online.value) {
+          userStore.changeLogoutAlert(true)
+          console.log('logoutAlert', userStore.logoutAlert.value)
+        }
+        console.log('在线状态', online.value)
+      })
+    }, 10000)
+  }
 }
 onMounted(() => {
+  changeActive(0, 'screen')
+  // showLeftBar()
   pingInter()
 })
 </script>
@@ -178,15 +183,15 @@ onMounted(() => {
   }
   .nav-wrapper {
     width: 55%;
-    height: 60%;
+    height: 70%;
     position: relative;
     display: flex;
     justify-content: flex-end;
     align-items: center;
     flex-wrap: wrap;
-    color: var(--font-level-1);
+    color: var(--font-level-3);
     .nav {
-      height: 90%;
+      height: 100%;
       width: auto;
       padding: 0 15px;
       display: flex;
@@ -195,11 +200,22 @@ onMounted(() => {
       font-size: 1em;
       font-weight: bold;
       transition: all 0.2s;
-      border-radius: 30px;
+      border-radius: 10px;
+      margin-right: 5px;
       cursor: pointer;
+      &:hover{
+        color: var(--font-level-1);
+      }
     }
     .active {
-      background-color: #3b7c8d;
+      // background-color: #3b7c8d;
+      background-color: #a9ded8;
+      color: var(--font-level-13);
+      // background-image: linear-gradient(to right, #8a959d, #979da4, #a4a6ab, #afafb2, #b9b9b9);
+      // background-image: linear-gradient(to right, #848484, #919191, #9e9e9e, #ababab, #b9b9b9);
+      &:hover{
+        color: var(--font-level-13);
+      }
     }
   }
   .function-wrapper2 {
@@ -232,14 +248,14 @@ onMounted(() => {
         transform: rotate(180deg);
       }
     }
-    .online{
+    .online {
       width: 40px;
       height: 20px;
       line-height: 20px;
       text-align: center;
       border-radius: 10px;
-      background-color: #67C23A;
-      font-size: .6em;
+      background-color: #67c23a;
+      font-size: 0.6em;
       cursor: default;
     }
   }

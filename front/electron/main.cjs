@@ -1,10 +1,9 @@
-const { app, BrowserWindow, ipcMain,shell } = require('electron')
+const { app, BrowserWindow, ipcMain, shell } = require('electron')
 const path = require('path')
 const { spawn } = require('child_process')
 const dns = require('dns')
 const { Menu } = require('electron')
 const { readYamlFile, writeYamlFile } = require('./rwYaml.cjs')
-  
 
 // 定义窗口
 let win
@@ -53,16 +52,21 @@ app.whenReady().then(() => {
   ipcMain.handle('read-yaml-file', (path) => {
     readYamlFile(path)
   })
-  ipcMain.handle('write-yaml-file', (path,data) => {
-    writeYamlFile(path,data)
+  ipcMain.handle('write-yaml-file', (path, data) => {
+    writeYamlFile(path, data)
   })
   // 判断是否有网络,在预加载脚本中调用
   ipcMain.handle('check-connection', async () => {
-    return  new Promise((resolve, reject) => {
-      dns.resolve('www.ihmeng.cn', function (err) {
+    return new Promise((resolve, reject) => {
+      let timer = null
+      timer = setTimeout(() => {
+        resolve(false)
+      }, 3000)
+      dns.resolve('www.ihmeng.cn', function (err,addresses) {
         if (err) {
           resolve(false)
         } else {
+          timer = null
           resolve(true)
         }
       })

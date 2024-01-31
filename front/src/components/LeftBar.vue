@@ -2,8 +2,8 @@
 <template>
   <div class="leftBar-wrapper" ref="leftBar">
     <div class="user-wrapper">
-      <img src="../assets/logo.png" alt="" />
-      <p>中铁十七局集团</p>
+      <img src="/public/fontLogo.png" alt="" />
+      <!-- <p>中铁十七局集团</p> -->
     </div>
     <!-- 导航 -->
     <div class="nav-wrapper">
@@ -14,8 +14,7 @@
         v-for="(item, index) in userStore.secRouter.children"
         :key="index"
       >
-        <!-- <span :class="item.icon"></span> -->
-        <span class="iconfont icon-template"></span>
+        <span class="iconfont" :class="`icon-${item.icon}`"></span>
         {{ item.name }}
       </div>
     </div>
@@ -70,12 +69,11 @@ onMounted(() => {})
     justify-content: center;
     overflow: hidden;
     img {
-      width: 30px;
-      height: 30px;
+      width: 80%;
+      height: 100%;
       object-fit: contain;
-      border-radius: 50%;
-      border: 1px solid #fff;
       margin-right: 3%;
+      // background-color: #000;
     }
     p {
       font-size: 0.8em;

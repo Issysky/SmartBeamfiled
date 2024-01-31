@@ -4,7 +4,7 @@
   /* 左侧边栏背景颜色 */
   --LeftNavBgColor: #cfcdcd;
   /* 中间内容区背景颜色 */
-  --MainContentBgColor: #24263a;
+  --MainContentBgColor: #000;
   /* 悬浮按钮背景色 */
   --HoverBtnBgColor: #3c3c3c;
   /* 选中按钮背景色 */
