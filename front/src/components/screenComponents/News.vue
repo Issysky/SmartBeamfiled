@@ -22,7 +22,7 @@
 </template>
 
 <script setup lang="js">
-import { ref, onMounted, onBeforeMount, reactive } from 'vue'
+import { ref, onMounted, onBeforeMount, reactive, onUnmounted } from 'vue'
 import Line from '../Line.vue'
 import { useScreenStore } from '../../stores/screen.js'
 
@@ -39,9 +39,12 @@ const goToWebsite = (url) => {
 }
 
 const li = ref(null)
+
+// 定义定时器,挂载时启动,卸载时清除
+let timer = null
 // 无限轮播新闻
 const scrollNews = () => {
-  setInterval(() => {
+  timer = setInterval(() => {
     Array.from(li.value).forEach((item) => {
       item.style.transition = 'all .5s'
       item.style.transform = 'translateY(-100%)'
@@ -61,6 +64,10 @@ onMounted(async () => {
   }, 100)
   newsData.data = await screenStore.getNewsData()
   scrollNews()
+})
+onUnmounted(() => {
+  clearInterval(timer)
+  timer = null
 })
 </script>
 <style scoped lang="less">

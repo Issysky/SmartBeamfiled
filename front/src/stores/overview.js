@@ -58,8 +58,8 @@ export const useOverviewStore = defineStore('overview', () => {
         total: res.data.beamDataCount,
         beamValue: res.data.beamDataUnfinishedCount,
         bridgeValue: res.data.beamDataBridgeCount,
-        iconBeam: 'icon-incomplete',
-        iconBridge: 'icon-complete'
+        iconBeam: 'icon-beam_progress',
+        iconBridge: 'icon-bridge_progress'
       }
       planInfo.data = data
       localStorage.setItem('planInfo', JSON.stringify(planInfo.data))

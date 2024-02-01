@@ -2,8 +2,10 @@
 <template>
   <div class="top-bar">
     <div class="label-wrapper">
-      <img src="../../public/logo.png" alt="" />
-      <p>郑州艾环梦工程科技有限公司</p>
+      <img src="/src/assets/img/logo/logo1.png" alt="" />
+      <p>山西路桥</p>
+      <img src="/src/assets/img/logo/logo3.png" alt="" />
+      <p>山西交控</p>
     </div>
     <!-- 点击拖拽窗口区域 下方两个都是-->
     <div class="nav-wrapper">
@@ -62,7 +64,7 @@ const userStore = useUserStore()
 // 导航路由数组
 const navArr = userStore.getFirstRouter()
 // 获取顶部导航栏元素
-const nav = ref(null)
+const nav = Array.from(document.querySelectorAll('.nav'))
 // 获取可拖拽元素
 const drag = ref(null)
 const drag1 = ref(null)
@@ -76,12 +78,16 @@ const largeFs = document.querySelector('#largeFs')
 
 // 改变顶部导航栏的激活状态
 const changeActive = (index, router_name) => {
-  nav.value.forEach((item) => {
+  nav.forEach((item) => {
     item.classList.remove('active')
   })
-  nav.value[index].classList.add('active')
+  nav[index].classList.add('active')
   if (router_name === 'screen') {
     hideLeftBar()
+    router.push('/home/' + router_name)
+  } else if (router_name === 'digital_twin') {
+    hideLeftBar()
+    userStore.changeSecondRouter(router_name)
     router.push('/home/' + router_name)
   } else {
     showLeftBar()
@@ -165,6 +171,7 @@ onMounted(() => {
       font-size: 1.2em;
       font-weight: bold;
       margin: 0;
+      margin-right: 30px;
     }
   }
   .drag {
@@ -203,17 +210,17 @@ onMounted(() => {
       border-radius: 10px;
       margin-right: 5px;
       cursor: pointer;
-      &:hover{
+      &:hover {
         color: var(--font-level-1);
       }
     }
     .active {
-      // background-color: #3b7c8d;
-      background-color: #a9ded8;
-      color: var(--font-level-13);
-      // background-image: linear-gradient(to right, #8a959d, #979da4, #a4a6ab, #afafb2, #b9b9b9);
-      // background-image: linear-gradient(to right, #848484, #919191, #9e9e9e, #ababab, #b9b9b9);
-      &:hover{
+      // background-color: #a9ded8;
+      background-color: #218ed1;
+      // background-color: #fff;
+      color: var(--font-level-1);
+
+      &:hover {
         color: var(--font-level-13);
       }
     }

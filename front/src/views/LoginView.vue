@@ -84,6 +84,7 @@ const loginWrapper = ref(null)
 let isShowPwd = ref(false)
 // 登录方法
 const login = (username, pwd) => {
+  localStorage.setItem('online', 'online')
   // 调用userstore的login方法，因为是promise方法所以使用then去处理后续逻辑
   userStore.login(username, pwd).then(() => {
     window.topBar.pingInter().then((res) => {
@@ -107,7 +108,8 @@ const login = (username, pwd) => {
           loginWrapper.value.style.display = 'none'
           window.topBar.max()
           localStorage.setItem('online', 'online')
-          router.push('/startVideo')
+          router.push('/home/screen')
+          // router.push('/startVideo')
           // router.push('/home/AItalk/AI__production')
         } else {
           // 登录失败

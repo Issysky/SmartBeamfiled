@@ -2,14 +2,15 @@
 <template>
   <div class="leftBar-wrapper" ref="leftBar">
     <div class="user-wrapper">
-      <img src="/public/fontLogo.png" alt="" />
+      <img src="/public/logo.png" alt="" />
       <!-- <p>中铁十七局集团</p> -->
+      <div class="split-line"></div>
     </div>
     <!-- 导航 -->
     <div class="nav-wrapper">
-      <div class="label">{{ userStore.secRouter.name }}</div>
+      <!-- <div class="label">{{ userStore.secRouter.name }}</div> -->
       <div
-        class="nav"
+        class="leftnav"
         @click="handleClick(index)"
         v-for="(item, index) in userStore.secRouter.children"
         :key="index"
@@ -34,6 +35,12 @@ const userStore = useUserStore()
 const equipStore = useEquipStore()
 // 点击跳转不同三级路由
 const handleClick = async (index) => {
+  const leftnav = Array.from(document.querySelectorAll('.leftnav'))
+  leftnav.forEach((item) => {
+    item.classList.remove('active')
+  })
+  console.log(leftnav[index], 123456)
+  leftnav[index].classList.add('active')
   const path =
     '/home/' +
     userStore.secRouter.router_name +
@@ -49,18 +56,22 @@ const handleClick = async (index) => {
   }
   router.push({ path })
 }
-onMounted(() => {})
+onMounted(() => {
+  handleClick(0)
+})
 </script>
 <style scoped lang="less">
 .leftBar-wrapper {
   width: 0;
   height: 90vh;
   border-radius: 15px;
-  background: var(--LeftNavBgColor);
+  // background: var(--LeftNavBgColor);
+  background-color: #1c1c1c;
   flex-direction: column;
-  box-shadow: 10px 15px 30px #000;
+  box-shadow:   8px 8px 16px #000;
   transition: all 0.3s ease-in-out;
   overflow: hidden;
+  font-family: 'textFont';
   .user-wrapper {
     width: 100%;
     height: 14%;
@@ -68,8 +79,9 @@ onMounted(() => {})
     align-items: center;
     justify-content: center;
     overflow: hidden;
+    position: relative;
     img {
-      width: 80%;
+      width: 50%;
       height: 100%;
       object-fit: contain;
       margin-right: 3%;
@@ -82,6 +94,14 @@ onMounted(() => {})
       line-height: 1.5;
       white-space: nowrap;
     }
+    .split-line {
+      position: absolute;
+      width: 60%;
+      height: 3px;
+      background-color: #fff;
+      bottom: 10px;
+      border-radius: 1.5px;
+    }
   }
   .nav-wrapper {
     width: 100%;
@@ -91,41 +111,39 @@ onMounted(() => {})
     align-items: center;
     justify-content: flex-start;
 
-    .label {
-      width: 80%;
-      height: 8%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.3em;
-      color: var(--LeftNavFontColor);
-      font-weight: bold;
-      border-bottom: 1px solid #fff;
-      margin-bottom: 5%;
-      white-space: nowrap;
-    }
-    .nav {
-      width: 80%;
-      height: 5vh;
-      margin-bottom: 8%;
+    .leftnav {
+      width: 70%;
+      height: 3.5vh;
+      margin-bottom: 4%;
       display: flex;
       align-items: center;
       justify-content: flex-start;
-      font-size: 1.1em;
-      color: var(--LeftNavFontColor);
+      font-size: .8em;
       font-weight: 600;
+      color: var(--font-level-1);
       letter-spacing: 2px;
       border-radius: 10px;
       white-space: nowrap;
-
+      padding-left: 15px;
+      transition: all 0.1s ease-in-out;
       cursor: pointer;
       &:hover {
-        color: var(--LeftNavFontColor);
-        background-color: #003f73;
+        color: var(--font-level-13);
+        background-color: #b0ebff;
       }
       span {
         width: 20px;
         height: 20px;
+        margin-right: 9px;
+        line-height: 20px;
+      }
+    }
+    .active {
+      color: var(--font-level-1);
+      background-color: #34b2f7;
+      &:hover {
+        color: var(--font-level-1);
+        background-color: #34b2f7;
       }
     }
   }

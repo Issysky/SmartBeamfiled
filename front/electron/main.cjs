@@ -21,7 +21,7 @@ const createWindow = () => {
   win = new BrowserWindow({
     width: 400,
     height: 420,
-    icon: path.join(__dirname, '../src/assets/img/logo.png'),
+    icon: path.join(__dirname, '../public/taskBarLogo3.png'),
     webPreferences: {
       preload: path.join(__dirname, 'preload.cjs'),
       contextIsolation: true, // 启用上下文隔离

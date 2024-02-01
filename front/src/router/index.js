@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import { useUserStore } from '../stores/user'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -24,7 +25,12 @@ const router = createRouter({
         {
           path: 'screen',
           name: 'screen',
-          component: () => import('../views/secondViews/ScreenView.vue'),
+          component: () => import('../views/secondViews/ScreenView.vue')
+        },
+        {
+          path: 'digital_twin',
+          name: 'digital_twin',
+          component: () => import('../views/secondViews/ScreenView.vue')
         },
         // 设备管理
         {
@@ -49,6 +55,11 @@ const router = createRouter({
               path: 'equip__monitor',
               name: 'equip__monitor',
               component: () => import('../views/thirdViews/EquipMonitorView.vue')
+            },
+            {
+              path: 'locked',
+              name: 'locked',
+              component: () => import('../views/LockedView.vue')
             }
           ]
         },
@@ -72,6 +83,11 @@ const router = createRouter({
               path: 'blank',
               name: '空白页',
               component: () => import('../views/thirdViews/BlankView.vue')
+            },
+            {
+              path: 'locked',
+              name: 'locked',
+              component: () => import('../views/LockedView.vue')
             }
           ]
         },
@@ -85,6 +101,11 @@ const router = createRouter({
               path: 'alarm__chart',
               name: 'alarm__chart',
               component: () => import('../views/thirdViews/AlarmChartView.vue')
+            },
+            {
+              path: 'locked',
+              name: 'locked',
+              component: () => import('../views/LockedView.vue')
             }
           ]
         },
@@ -98,6 +119,11 @@ const router = createRouter({
               path: 'ai__production',
               name: 'ai__production',
               component: () => import('../views/thirdViews/AIProductionView.vue')
+            },
+            {
+              path: 'locked',
+              name: 'locked',
+              component: () => import('../views/LockedView.vue')
             }
           ]
         }
@@ -109,6 +135,23 @@ const router = createRouter({
       redirect: '/home/equip/equip__template'
     }
   ]
+})
+router.beforeEach((to, from, next) => {
+  const userStore = useUserStore()
+  const path = to.path.split('/')
+  console.log(userStore.userData.locked_menu_list, '路由输出')
+  console.log('path', path)
+  // 检查即将进入的路由是否是受限的
+  if (userStore.userData.locked_menu_list.includes(path[3])) {
+    const lockedPath = '/' + path[1] + '/' + path[2] + '/locked'
+    console.log('受限路由', lockedPath)
+    // 如果是，重定向到新页面
+    next(lockedPath)
+  } else {
+    // 如果不是，正常导航
+    console.log('正常导航')
+    next()
+  }
 })
 
 export default router

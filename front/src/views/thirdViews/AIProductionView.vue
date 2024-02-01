@@ -1,12 +1,8 @@
 <!-- AI问答页面 -->
 <template>
   <div class="wrapper">
-    <div class="header">{{ homeViewText.headerText }}</div>
-    <!-- <div class="clear" @click="clear">
-      <el-icon>
-        <CloseBold />
-      </el-icon>
-    </div> -->
+    <!-- <button @click="download">下载表格</button> -->
+    <div class="header">生产数据助手</div>
     <div class="message-wrapper" v-if="store.messageArr.length != 0">
       <div class="message-area" v-for="(message, index) in store.messageArr" :key="index">
         <p class="label">
@@ -55,7 +51,7 @@
         ><el-icon> <Promotion /> </el-icon
       ></el-button>
     </div>
-    <!-- <div class="footer">{{ footerInfo }}</div> -->
+    <div class="footer">{{ footerInfo }}</div>
   </div>
 </template>
 
@@ -65,6 +61,7 @@ import { useAITalkStore } from '/src/stores/AItalk'
 import homeViewText from '/src/assets/json/homeView.json'
 import avator from '/src/assets/avator.png'
 import logo from '/public/logo.png'
+import { exportExcel } from '/src/excelConfig.js'
 
 // 用户和回复头像的路径
 const avatorArr = ref([avator, logo])
@@ -80,7 +77,17 @@ const buttons = ref([
   { type: 'info', text: homeViewText.buttonArr[3] }
 ])
 
-const footerInfo = ref('艾环梦工程科技公司')
+// 导出excel的数据
+// const exc_data = [
+//   ['第一列', '第二列', '第三列'],
+//   ['aa', 'bb', 'cc'],
+//   ['dd', 'ee', 'ff']
+// ]
+// function download() {
+//   exportExcel('vue3导出的表格.', exc_data)
+// }
+
+const footerInfo = ref('@艾环梦工程科技')
 // 获取输入的消息
 let inputMessage = ref('')
 const input = ref(null)
@@ -141,6 +148,10 @@ onMounted(() => {})
   // background-color: #bfc;
   position: relative;
   color: var(--font-level-2);
+  button{
+    position: absolute;
+    top: 50%;
+  }
 
   .header {
     position: absolute;
@@ -264,7 +275,7 @@ onMounted(() => {})
         /* 清除默认的大小调整功能 */
         resize: none;
         background-color: transparent;
-        color:var(--font-level-2)
+        color: var(--font-level-2);
       }
     }
 
@@ -287,7 +298,7 @@ onMounted(() => {})
     width: 100%;
     text-align: center;
     font-size: 12px;
-    color: #33333388;
+    color: var(--font-level-7);
   }
 }
 

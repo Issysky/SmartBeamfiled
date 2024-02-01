@@ -7,7 +7,9 @@ import request from './axios'
 export const useUserStore = defineStore('user', () => {
   // 登陆后返回的用户数据
   const userData = ref({
-    name: 'admin'
+    name: 'admin',
+    locked_menu_list: [],
+    status:500,
   })
   // 二级路由
   let secRouter = ref({
@@ -123,7 +125,14 @@ export const useUserStore = defineStore('user', () => {
 
   const changeLogoutAlert = (state) => {
     logoutAlert.value = state
-    
   }
-  return { userData, login, getFirstRouter, changeSecondRouter, secRouter,changeLogoutAlert,logoutAlert }
+  return {
+    userData,
+    login,
+    getFirstRouter,
+    changeSecondRouter,
+    secRouter,
+    changeLogoutAlert,
+    logoutAlert
+  }
 })

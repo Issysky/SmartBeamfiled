@@ -24,7 +24,6 @@ onMounted(() => {
   // 放大缩小字体
   window.addEventListener('resize', (e) => {
     // topBarStore.changeFontSize(!topBarStore.isMax ? 'small' : 'large')
-    
   })
   // router.push({ path: '/home' })
 })
@@ -38,9 +37,14 @@ onMounted(() => {
 </template>
 
 <style scoped lang="less">
+@font-face {
+  font-family: 'textFont';
+  src: url('./assets/font/微软雅黑.ttf') format('truetype');
+}
 main {
   width: 100vw;
   height: 100vh;
   background-color: var(--BgColor);
+  
 }
 </style>
