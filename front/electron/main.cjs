@@ -48,6 +48,10 @@ app.whenReady().then(() => {
   ipcMain.on('mini', () => win.minimize())
   ipcMain.on('max', () => win.maximize())
   ipcMain.on('unmax', () => win.unmaximize())
+  // 打开开发者工具
+  ipcMain.on('open-dev-tools', () => win.webContents.openDevTools())
+  // 强制刷新
+  ipcMain.on('reload', () => win.reload())
   // 注册读写 YAML 文件的方法
   ipcMain.handle('read-yaml-file', (path) => {
     readYamlFile(path)
@@ -62,7 +66,7 @@ app.whenReady().then(() => {
       timer = setTimeout(() => {
         resolve(false)
       }, 3000)
-      dns.resolve('www.ihmeng.cn', function (err,addresses) {
+      dns.resolve('www.ihmeng.cn', function (err, addresses) {
         if (err) {
           resolve(false)
         } else {
@@ -82,7 +86,6 @@ app.whenReady().then(() => {
   })
   createWindow()
   // 启动后打开开发者工具
-  win.webContents.openDevTools()
 })
 
 // 下方托盘邮件任务栏
@@ -110,3 +113,8 @@ const template = [
   { label: 'Menu Item 2', type: 'checkbox', checked: true }
 ]
 const menu = Menu.buildFromTemplate(template)
+
+// 热更新
+// try {
+//   require('electron-reloader')(module, {})
+// } catch (_) {}

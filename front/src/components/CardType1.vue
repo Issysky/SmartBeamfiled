@@ -36,14 +36,14 @@
 
 <script setup lang="js">
 import { onMounted, reactive, ref, watch } from 'vue'
-import { useEquipStore } from '../stores/equip.js'
+import { useEquipSteamStore } from '../stores/equipSteam.js'
 import { useMonitorStore } from '../stores/monitor.js'
 import * as echarts from 'echarts'
 
 //定义时间范围
 const timeRange = ref('')
 //  引入store
-const equipStore = useEquipStore()
+const equipSteamStore = useEquipSteamStore()
 const monitorStore = useMonitorStore()
 // 定义isActive,控制按钮的样式
 const isActive = ref(true)
@@ -74,7 +74,7 @@ onMounted(() => {
     is_simplify:'true'
   }
   // 发送请求
-  equipStore.getEquipTempData(requestData, myChart)
+  equipSteamStore.getEquipTempData(requestData, myChart)
   // 窗口变化时图表自适应
   window.addEventListener('resize', () => {
     myChart.resize()

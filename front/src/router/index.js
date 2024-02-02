@@ -30,7 +30,19 @@ const router = createRouter({
         {
           path: 'digital_twin',
           name: 'digital_twin',
-          component: () => import('../views/secondViews/ScreenView.vue')
+          component: () => import('../views/secondViews/DigitalTwinView.vue'),
+          children: [
+            {
+              path: 'digital_twin__beam_1',
+              name: 'digital_twin__beam_1',
+              component: () => import('../views/thirdViews/DigitalTwinBeamView.vue')
+            },
+            {
+              path: 'locked',
+              name: 'locked',
+              component: () => import('../views/LockedView.vue')
+            }
+          ]
         },
         // 设备管理
         {
@@ -55,6 +67,12 @@ const router = createRouter({
               path: 'equip__monitor',
               name: 'equip__monitor',
               component: () => import('../views/thirdViews/EquipMonitorView.vue')
+            },
+            // 拌合站
+            {
+              path: 'equip__mix_station',
+              name: 'equip__mix_station',
+              component: () => import('../views/thirdViews/EquipMixView.vue')
             },
             {
               path: 'locked',

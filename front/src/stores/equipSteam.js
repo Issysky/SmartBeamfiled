@@ -1,9 +1,9 @@
-// 设备数据的store
+// 设备数据 蒸养棚的store
 import { defineStore } from 'pinia'
 import axios from 'axios'
 import { reactive, ref } from 'vue'
 
-export const useEquipStore = defineStore('equip', () => {
+export const useEquipSteamStore = defineStore('equipSteam', () => {
   // 蒸养棚数据
   let equipSteamData = reactive([])
   //  温湿度数据

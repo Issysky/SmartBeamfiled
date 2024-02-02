@@ -26,35 +26,37 @@
 import { onMounted } from 'vue'
 import { useUserStore } from '../stores/user.js'
 import { useRouter } from 'vue-router'
-import { useEquipStore } from '../stores/equip.js'
+import { useEquipSteamStore } from '../stores/equipSteam.js'
 
 // 定义路由
 const router = useRouter()
 // 引入store
 const userStore = useUserStore()
-const equipStore = useEquipStore()
+const equipSteamStore = useEquipSteamStore()
 // 点击跳转不同三级路由
 const handleClick = async (index) => {
   const leftnav = Array.from(document.querySelectorAll('.leftnav'))
-  leftnav.forEach((item) => {
-    item.classList.remove('active')
-  })
-  console.log(leftnav[index], 123456)
-  leftnav[index].classList.add('active')
-  const path =
-    '/home/' +
-    userStore.secRouter.router_name +
-    '/' +
-    userStore.secRouter.children[index].router_name
-  // 跳转到蒸养棚页面的操作
-  if (path === '/home/equip/equip__steam') {
-    const requestData = {
-      name: 'room1',
-      type: 'device_status'
+  // 判断是否有左侧导航
+  if (leftnav.length !== 0) {
+    leftnav.forEach((item) => {
+      item.classList.remove('active')
+    })
+    leftnav[index].classList.add('active')
+    const path =
+      '/home/' +
+      userStore.secRouter.router_name +
+      '/' +
+      userStore.secRouter.children[index].router_name
+    // 跳转到蒸养棚页面的操作
+    if (path === '/home/equip/equip__steam') {
+      const requestData = {
+        name: 'room1',
+        type: 'device_status'
+      }
+      equipSteamStore.getEquipSteamData(requestData)
     }
-    equipStore.getEquipSteamData(requestData)
+    router.push({ path })
   }
-  router.push({ path })
 }
 onMounted(() => {
   handleClick(0)
@@ -68,7 +70,7 @@ onMounted(() => {
   // background: var(--LeftNavBgColor);
   background-color: #1c1c1c;
   flex-direction: column;
-  box-shadow:   8px 8px 16px #000;
+  box-shadow: 8px 8px 16px #000;
   transition: all 0.3s ease-in-out;
   overflow: hidden;
   font-family: 'textFont';
@@ -118,7 +120,7 @@ onMounted(() => {
       display: flex;
       align-items: center;
       justify-content: flex-start;
-      font-size: .8em;
+      font-size: 0.8em;
       font-weight: 600;
       color: var(--font-level-1);
       letter-spacing: 2px;

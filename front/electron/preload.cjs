@@ -8,6 +8,10 @@ contextBridge.exposeInMainWorld('topBar', {
   mini: () => ipcRenderer.send('mini'),
   max: () => ipcRenderer.send('max'),
   unmax: () => ipcRenderer.send('unmax'),
+  // 打开开发者工具
+  openDevTools: () => ipcRenderer.send('open-dev-tools'),
+  // 强制刷新
+  reload: () => ipcRenderer.send('reload'),
   // 检测网络
   pingInter: () =>
     ipcRenderer.invoke('check-connection').then((res) => {

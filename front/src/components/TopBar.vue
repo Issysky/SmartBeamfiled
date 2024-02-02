@@ -62,9 +62,9 @@ const topBarStore = usetopBarStore()
 const userStore = useUserStore()
 
 // 导航路由数组
-const navArr = userStore.getFirstRouter()
+let navArr = userStore.getFirstRouter()
 // 获取顶部导航栏元素
-const nav = Array.from(document.querySelectorAll('.nav'))
+let nav = []
 // 获取可拖拽元素
 const drag = ref(null)
 const drag1 = ref(null)
@@ -79,16 +79,24 @@ const largeFs = document.querySelector('#largeFs')
 // 改变顶部导航栏的激活状态
 const changeActive = (index, router_name) => {
   nav.forEach((item) => {
-    item.classList.remove('active')
+    if (item) {
+      item.classList.remove('active')
+    }
   })
-  nav[index].classList.add('active')
+  if (nav[index]) {
+    nav[index].classList.add('active')
+  }
   if (router_name === 'screen') {
     hideLeftBar()
     router.push('/home/' + router_name)
   } else if (router_name === 'digital_twin') {
     hideLeftBar()
     userStore.changeSecondRouter(router_name)
-    router.push('/home/' + router_name)
+    console.log(
+      '/home/' + router_name + '/' + userStore.secRouter.children[0].router_name,
+      '数字孪生'
+    )
+    router.push('/home/' + router_name + '/' + userStore.secRouter.children[0].router_name)
   } else {
     showLeftBar()
     userStore.changeSecondRouter(router_name)
@@ -137,6 +145,7 @@ const pingInter = async () => {
   }
 }
 onMounted(() => {
+  nav = Array.from(document.querySelectorAll('.nav'))
   changeActive(0, 'screen')
   // showLeftBar()
   pingInter()

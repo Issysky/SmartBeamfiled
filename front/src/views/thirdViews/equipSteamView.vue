@@ -26,7 +26,7 @@
 
 <script setup lang="js">
 import { onMounted, ref } from 'vue'
-import { useEquipStore } from '../../stores/equip.js'
+import { useEquipSteamStore } from '../../stores/equipSteam.js'
 import CardType1 from '../../components/CardType1.vue'
 import Monitor from '@/components/Monitor.vue';
 import { useMonitorStore } from '@/stores/monitor';
@@ -36,14 +36,14 @@ import { useMonitorStore } from '@/stores/monitor';
 const timeRange = ref('')
 
 //  引入store
-const equipStore = useEquipStore()
+const equipSteamStore = useEquipSteamStore()
 const monitorStore = useMonitorStore()
 // 定义isActive,控制按钮的样式
 const isActive = ref(true)
 
 const handle = () => {}
 onMounted(() => {
-  console.log(equipStore.equipSteamData, 'equipStore.equipSteamData')
+  console.log(equipSteamStore.equipSteamData, 'equipStore.equipSteamData')
 
 })
 </script>
