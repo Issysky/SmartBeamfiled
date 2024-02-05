@@ -225,13 +225,10 @@ onMounted(() => {
     }
     .active {
       // background-color: #a9ded8;
-      background-color: #218ed1;
+      background-color: #34b2f7;
       // background-color: #fff;
       color: var(--font-level-1);
 
-      &:hover {
-        color: var(--font-level-13);
-      }
     }
   }
   .function-wrapper2 {

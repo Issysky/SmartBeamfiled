@@ -1,7 +1,7 @@
 <!-- 二级路由 设备数据 -->
 <template>
   <div class="equip-wrapper">
-    <h1>设备数据</h1>
+    <!-- <h1>设备数据</h1> -->
     <router-view></router-view>
   </div>
 </template>

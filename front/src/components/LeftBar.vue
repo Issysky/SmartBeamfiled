@@ -130,8 +130,8 @@ onMounted(() => {
       transition: all 0.1s ease-in-out;
       cursor: pointer;
       &:hover {
-        color: var(--font-level-13);
-        background-color: #b0ebff;
+        color: var(--font-level-3);
+        // background-color: #b0ebff;
       }
       span {
         width: 20px;
