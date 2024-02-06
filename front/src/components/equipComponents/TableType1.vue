@@ -79,9 +79,13 @@
               @blur="getParams('taskId', taskId)"
             />
           </div>
-
           <button @click="getMixStationData('', '')">查询</button>
+          <button @click="resetParams('', '')">重置</button>
         </div>
+      </div>
+      <div class="echart-wrapper">
+        <ChartProductionLine />
+        <ChartMonth />
       </div>
       <!-- 表格主体 -->
       <div class="table">
@@ -111,13 +115,21 @@
             :key="index"
           >
             <p class="value" v-for="(valueKey, i) in equipMixStore.mixDataKey" :key="index">
+              <!-- 实际方量加后缀 -->
               {{ valueKey === 'QuanityActual' ? item[valueKey] + '(m³)' : item[valueKey] }}
               <!-- 详情显示字体图标 -->
               <el-icon
                 v-if="valueKey === 'Detail'"
                 :style="{ cursor: 'pointer', fontSize: '1.5em' }"
+                @click="equipMixStore.showDetailDialog(item)"
                 ><Document
               /></el-icon>
+              <!-- 超标等级显示图标 -->
+              <img
+                v-if="valueKey === 'ExcessGrade'"
+                :src="getExcessGradeImg(item[valueKey])"
+                alt=""
+              />
             </p>
           </div>
         </div>
@@ -133,12 +145,16 @@
         />
       </div>
     </div>
+    <!-- 详情弹窗 -->
+    <!-- <CardType3 /> -->
   </div>
 </template>
 
 <script setup lang="js">
 import { onMounted, reactive, ref } from 'vue'
 import { useEquipMixStore } from '@/stores/equipMix'
+import ChartProductionLine from '../screenComponents/ChartProductionLine.vue';
+import ChartMonth from '../ChartMonth.vue';
 
 // 引入store
 const equipMixStore = useEquipMixStore()
@@ -158,7 +174,7 @@ const excessGrade = ref('')
 const taskId = ref('')
 // 定义传出的筛选数据
 let params = reactive({
-  page_size: 15,
+  page_size: 7,
   page: 1,
   ordering: '-UploadTime'
 })
@@ -197,6 +213,21 @@ const getParams = (key, value) => {
 
   console.log(params)
 }
+// 重置筛选参数
+const resetParams = () => {
+  params = {
+    page_size: 7,
+    page: 1,
+    ordering: '-UploadTime'
+  }
+  datePickerValue.value = ''
+  strengthGrade.value = ''
+  mixStationCode.value = ''
+  pouringPosition.value = ''
+  excessGrade.value = ''
+  taskId.value = ''
+  getMixStationData('', '')
+}
 
 // 排序
 const sortBy = (key) => {
@@ -218,6 +249,18 @@ const getMixStationData = (type, value) => {
   }
   equipMixStore.getMixData(params)
 }
+// 获取超标图片
+const getExcessGradeImg = (value) => {
+  if (value === 0) {
+    return '/src/assets/img/screenImg/无.png'
+  } else if (value === 1) {
+    return '/src/assets/img/screenImg/数字1.png'
+  } else if (value === 2) {
+    return '/src/assets/img/screenImg/数字2.png'
+  } else if (value === 3) {
+    return '/src/assets/img/screenImg/数字3.png'
+  }
+}
 
 onMounted(() => {
   equipMixStore.getMixData(params)
@@ -229,7 +272,7 @@ onMounted(() => {
   height: 87%;
   // background-color: #fff;
   padding: 0 3%;
-
+  // position: relative;
   .table-wrapper {
     width: 100%;
     height: 100%;
@@ -285,10 +328,10 @@ onMounted(() => {
         button {
           width: 5%;
           height: 40%;
-          margin: 0 2%;
+          margin-right: 1%;
           border: none;
           border-radius: 5px;
-          background-color: #409eff;
+          background-color: #34b2f7;
           color: var(--font-level-1);
           &:hover {
             cursor: pointer;
@@ -297,9 +340,17 @@ onMounted(() => {
         }
       }
     }
+    .echart-wrapper{
+      width: 100%;
+      height: 44%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      
+    }
     .table {
       width: 100%;
-      height: 80%;
+      height: 40%;
       .title-wrapper {
         width: 100%;
         height: 7%;
@@ -315,7 +366,7 @@ onMounted(() => {
         //   display: block;
         //   width: 95%;
         //   height: 1px;
-        //   background: black; 
+        //   background: black;
         //   position: absolute;
         //   bottom: -10px;
         //   left: 2.5%;
@@ -349,7 +400,7 @@ onMounted(() => {
         height: 85%;
         .value-column {
           width: 100%;
-          height: 7%;
+          height: 14%;
           // margin-bottom: .5%;
           display: flex;
           justify-content: center;
@@ -357,6 +408,11 @@ onMounted(() => {
           border-radius: 15px;
           &:hover {
             background-color: #fff;
+          }
+          & > :last-child {
+            &:hover {
+              color: #34b2f7;
+            }
           }
           .value {
             width: 20%;
@@ -366,13 +422,20 @@ onMounted(() => {
             align-items: center;
             color: var(--font-level-13);
             font-size: 0.7em;
+            position: relative;
+            img {
+              position: absolute;
+              width: 100%;
+              height: 50%;
+              object-fit: contain;
+            }
           }
         }
       }
     }
     .pagination {
       width: 90%;
-      height: 7%;
+      height: 6%;
       display: flex;
       justify-content: flex-end;
     }

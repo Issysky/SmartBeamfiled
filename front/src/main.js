@@ -3,6 +3,7 @@ import { createPinia } from 'pinia'
 // 引入 Element Plus+ 组件库
 import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
+// import '@/assets/css/elvar.css'
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 // elem中文语言包
 import zhCn from 'element-plus/dist/locale/zh-cn'
@@ -19,6 +20,14 @@ app.use(router)
 app.use(ElementPlus)
 for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
   app.component(key, component)
+}
+// 设置全局颜色变量
+app.config.globalProperties.$color = {
+  primary: '#34b2f7',
+  success: '#1aaf8b',
+  warning: '#f5bc16',
+  danger: '#fe4500',
+  info: '#909399'
 }
 
 axios.defaults.baseURL = 'https://api.ihmeng.cn'

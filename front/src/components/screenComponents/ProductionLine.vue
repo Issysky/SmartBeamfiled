@@ -2,14 +2,14 @@
 <template>
   <div class="product-line-wrapper" :style="{ right: show ? '2%' : '-40%' }">
     <Line :width="'80%'" :label="'生产线使用率'"></Line>
-    <chartProductionLine></chartProductionLine>
+    <ChartProductionLine></ChartProductionLine>
   </div>
 </template>
 
 <script setup lang="js">
 import { ref, onMounted, onBeforeMount, reactive } from 'vue'
 import Line from '../Line.vue'
-import chartProductionLine from './chartProductionLine.vue'
+import ChartProductionLine from './ChartProductionLine.vue'
 
 // 定义是否展示
 let show = ref(false)

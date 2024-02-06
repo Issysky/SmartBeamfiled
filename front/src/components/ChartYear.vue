@@ -1,4 +1,4 @@
-<!-- 年度生产计划统计图 -->
+<!-- 年度生产计划统计图 出现在梁场大屏-->
 <template>
   <div class="chart-wrapper">
     <p class="label">年度生产曲线</p>

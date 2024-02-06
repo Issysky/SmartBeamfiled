@@ -198,7 +198,7 @@ onMounted(() => {
     // -webkit-app-region: drag;
   }
   .nav-wrapper {
-    width: 55%;
+    width: 80%;
     height: 70%;
     position: relative;
     display: flex;
