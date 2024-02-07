@@ -2,7 +2,7 @@
 import { defineStore } from 'pinia'
 import axios from 'axios'
 import { reactive, ref } from 'vue'
-import { exportExcel } from '@/excelConfig.js'
+import { exportExcel } from '@/utils/excelConfig.js'
 
 export const useEquipMixStore = defineStore('equipMix', () => {
   // 请求地址
@@ -23,10 +23,10 @@ export const useEquipMixStore = defineStore('equipMix', () => {
     { name: '配合比编号:', key: 'ProportionoperId' },
     { name: '操作人:', key: 'Operator' }
   ]
-   // 弹窗的内容区2表头
+  // 弹窗的内容区2表头
   const mixDetailContent2 = [
     { name: '拌时:', key: 'MixingDuration ' },
-    { name: '方量:', key: 'QuanityActual' },
+    { name: '方量:', key: 'QuanityActual' }
   ]
   //详情弹窗的数据
   const mixDetailData = reactive({
@@ -65,6 +65,121 @@ export const useEquipMixStore = defineStore('equipMix', () => {
     'Detail'
   ]
 
+  // 导出excel的图表数据表头
+  const exportExcelColumns = reactive({
+    data: ['机器编号', '任务工单号', '浇筑部位', '强度等级', '实际方量', '出料时间', '超标等级', '拌合站','水胶比','砂率','上传时间','车牌号','配合比编号','操作人','拌时','水1','水2','水泥1','水泥2','水泥3','砂1','砂2','碎石1','碎石2','碎石3','碎石4','矿粉','粉煤灰','外加剂']
+  })
+
+ 
+  // 超标等级饼状图option
+  const excessGradeOption = reactive({
+    option: {
+      title: {
+        text: '超标等级'
+      },
+      tooltip: {
+        trigger: 'item'
+      },
+      series: [
+        {
+          name: 'Access From',
+          type: 'pie',
+          radius: '70%',
+          left: '0%',
+          data: [
+            {
+              value: 1000,
+              name: '不超标',
+              itemStyle: { color: '#1aaf8b' }
+              // itemStyle: { color: '#7CFFB2' }
+            },
+            {
+              value: 30,
+              name: '一级超标',
+              itemStyle: { color: '#406c85' }
+              // itemStyle: { color: '#58D9F9' }
+            },
+            {
+              value: 50,
+              name: '二级超标',
+              itemStyle: { color: '#f5bc16' }
+              // itemStyle: { color: '#FDDD60' }
+            },
+            {
+              value: 10,
+              name: '三级超标',
+              itemStyle: { color: '#fe4500' }
+              // itemStyle: { color: '#FF6E76' }
+            }
+          ],
+          emphasis: {
+            itemStyle: {
+              shadowBlur: 10,
+              shadowOffsetX: 0,
+              shadowColor: 'rgba(0, 0, 0, 0.5)'
+            }
+          }
+        }
+      ]
+    }
+  })
+  // 实际方量折线图option
+  const actualQuantityOption = reactive({
+    option:{
+      title: {
+        text: '出方量统计'
+      },
+      tooltip: {
+        trigger: 'axis',
+        axisPointer: {
+          type: 'cross',
+          label: {
+            backgroundColor: '#6a7985'
+          }
+        }
+      },
+      grid: {
+        left: '3%',
+        right: '4%',
+        bottom: '3%',
+        containLabel: true
+      },
+      xAxis: [
+        {
+          type: 'category',
+          boundaryGap: false,
+          data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+        }
+      ],
+      yAxis: [
+        {
+          type: 'value'
+        }
+      ],
+      series: [
+        {
+          name: 'Email',
+          type: 'line',
+          stack: 'Total1',
+          areaStyle: {
+            color: '#f5bc16'
+          },
+          emphasis: {
+            focus: 'series'
+          },
+          data: [120, 132, 101, 134, 90, 230, 210],
+          lineStyle:{
+            color:'#f5bc16'
+          },
+          itemStyle:{
+            color:'#f5bc16'
+          }
+        },
+    
+      ]
+    }
+  })
+
   // 获取拌合站数据
   const getMixData = async (params) => {
     const res = await axios.get(url, {
@@ -91,7 +206,7 @@ export const useEquipMixStore = defineStore('equipMix', () => {
     // 获取这一条的详情数据
     mixDetailData.data = item
     // 获取下方的表格数据
-    mixDetailTableData.data =  [
+    mixDetailTableData.data = [
       {
         name: '水1',
         design: mixDetailData.data.WaterDesign1 ? mixDetailData.data.WaterDesign1 : 0,
@@ -271,6 +386,64 @@ export const useEquipMixStore = defineStore('equipMix', () => {
     return data
   }
 
+  // 渲染图表
+  const chartSetOption = (chart, option) => {
+    // console.log('渲染图表')
+    chart.setOption(option)
+    // resetOption(chart, option)
+  }
+  // 图表重绘
+  const resetOption = (myChart, option) => {
+    setInterval(() => {
+      myChart.clear()
+      myChart.setOption(option)
+    }, 7000)
+  }
+  // 获取导出excel的数据
+  const getExportExcelData = (data) => {
+    console.log(data,'excleData')
+    let arr = []
+    arr = data.map((item,index)=>{
+      return [
+        item.MixingStationCode,
+        item.TaskId,
+        item.PouringPosition,
+        item.StrengthGrade,
+        item.QuanityActual,
+        item.DischargeTime,
+        item.ExcessGrade,
+        item.MixingstationCode,
+        item.WaterCementRatio,
+        item.SandRatio,
+        item.UploadTime,
+        item.CarNo,
+        item.ProportionoperId,
+        item.Operator,
+        item.MixingDuration,
+        item.WaterActual1,
+        item.WaterActual2,
+        item.CementActual1,
+        item.CementActual2,
+        item.CementActual3,
+        item.SandActual1,
+        item.SandActual2,
+        item.GravelActual1,
+        item.GravelActual2,
+        item.GravelActual3,
+        item.GravelActual4,
+        item.MineralPowderActual,
+        item.FlyAshActual,
+        item.WaterReduceActual
+      ]
+    })
+    arr.unshift(exportExcelColumns.data)
+    return arr
+  }
+  // 导出excel
+  const exportExcelData = () => {
+    exportExcel('拌合站数据',getExportExcelData(mixData.data))
+  }
+
   return {
     mixData,
     getMixData,
@@ -283,6 +456,10 @@ export const useEquipMixStore = defineStore('equipMix', () => {
     showDetailDialog,
     mixDetailContent2,
     getDetailTableData,
-    mixDetailTableData
+    mixDetailTableData,
+    chartSetOption,
+    excessGradeOption,
+    actualQuantityOption,
+    exportExcelData
   }
 })

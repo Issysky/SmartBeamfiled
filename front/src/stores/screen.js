@@ -9,17 +9,11 @@ export const useScreenStore = defineStore('screen', () => {
 
   // 获取在线状态
   const online = localStorage.getItem('online') === 'online' ? true : false
-  // 定义卡片是否展示的
-  let cardShow = reactive({
-    type1: false,
-    type2: false,
-    type3: false
-  })
 
   const newsData = reactive({
     data: {}
   })
-  // 获取生产线占用率图表option
+  // 生产线占用率图表option
   const productionLineOption = reactive({
     option: {
       title: {
@@ -98,7 +92,7 @@ export const useScreenStore = defineStore('screen', () => {
   }
   // 渲染图表
   const chartSetOption = (chart, option) => {
-    console.log('渲染图表')
+    // console.log('渲染图表')
     chart.setOption(option)
     resetOption(chart, option)
   }

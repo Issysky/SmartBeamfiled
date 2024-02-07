@@ -6,7 +6,9 @@ import 'element-plus/dist/index.css'
 // import '@/assets/css/elvar.css'
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 // elem中文语言包
-import zhCn from 'element-plus/dist/locale/zh-cn'
+import zhCn from 'element-plus/dist/locale/zh-cn.js'
+// import lang from 'element-plus/lib/locale/lang/zh-cn.js'
+import 'dayjs/locale/zh-cn.js'
 import axios from 'axios'
 
 import App from './App.vue'
@@ -21,6 +23,10 @@ app.use(ElementPlus)
 for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
   app.component(key, component)
 }
+// 设置 Element Plus+ 组件库语言为中文
+app.use(ElementPlus, {
+  locale: zhCn,
+})
 // 设置全局颜色变量
 app.config.globalProperties.$color = {
   primary: '#34b2f7',

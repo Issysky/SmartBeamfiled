@@ -79,13 +79,18 @@
               @blur="getParams('taskId', taskId)"
             />
           </div>
-          <button @click="getMixStationData('', '')">查询</button>
-          <button @click="resetParams('', '')">重置</button>
+          <div class="btn-arr">
+            <button @click="getMixStationData('', '')">查询</button>
+            <button @click="resetParams('', '')">重置</button>
+            <button @click="equipMixStore.exportExcelData()">导出</button>
+          </div>
         </div>
       </div>
       <div class="echart-wrapper">
-        <ChartProductionLine />
-        <ChartMonth />
+        <div class="chart1">
+          <ChartExcess />
+        </div>
+        <div class="chart2"><ChartQuanityActual /></div>
       </div>
       <!-- 表格主体 -->
       <div class="table">
@@ -152,9 +157,9 @@
 
 <script setup lang="js">
 import { onMounted, reactive, ref } from 'vue'
-import { useEquipMixStore } from '@/stores/equipMix'
-import ChartProductionLine from '../screenComponents/ChartProductionLine.vue';
-import ChartMonth from '../ChartMonth.vue';
+import { useEquipMixStore } from '@/stores/equipMix.js'
+import ChartExcess from './ChartExcess.vue'
+import ChartQuanityActual from './ChartQuanityActual.vue'
 
 // 引入store
 const equipMixStore = useEquipMixStore()
@@ -174,7 +179,7 @@ const excessGrade = ref('')
 const taskId = ref('')
 // 定义传出的筛选数据
 let params = reactive({
-  page_size: 7,
+  page_size: 10,
   page: 1,
   ordering: '-UploadTime'
 })
@@ -216,7 +221,7 @@ const getParams = (key, value) => {
 // 重置筛选参数
 const resetParams = () => {
   params = {
-    page_size: 7,
+    page_size: 10,
     page: 1,
     ordering: '-UploadTime'
   }
@@ -270,9 +275,9 @@ onMounted(() => {
 .table-mix-wrapper {
   width: 94%;
   height: 87%;
-  // background-color: #fff;
+
   padding: 0 3%;
-  // position: relative;
+
   .table-wrapper {
     width: 100%;
     height: 100%;
@@ -325,35 +330,49 @@ onMounted(() => {
           align-items: center;
           margin-right: 2%;
         }
-        button {
-          width: 5%;
-          height: 40%;
-          margin-right: 1%;
-          border: none;
-          border-radius: 5px;
-          background-color: #34b2f7;
-          color: var(--font-level-1);
-          &:hover {
-            cursor: pointer;
-            background-color: #79bbff;
+        .btn-arr {
+          flex: 1;
+          height: 100%;
+          display: flex;
+          justify-content: flex-end;
+          align-items: center;
+          button {
+            flex: 1;
+            height: 40%;
+            margin-left: 4%;
+            border: none;
+            border-radius: 5px;
+            background-color: #34b2f7;
+            color: var(--font-level-1);
+            &:hover {
+              cursor: pointer;
+              background-color: #79bbff;
+            }
           }
         }
       }
     }
-    .echart-wrapper{
+    .echart-wrapper {
       width: 100%;
-      height: 44%;
+      height: 39%;
       display: flex;
       justify-content: center;
       align-items: center;
-      
+      .chart1 {
+        width: 30%;
+        height: 100%;
+      }
+      .chart2 {
+        width: 70%;
+        height: 100%;
+      }
     }
     .table {
       width: 100%;
-      height: 40%;
+      height: 45%;
       .title-wrapper {
         width: 100%;
-        height: 7%;
+        height: 10%;
         display: flex;
         background-color: #60626633;
         border-radius: 15px;
@@ -381,7 +400,7 @@ onMounted(() => {
           font-size: 0.8em;
           font-weight: 600;
           .icon {
-            height: 30%;
+            height: 40%;
             font-size: 0.8em;
             cursor: pointer;
             display: flex;
@@ -400,7 +419,7 @@ onMounted(() => {
         height: 85%;
         .value-column {
           width: 100%;
-          height: 14%;
+          height: 10%;
           // margin-bottom: .5%;
           display: flex;
           justify-content: center;

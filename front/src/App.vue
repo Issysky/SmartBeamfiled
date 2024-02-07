@@ -57,6 +57,10 @@ onBeforeUnmount(() => {
   font-family: 'textFont';
   src: url('./assets/font/微软雅黑.ttf') format('truetype');
 }
+@font-face {
+  font-family: 'alimamaFont';
+  src: url('./assets/font/阿里妈妈数黑体.ttf') format('truetype');
+}
 main {
   width: 100vw;
   height: 100vh;
