@@ -16,6 +16,7 @@ const equipMixStore = useEquipMixStore()
 
 onMounted(() => {
   myChart = echarts.init(chart.value)
+
   equipMixStore.chartSetOption(myChart, equipMixStore.excessGradeOption.option)
   window.addEventListener('resize', () => {
     myChart.resize()

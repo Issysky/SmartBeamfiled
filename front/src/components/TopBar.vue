@@ -121,11 +121,14 @@ const hideLeftBar = () => {
   // 获取左侧边栏元素和主要内容区域元素
   const leftBar = document.querySelector('.leftBar-wrapper')
   const mainWrapper = document.querySelector('.main-wrapper')
-  leftBar.style.width = '0'
-  // 把主要内容区域设置为占满全屏
-  mainWrapper.style.flex = '1'
-  mainWrapper.style.marginRight = '2vw'
-  mainWrapper.style.marginLeft = '0'
+  if(leftBar) {
+    leftBar.style.width = '0'
+    // 把主要内容区域设置为占满全屏
+    mainWrapper.style.flex = '1'
+    mainWrapper.style.marginRight = '2vw'
+    mainWrapper.style.marginLeft = '0'
+  }
+
 }
 
 // 测试是否联网

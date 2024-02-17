@@ -94,7 +94,7 @@ onMounted(() => {
     flex-direction: row;
     margin-bottom: 2%;
     color: var(--font-level-11);
-    background-color: #f7ea8e;
+    background-color: var(--color-warning);
     border-radius: 7px;
     .label {
       height: 100%;

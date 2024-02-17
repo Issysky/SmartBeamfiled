@@ -6,7 +6,7 @@ import { exportExcel } from '@/utils/excelConfig.js'
 
 export const useEquipMixStore = defineStore('equipMix', () => {
   // 请求地址
-  const url = '/mixStationData/'
+  const url = '/device/mix_station/'
   // 详情弹窗是否展示
   const detailDialogVisible = ref(false)
   // 弹窗的内容区1表头
@@ -49,7 +49,7 @@ export const useEquipMixStore = defineStore('equipMix', () => {
     { name: '浇筑部位', width: '', key: 'PouringPosition' },
     { name: '强度等级', width: '', key: 'StrengthGrade' },
     { name: '实际方量', width: '', key: 'QuanityActual' },
-    { name: '出料时间', width: '', key: 'DischargeTime' },
+    { name: '出料时间', width: '', key: 'time' },
     { name: '超标等级', width: '', key: 'ExcessGrade' },
     { name: '详情', width: '', key: 'Detail' }
   ]
@@ -60,17 +60,46 @@ export const useEquipMixStore = defineStore('equipMix', () => {
     'PouringPosition',
     'StrengthGrade',
     'QuanityActual',
-    'DischargeTime',
+    'time',
     'ExcessGrade',
     'Detail'
   ]
 
   // 导出excel的图表数据表头
   const exportExcelColumns = reactive({
-    data: ['机器编号', '任务工单号', '浇筑部位', '强度等级', '实际方量', '出料时间', '超标等级', '拌合站','水胶比','砂率','上传时间','车牌号','配合比编号','操作人','拌时','水1','水2','水泥1','水泥2','水泥3','砂1','砂2','碎石1','碎石2','碎石3','碎石4','矿粉','粉煤灰','外加剂']
+    data: [
+      '机器编号',
+      '任务工单号',
+      '浇筑部位',
+      '强度等级',
+      '实际方量',
+      '出料时间',
+      '超标等级',
+      '拌合站',
+      '水胶比',
+      '砂率',
+      '上传时间',
+      '车牌号',
+      '配合比编号',
+      '操作人',
+      '拌时',
+      '水1',
+      '水2',
+      '水泥1',
+      '水泥2',
+      '水泥3',
+      '砂1',
+      '砂2',
+      '碎石1',
+      '碎石2',
+      '碎石3',
+      '碎石4',
+      '矿粉',
+      '粉煤灰',
+      '外加剂'
+    ]
   })
 
- 
   // 超标等级饼状图option
   const excessGradeOption = reactive({
     option: {
@@ -125,7 +154,7 @@ export const useEquipMixStore = defineStore('equipMix', () => {
   })
   // 实际方量折线图option
   const actualQuantityOption = reactive({
-    option:{
+    option: {
       title: {
         text: '出方量统计'
       },
@@ -141,7 +170,7 @@ export const useEquipMixStore = defineStore('equipMix', () => {
       grid: {
         left: '3%',
         right: '4%',
-        bottom: '3%',
+        bottom: '10%',
         containLabel: true
       },
       xAxis: [
@@ -168,14 +197,13 @@ export const useEquipMixStore = defineStore('equipMix', () => {
             focus: 'series'
           },
           data: [120, 132, 101, 134, 90, 230, 210],
-          lineStyle:{
-            color:'#f5bc16'
+          lineStyle: {
+            color: '#f5bc16'
           },
-          itemStyle:{
-            color:'#f5bc16'
+          itemStyle: {
+            color: '#f5bc16'
           }
-        },
-    
+        }
       ]
     }
   })
@@ -188,13 +216,12 @@ export const useEquipMixStore = defineStore('equipMix', () => {
         Authorization: localStorage.getItem('token')
       }
     })
-
     totalPage.value = res.data.total_pages
     mixData.data = res.data.results.map((item, index) => {
       // 处理时间格式,加静态详情字段
       return {
         ...item,
-        DischargeTime: item.DischargeTime?.split('T')[0] + ' ' + item.DischargeTime?.split('T')[1],
+        time: item.time?.split('T')[0] + ' ' + item.time?.split('T')[1],
         Detail: ''
       }
     })
@@ -385,25 +412,51 @@ export const useEquipMixStore = defineStore('equipMix', () => {
     console.log(data, 'data')
     return data
   }
+  //获取option的value
+  const getChartOtion = () => {
+    let excess = {
+      zero: 0,
+      one: 0,
+      two: 0,
+      three: 0
+    }
+    mixData.data.forEach((item, index) => {
+      if (item.ExcessGrade === 0) {
+        excess.zero++
+      } else if (item.ExcessGrade === 1) {
+        excess.one++
+      } else if (item.ExcessGrade === 2) {
+        excess.two++
+      } else if (item.ExcessGrade === 3) {
+        excess.three++
+      }
+    })
+    // 超标等级饼状图option
+    excessGradeOption.option.series[0].data[0].value = excess.zero
+    excessGradeOption.option.series[0].data[1].value = excess.one
+    excessGradeOption.option.series[0].data[2].value = excess.two
+    excessGradeOption.option.series[0].data[3].value = excess.three
+  }
 
   // 渲染图表
   const chartSetOption = (chart, option) => {
     // console.log('渲染图表')
     chart.setOption(option)
-    // resetOption(chart, option)
+    resetOption(chart, option)
   }
   // 图表重绘
   const resetOption = (myChart, option) => {
     setInterval(() => {
+      getChartOtion()
       myChart.clear()
       myChart.setOption(option)
-    }, 7000)
+    }, 4000)
   }
   // 获取导出excel的数据
   const getExportExcelData = (data) => {
-    console.log(data,'excleData')
+    console.log(data, 'excleData')
     let arr = []
-    arr = data.map((item,index)=>{
+    arr = data.map((item, index) => {
       return [
         item.MixingStationCode,
         item.TaskId,
@@ -441,7 +494,7 @@ export const useEquipMixStore = defineStore('equipMix', () => {
   }
   // 导出excel
   const exportExcelData = () => {
-    exportExcel('拌合站数据',getExportExcelData(mixData.data))
+    exportExcel('拌合站数据', getExportExcelData(mixData.data))
   }
 
   return {

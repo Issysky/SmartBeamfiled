@@ -65,7 +65,7 @@ export const useChartMonthStore = defineStore('chartMonth', () => {
         },
         data: [],
         itemStyle: {
-          color: '#E36255'
+          color: '#1aaf8b'
         }
       },
       {
@@ -78,10 +78,10 @@ export const useChartMonthStore = defineStore('chartMonth', () => {
         },
         smooth: true,
         lineStyle: {
-          color: '#E36255'
+          color: '#1aaf8b'
         },
         itemStyle: {
-          color: '#E36255'
+          color: '#1aaf8b'
         }
       },
       {
@@ -92,7 +92,7 @@ export const useChartMonthStore = defineStore('chartMonth', () => {
         },
         data: [],
         itemStyle: {
-          color: '#AEFDAE'
+          color: '#fe4500'
         }
       },
       {
@@ -105,10 +105,10 @@ export const useChartMonthStore = defineStore('chartMonth', () => {
         },
         smooth: true,
         lineStyle: {
-          color: '#AEFDAE'
+          color: '#fe4500'
         },
         itemStyle: {
-          color: '#AEFDAE'
+          color: '#fe4500'
         }
       }
     ]
@@ -121,8 +121,8 @@ export const useChartMonthStore = defineStore('chartMonth', () => {
   // 在线状态
   const online = localStorage.getItem('online') === 'online'
   // 定义请求地址
-  const url = '/beam_plan/'
-  const url2 = '/finished_beam/'
+  const url = '/beam/plan/'
+  const url2 = '/beam/finished/'
   //   重新渲染图表
   const chartSetOption = (myChart) => {
     myChart.setOption(option)
@@ -134,7 +134,7 @@ export const useChartMonthStore = defineStore('chartMonth', () => {
       console.log('chartMonth在线')
       const res = await axios.get(url, {
         params: {
-          latest_data: 'true'
+          info_count: 15
         },
         headers: {
           Authorization: localStorage.getItem('token')
@@ -180,7 +180,7 @@ export const useChartMonthStore = defineStore('chartMonth', () => {
     if (online) {
       const res = await axios.get(url2, {
         params: {
-          type: 'latest'
+          info_count: 15
         },
         headers: {
           Authorization: localStorage.getItem('token')

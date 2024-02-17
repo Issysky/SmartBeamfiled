@@ -28,7 +28,7 @@
           :title="item.beam_name"
           :style="{ width: formBeamStore.tableData.width[0] }"
         >
-          {{ item.beam_name }}
+          {{ item.beam_code }}
         </div>
         <div
           class="data2"
@@ -102,7 +102,7 @@ onMounted(() => {
     padding-top: 3px;
     padding-bottom: 3px;
     color: var(--font-level-11);
-    background-color: #b0edef;
+    background-color: var(--color-primary);
     color: #333546;
     border-radius: 7px;
     .label {

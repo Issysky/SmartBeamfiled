@@ -57,7 +57,7 @@ export const useFormBeamStore = defineStore('beam', () => {
   })
   // 在线状态
   const online = localStorage.getItem('online') === 'online'
-  const url = '/produced_beam/'
+  const url = '/beam/process/'
   // 获取最新数据
   const getTableData = async () => {
     if(!online){
@@ -69,7 +69,7 @@ export const useFormBeamStore = defineStore('beam', () => {
     if (online) {
       console.log('制梁在线状态')
       const res = await axios.get(url, {
-        params: { type: 'screen' },
+        params: { info_count: 15 },
         headers: { Authorization: localStorage.getItem('token') }
       })
       res.data.forEach((item) => {

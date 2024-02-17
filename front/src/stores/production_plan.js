@@ -11,7 +11,7 @@ export const useProductionPlanStore = defineStore('productionPlan', () => {
   // 已计划生产列表
   const planedList = reactive({})
   // 已计划生产列表的请求地址
-  const planedUrl = '/beam_plan/'
+  const planedUrl = '/beam/plan/'
 
   // 日历显示信息
   let calenderPlan = reactive({

@@ -81,7 +81,7 @@ export const useEquipSteamStore = defineStore('equipSteam', () => {
     series: []
   })
   // 获取蒸养数据的url
-  const equipSreamUrl = '/steam/'
+  const equipSreamUrl = '/beam/steam_room/'
 
   // 色彩生成器
   function* colorGenerator(colorType,init_color) {

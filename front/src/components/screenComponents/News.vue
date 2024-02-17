@@ -100,7 +100,7 @@ onUnmounted(() => {
 
     li {
       width: 100%;
-      padding-top: 8px;
+      padding-top: 10px;
       padding-bottom: 5px;
       border-bottom: 1px solid #000;
       position: relative;

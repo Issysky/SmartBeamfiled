@@ -68,10 +68,10 @@ onMounted(() => {
   myChart = echarts.init(document.getElementById('container'))
   const requestData = {
     type: 'tem_hum',
-    name: 'room1',
+    name: 'room2',
     time_from: '2024-01-01 12:30:00',
     time_to: '2024-01-01 14:40:00',
-    is_simplify:'true'
+    simplify: 10
   }
   // 发送请求
   equipSteamStore.getEquipTempData(requestData, myChart)

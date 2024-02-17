@@ -27,6 +27,7 @@ const router = createRouter({
           name: 'screen',
           component: () => import('../views/secondViews/ScreenView.vue')
         },
+        // 数字孪生
         {
           path: 'digital_twin',
           name: 'digital_twin',
@@ -93,7 +94,7 @@ const router = createRouter({
               component: () => import('../views/thirdViews/ProductionBeamView.vue')
             },
             {
-              path: 'production__beam__plan',
+              path: 'production__beam_plan',
               name: '梁片计划排程',
               component: () => import('../views/thirdViews/ProductionPlanView.vue')
             },
@@ -157,7 +158,7 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
   const userStore = useUserStore()
   const path = to.path.split('/')
-  console.log(userStore.userData.locked_menu_list, '路由输出')
+  console.log(userStore.userData.locked_menu_list, '锁定路由列表')
   console.log('path', path)
   // 检查即将进入的路由是否是受限的
   if (userStore.userData.locked_menu_list.includes(path[3])) {

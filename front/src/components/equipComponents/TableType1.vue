@@ -15,7 +15,7 @@
               range-separator="至"
               start-placeholder="开始日期"
               end-placeholder="结束日期"
-              :size="size"
+
               format="YYYY/MM/DD hh:mm:ss"
               value-format="YYYY-MM-DD hh:mm:ss "
               @change="getParams('time', datePickerValue)"
@@ -100,9 +100,9 @@
             <span
               class="icon"
               v-if="
-                item.key === 'ExcessGrade' || item.key === 'TaskId' || item.key === 'DischargeTime'
+                item.key === 'ExcessGrade' || item.key === 'TaskId' || item.key === 'time'
               "
-              @click="sortBy(item.key, item.key)"
+              @click="sortBy(item.key)"
             >
               <el-icon :style="{ color: isSortShow.show === item.key ? '#409EFF' : '' }"
                 ><CaretTop
@@ -180,8 +180,7 @@ const taskId = ref('')
 // 定义传出的筛选数据
 let params = reactive({
   page_size: 10,
-  page: 1,
-  ordering: '-UploadTime'
+  ordering: '-time'
 })
 
 // 排序按钮是否显示
@@ -200,8 +199,8 @@ const excessGradeArr = [
 // 根据筛选获得参数
 const getParams = (key, value) => {
   if (key === 'time') {
-    params.DischargeTime_before = value[0]
-    params.DischargeTime = value[1]
+    params.time_from = value[0]
+    params.time_to = value[1]
   } else if (key === 'strengthGrade') {
     params.StrengthGrade = value
   } else if (key === 'mixStationCode') {
@@ -222,8 +221,7 @@ const getParams = (key, value) => {
 const resetParams = () => {
   params = {
     page_size: 10,
-    page: 1,
-    ordering: '-UploadTime'
+    ordering: '-time'
   }
   datePickerValue.value = ''
   strengthGrade.value = ''

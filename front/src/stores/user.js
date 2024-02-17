@@ -37,9 +37,11 @@ export const useUserStore = defineStore('user', () => {
           // 保存token到localStorage
           localStorage.setItem('token', 'Bearer ' + userData.value.token)
           localStorage.setItem('userData', JSON.stringify(response.data))
+          // 修改baseurl,对应用户的app_url
+          axios.defaults.baseURL = 'https://api.ihmeng.cn/'+userData.value.app_url;
         })
         .catch((error) => {
-          console.error('登陆失败，error', error.response)
+          console.error('登陆失败，error', error)
         })
     } else {
       console.log('用户数据离线')

@@ -35,11 +35,11 @@ scene.add(axesHelper)
 // 加载模型
 const loader = new GLTFLoader()
 loader.load(
-  new URL('@/assets/3Dmodel/test.glb', import.meta.url).href,
+  new URL('@/assets/3Dmodel/文本(1).glb', import.meta.url).href,
   function (gltf) {
     console.log(gltf, ' 模型文件对象')
     gltf.scene.castShadow = true
-    scene.add(gltf.scene)
+    scene.add(gltf.scenes[1])
     const model = gltf.scene.children[0]
     // 批量添加模型
 

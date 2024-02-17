@@ -45,7 +45,7 @@ export const useFormMixStore = defineStore('form', () => {
   })
   // 在线状态
   const online = localStorage.getItem('online') === 'online' ? true : false
-  const url = '/mixStationData/'
+  const url = '/device/mix_station/'
   // 获取最新数据
   const getTableData = async () => {
     if (!online) {
@@ -54,10 +54,10 @@ export const useFormMixStore = defineStore('form', () => {
     } else {
       console.log('拌合站在线状态')
       const res = await axios.get(url, {
-        params: { type: 'latest' },
         headers: { Authorization: localStorage.getItem('token') }
       })
       tableData.data = res.data
+      
       localStorage.setItem('formMixData', JSON.stringify(res.data))
     }
   }

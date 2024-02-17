@@ -48,6 +48,12 @@
   /* fullCalendar */
   --fc-small-font-size: 1.2em;
   --fc-border-color: transparent;
+
+  --color-primary: #34b2f7;
+  --color-success: #1aaf8b;
+  --color-warning: #f5bc16;
+  --color-danger: #fe4500;
+  --color-info: #909399;
 }
 
 .primary-color{

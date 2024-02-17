@@ -24,10 +24,10 @@ export const useEnvStore = defineStore('env', () => {
               //   [1, '#F1B2B2']
               // ]
               color: [
-                [0.14, '#7CFFB2'],
-                [0.3, '#58D9F9'],
-                [0.7, '#FDDD60'],
-                [1, '#FF6E76']
+                [0.14, '#1aaf8b'],
+                [0.3, '#34b2f7'],
+                [0.7, '#f5bc16'],
+                [1, '#fe4500']
               ]
             }
           },
@@ -109,9 +109,9 @@ export const useEnvStore = defineStore('env', () => {
             lineStyle: {
               width: 15,
               color: [
-                [0.33, '#7CFFB2'],
-                [0.66, '#FDDD60'],
-                [1, '#FF6E76']
+                [0.33, '#1aaf8b'],
+                [0.66, '#f5bc16'],
+                [1, '#fe4500']
               ]
             }
           },
@@ -184,7 +184,7 @@ export const useEnvStore = defineStore('env', () => {
       temperature: 0
     }
   })
-  const url = '/environmentData/'
+  const url = 'device/environment/'
   //   获取环境数据
   const getEnvData = async (chart, type) => {
     getEnvDataFromLocalStorage(chart, type)

@@ -5,7 +5,7 @@ import { reactive, ref } from 'vue'
 
 export const useScreenStore = defineStore('screen', () => {
   // 获取新闻信息api
-  const newsUrl = '/news/'
+  const newsUrl = '/info/news/'
 
   // 获取在线状态
   const online = localStorage.getItem('online') === 'online' ? true : false
@@ -40,26 +40,29 @@ export const useScreenStore = defineStore('screen', () => {
             {
               value: 10,
               name: '一号生产线',
-              // itemStyle: { color: '#f7ea8e' }
-              itemStyle: { color: '#FF6E76' }
+              itemStyle: { color: '#fe4500' },
+              label: { color: '#fff' }
             },
             {
               value: 30,
               name: '二号生产线',
-              // itemStyle: { color: '#b0edef' }
-              itemStyle: { color: '#FDDD60' }
+              itemStyle: { color: '#f5bc16' },
+              label: { color: '#fff' }
+
             },
             {
               value: 50,
               name: '三号生产线',
-              // itemStyle: { color: '#aefdae' }
-              itemStyle: { color: '#58D9F9' }
+              itemStyle: { color: '#1aaf8b' },
+              label: { color: '#fff' }
+
             },
             {
               value: 10,
               name: '四号生产线',
-              // itemStyle: { color: '#F1B2B2' }
-              itemStyle: { color: '#7CFFB2' }
+              itemStyle: { color: '#34b2f7' },
+              label: { color: '#fff' }
+
             }
           ],
           emphasis: {

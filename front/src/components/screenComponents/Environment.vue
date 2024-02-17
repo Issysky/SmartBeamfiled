@@ -78,7 +78,7 @@ onMounted(async () => {
       position: relative;
       .title {
         position: absolute;
-        top: -4%;
+        top: 5%;
         left: 50%;
         transform: translateX(-50%);
         font-size: 1em;
@@ -91,7 +91,7 @@ onMounted(async () => {
 
       .title {
         position: absolute;
-        top: -4%;
+        top: 5%;
         left: 50%;
         transform: translateX(-50%);
         font-size: 1em;
@@ -127,13 +127,13 @@ onMounted(async () => {
       }
     }
     .tem {
-      background-color: #f7ea8e;
+      background-color: #f5bc16;
     }
     .hum {
-      background-color: #b0edef;
+      background-color: #34b2f7;
     }
     .wind {
-      background-color: #aefdae;
+      background-color: #1aaf8b;
     }
   }
 }

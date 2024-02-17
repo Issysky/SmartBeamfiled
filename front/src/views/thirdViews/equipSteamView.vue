@@ -1,7 +1,6 @@
-<!-- 三级路由 蒸养棚 -->
+<!-- 三级路由 蒸养棚 从属于设备管理二级路由-->
 <template>
   <div class="equip-steam-wrapper">
-    <Monitor v-if="monitorStore.isShow" />
     <!-- 日期时间选择器 -->
     <div class="block">
       <el-date-picker
@@ -28,8 +27,6 @@
 import { onMounted, ref } from 'vue'
 import { useEquipSteamStore } from '../../stores/equipSteam.js'
 import CardType1 from '../../components/CardType1.vue'
-import Monitor from '@/components/Monitor.vue';
-import { useMonitorStore } from '@/stores/monitor';
 
 
 //定义时间范围
@@ -37,7 +34,6 @@ const timeRange = ref('')
 
 //  引入store
 const equipSteamStore = useEquipSteamStore()
-const monitorStore = useMonitorStore()
 // 定义isActive,控制按钮的样式
 const isActive = ref(true)
 

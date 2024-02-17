@@ -14,9 +14,9 @@ export const useOverviewStore = defineStore('overview', () => {
 
   const online = localStorage.getItem('online') === 'online'
   //   项目信息
-  const infoUrl = '/projectInfo/1/'
+  const infoUrl = '/info/project/1/'
   //   项目制梁计划
-  const planUrl = '/projectBeamInfo/'
+  const planUrl = '/beam/base_beam/'
   //   获取项目基础信息
   const getProjectInfo = async () => {
     getProjectInfoFromLocalStorage()

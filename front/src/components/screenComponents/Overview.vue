@@ -22,7 +22,7 @@
             :label="'制梁进度'"
             :complate="overviewStore.planInfo.data.beamValue"
             :icon="overviewStore.planInfo.data.iconBeam"
-            :color="'#f7ea8e'"
+            :color="'#1aaf8b'"
           ></BeamProgress>
         </div>
         <div class="beam-progress">
@@ -31,7 +31,7 @@
             :label="'架桥进度'"
             :complate="overviewStore.planInfo.data.bridgeValue"
             :icon="overviewStore.planInfo.data.iconBridge"
-            :color="'#b0edef'"
+            :color="'#34b2f7'"
           ></BeamProgress>
         </div>
       </div>

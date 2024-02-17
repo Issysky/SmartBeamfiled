@@ -47,14 +47,7 @@ const handleClick = async (index) => {
       userStore.secRouter.router_name +
       '/' +
       userStore.secRouter.children[index].router_name
-    // 跳转到蒸养棚页面的操作
-    if (path === '/home/equip/equip__steam') {
-      const requestData = {
-        name: 'room1',
-        type: 'device_status'
-      }
-      equipSteamStore.getEquipSteamData(requestData)
-    }
+    console.log('目标path', path)
     router.push({ path })
   }
 }

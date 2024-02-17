@@ -90,7 +90,7 @@ export const useChartYearStore = defineStore('chartYear', () => {
     ]
   })
 
-  const url = '/beam_plan/'
+  const url = '/beam/plan/'
   //   重新渲染图表
   const chartSetOption = (myChart) => {
     myChart.setOption(option)
