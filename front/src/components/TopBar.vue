@@ -26,7 +26,7 @@
         <el-icon><Bell /></el-icon>
       </button>
       <!-- 设置 -->
-      <button class="setting btn">
+      <button class="setting btn" @click="showSettingMenu()">
         <el-icon><Tools /></el-icon>
       </button>
       <div
@@ -53,13 +53,16 @@
 import { onMounted, ref } from 'vue'
 import { usetopBarStore } from '../stores/topBar.js'
 import { useUserStore } from '../stores/user.js'
-import { useRouter } from 'vue-router'
+import { useRouter,useRoute } from 'vue-router'
+import {useSettingMenuStore} from '../stores/settingMenu.js'
 
 const router = useRouter()
+const route = useRoute()
 
 // 引入store，内含顶部栏的关闭，最小化，最大化，还原事件
 const topBarStore = usetopBarStore()
 const userStore = useUserStore()
+const settingMenuStore = useSettingMenuStore()
 
 // 导航路由数组
 let navArr = userStore.getFirstRouter()
@@ -146,6 +149,12 @@ const pingInter = async () => {
       })
     }, 10000)
   }
+}
+
+// 展示设置弹窗
+const showSettingMenu = () => {
+  settingMenuStore.getCurrentPath(route.path)
+  router.push('/home/setting_menu')
 }
 onMounted(() => {
   nav = Array.from(document.querySelectorAll('.nav'))

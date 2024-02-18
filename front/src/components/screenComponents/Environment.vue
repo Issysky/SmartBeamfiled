@@ -127,13 +127,13 @@ onMounted(async () => {
       }
     }
     .tem {
-      background-color: #f5bc16;
+      background-color: var(--color-warning);
     }
     .hum {
-      background-color: #34b2f7;
+      background-color: var(--color-primary);
     }
     .wind {
-      background-color: #1aaf8b;
+      background-color: var(--color-success);
     }
   }
 }

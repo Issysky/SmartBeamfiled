@@ -145,6 +145,24 @@ const router = createRouter({
               component: () => import('../views/LockedView.vue')
             }
           ]
+        },
+        // 设置页面
+        {
+          path: 'setting_menu',
+          name: 'setting_menu',
+          component: () => import('../views/secondViews/SettingMenuView.vue'),
+          children: [
+            {
+              path: 'set_base__screen',
+              name: 'set_base__screen',
+              component: () => import('../views/thirdViews/SetBaseScreenView.vue')
+            },
+            // {
+            //   path:'set_equip__template',
+            //   name:'set_equip__template',
+            //   component:()=>import('../views/thirdViews/SetEquipTemplateView.vue')
+            // }
+          ]
         }
       ]
     },

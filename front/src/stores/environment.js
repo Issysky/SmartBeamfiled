@@ -177,6 +177,7 @@ export const useEnvStore = defineStore('env', () => {
   })
   // 在线状态
   const online = localStorage.getItem('online') === 'online'
+  // 环境数据
   const envData = reactive({
     data: {
       humidity: 0,
@@ -184,16 +185,23 @@ export const useEnvStore = defineStore('env', () => {
       temperature: 0
     }
   })
+  // 环境监测请求参数
+  const envParams = reactive({
+    name: '测试一号机',
+    type: 'latest_data'
+  })
   const url = 'device/environment/'
   //   获取环境数据
   const getEnvData = async (chart, type) => {
     getEnvDataFromLocalStorage(chart, type)
+    console.log(envParams, 'envParams')
     // 在线状态存储数据
     if (online) {
       const res = await axiox.get(url, {
-        params: { type: 'latest_data' },
+        params: { name:envParams.name,type: envParams.type },
         headers: { Authorization: localStorage.getItem('token') }
       })
+      console.log(res,'envres')
       getOption(res.data[0])
       if (type == 'air') {
         chartSetOption(chart, airOption.option)
@@ -205,6 +213,10 @@ export const useEnvStore = defineStore('env', () => {
       envData.data = res.data[0]
       localStorage.setItem('envData', JSON.stringify(envData.data))
     }
+  }
+  // 修改环境数据请求参数
+  const changeEnvParams = (name) => {
+    envParams.name = name
   }
   //   图表渲染
   const chartSetOption = (chart, option) => {
@@ -242,5 +254,5 @@ export const useEnvStore = defineStore('env', () => {
     }
   }
 
-  return { getEnvData, envData }
+  return { getEnvData, envData,changeEnvParams }
 })

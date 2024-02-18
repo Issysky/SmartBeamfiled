@@ -15,6 +15,10 @@ export const useUserStore = defineStore('user', () => {
   let secRouter = ref({
     name: '1'
   })
+  // 设置二级路由
+  let settingSecRouter = ref({
+    name: '1'
+  })
   // 联网状态
   const online = localStorage.getItem('online') === 'online' ? true : false
   // 断网登出框的状态
@@ -99,17 +103,35 @@ export const useUserStore = defineStore('user', () => {
     } else {
       let firstRouter = []
       for (let key in userData.value.menu) {
+        // 如果是设置菜单就跳过
+        if(userData.value.menu[key].is_setting_menu) continue
+        // 正常菜单就push
         firstRouter.push(userData.value.menu[key])
       }
       firstRouter.sort((a, b) => {
         return a.sort - b.sort
       })
-      console.log(firstRouter)
+      console.log(firstRouter,'firstRouter')
       return firstRouter
     }
   }
+  // 获取设置菜单一级路由
+  const getSettingFirstRouter = () => {
+    let firstRouter = []
+    for (let key in userData.value.menu) {
+      if (userData.value.menu[key].is_setting_menu) {
+        firstRouter.push(userData.value.menu[key])
+      }
+    }
+    firstRouter.sort((a, b) => {
+      return a.sort - b.sort
+    })
+    return firstRouter
+  }
+
   // 根据一级路由修改二级路由 二级路由通过store获取
   const changeSecondRouter = (router_name) => {
+   
     for (let key in userData.value.menu) {
       if (userData.value.menu[key].router_name === router_name) {
         secRouter.value = userData.value.menu[key]
@@ -119,6 +141,23 @@ export const useUserStore = defineStore('user', () => {
       return a.sort - b.sort
     })
     secRouter.value.children?.forEach((item) => {
+      if (item.hasOwnProperty('icon') && item.icon !== null) {
+        item.icon = 'iconfont  icon-' + item.icon
+      }
+    })
+    console.log(secRouter.value, 'secRouter')
+  }
+  const changeSettingSecondRouter = (router_name) => {
+   
+    for (let key in userData.value.menu) {
+      if (userData.value.menu[key].router_name === router_name) {
+        settingSecRouter.value = userData.value.menu[key]
+      }
+    }
+    settingSecRouter.value.children?.sort((a, b) => {
+      return a.sort - b.sort
+    })
+    settingSecRouter.value.children?.forEach((item) => {
       if (item.hasOwnProperty('icon') && item.icon !== null) {
         item.icon = 'iconfont  icon-' + item.icon
       }
@@ -134,7 +173,10 @@ export const useUserStore = defineStore('user', () => {
     getFirstRouter,
     changeSecondRouter,
     secRouter,
+    settingSecRouter,
     changeLogoutAlert,
-    logoutAlert
+    logoutAlert,
+    getSettingFirstRouter,
+    changeSettingSecondRouter
   }
 })

@@ -1,11 +1,15 @@
 <!-- 主页 -->
 <template>
   <div class="home-wrapper">
+    <!-- 背景视频 -->
     <div ref="BgVideoWrapper" class="bg-video-wrapper">
       <video autoplay loop src="/src/assets/video/bgVideo8.mp4"></video>
     </div>
+    <!-- 离线弹窗 -->
     <LogoutAlert v-if="userStore.logoutAlert"></LogoutAlert>
+    <!-- 顶部栏 -->
     <div class="header"><TopBar></TopBar></div>
+    <!-- 设置弹窗 -->
     <div ref="container" class="container">
       <LeftBar></LeftBar>
       <MainContent>

@@ -1,4 +1,4 @@
-<!-- 自定义的顶部栏 出现在登录页面 -->
+<!-- 自定义的顶部栏 出现在登录页面 废弃-->
 <template>
   <div class="top-bar">
     <div class="label-wrapper">

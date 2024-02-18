@@ -4,9 +4,7 @@
     <div class="video">
       <div class="left"></div>
       <div class="content">
-        <input type="file" id="fileInput" accept="video/*" @change="handleFileChange" />
-        <label for="fileInput" class="custom-file-upload">选择视频</label>
-        <video ref="videoPlayer" controls></video>
+        <video ref="videoPlayer" :src="settingMenuStore.screenVideoUrl" controls></video>
       </div>
       <div class="right"></div>
     </div>
@@ -15,10 +13,14 @@
 
 <script setup lang="js">
 import { onMounted, ref } from 'vue'
+import { useSettingMenuStore } from '../../stores/settingMenu.js'
 
 const videoPlayer = ref(null)
 
 let show = ref(false)
+
+// 引入store
+const settingMenuStore = useSettingMenuStore()
 
 // 选择播放视频
 function handleFileChange(event) {
@@ -49,6 +51,7 @@ onMounted(() => {
     height: 100%;
     display: flex;
     justify-content: center;
+    align-items: center;
     .left {
       width: 7%;
       height: 100%;
