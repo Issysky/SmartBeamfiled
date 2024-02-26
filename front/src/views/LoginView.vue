@@ -87,6 +87,7 @@ const login = (username, pwd) => {
   localStorage.setItem('online', 'online')
   // 调用userstore的login方法，因为是promise方法所以使用then去处理后续逻辑
   userStore.login(username, pwd).then(() => {
+    // 使用pinginter方法判断是否离线
     window.topBar.pingInter().then((res) => {
       if (res === '离线') {
         alertOutline.value = true
@@ -118,6 +119,29 @@ const login = (username, pwd) => {
         }
       }
     })
+
+    // if (userStore.userData.status === 200) {
+    //   // 登录成功
+    //   // 判断是否记住密码
+    //   if (rememberPwd.value) {
+    //     // 记住密码
+    //     localStorage.setItem('username', username)
+    //     localStorage.setItem('pwd', pwd)
+    //   } else {
+    //     // 不记住密码
+    //     localStorage.removeItem('username')
+    //     localStorage.removeItem('pwd')
+    //   }
+    //   // 跳转到首页
+    //   loginWrapper.value.style.display = 'none'
+    //   window.topBar.max()
+    //   localStorage.setItem('online', 'online')
+    //   router.push('/home/screen')
+    // } else {
+    //   // 登录失败
+    //   // 提示错误信息
+    //   alertPwd.value = true
+    // }
   })
 }
 

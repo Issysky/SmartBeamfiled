@@ -5,6 +5,8 @@ const dns = require('dns')
 const { Menu } = require('electron')
 const { readYamlFile, writeYamlFile } = require('./rwYaml.cjs')
 
+// 是否是开发环境
+const isDev = process.env.IS_DEV == 'true' ? true : false
 // 定义窗口
 let win
 // 在 Electron 的主线程中调用 Python 脚本
@@ -13,6 +15,8 @@ const createWindow = () => {
   win = new BrowserWindow({
     width: 400,
     height: 420,
+    // width:1920,
+    // height:1080,
     icon: path.join(__dirname, '../public/taskBarLogo3.png'),
     webPreferences: {
       preload: path.join(__dirname, 'preload.cjs'),
@@ -30,7 +34,11 @@ const createWindow = () => {
     maximizable: false
   })
 
-  win.loadURL('http://localhost:5173/')
+  // win.loadURL(`file://${path.join(__dirname, '../dist/index.html')}`)
+  win.loadURL(
+    isDev ? 'http://localhost:5173' : `file://${path.join(__dirname, '../dist/index.html')}`
+  )
+  // win.loadURL('http://localhost:5173/')
   // win.loadFile(path.join(__dirname, '../dist/index.html'))
 }
 

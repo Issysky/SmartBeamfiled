@@ -10,7 +10,7 @@ export const useSettingScreenMenuStore = defineStore('settingScreenMenu', () => 
   const changeScreenInfoUrl = '/info/project/1/'
 
   // 大屏视频的地址
-  const screenVideoUrl = ref('/src/assets/video/startVideo.mp4')
+  const screenVideoUrl = ref('/宣传片.mp4')
 
   // 获取大屏视频地址
   const getScreenVideoUrl = (url) => {

@@ -192,7 +192,7 @@ router.beforeEach((to, from, next) => {
   const userStore = useUserStore()
   const path = to.path.split('/')
   // console.log(userStore.userData.locked_menu_list, '锁定路由列表')
-  // console.log('path', path)
+  console.log('即将进入的path', path)
   // 检查即将进入的路由是否是受限的
   if (userStore.userData.locked_menu_list.includes(path[3])) {
     const lockedPath = '/' + path[1] + '/' + path[2] + '/locked'

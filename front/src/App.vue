@@ -28,7 +28,7 @@ onMounted(() => {
     console.log(connection, 'connection')
   }
   // 检查网络状态
-  checkConnection()
+  // checkConnection()
   // 绑定右键菜单事件,
   window.addEventListener('contextmenu', (e) => {
     e.preventDefault()
