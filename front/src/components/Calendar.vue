@@ -66,22 +66,24 @@ watch(
   { deep: true }
 )
 
-onMounted(async () => {
+onMounted(() => {
   const router = useRouter()
-  productionPlanStore.getCalenderPlan()
-  calendarApi = fullCalendar.value.getApi()
-  await productionPlanStore.getCalenderPlan().then((res) => {
-    productionPlanStore.calenderPlan.events = res
-  })
-  calendarApi.setOption('events', productionPlanStore.calenderPlan.events)
+  setTimeout(async () => {
+    productionPlanStore.getCalenderPlan()
+    calendarApi = fullCalendar.value.getApi()
+    await productionPlanStore.getCalenderPlan().then((res) => {
+      productionPlanStore.calenderPlan.events = res
+    })
+    calendarApi.setOption('events', productionPlanStore.calenderPlan.events)
+  }, 500)
 })
 </script>
 
 <style scoped lang="less">
 div {
-  width: 40vw;
+  width: 100%;
   font-size: 12px;
-  height: 40vh;
+  height: 80%;
   .fc-h-event .fc-event-title-container {
     height: 30px;
   }

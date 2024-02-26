@@ -1,8 +1,10 @@
 <!-- 月度生产统计图 出现在梁场大屏-->
 <template>
   <div class="chart-wrapper">
-    <!-- 月份选择器 -->
-    <div ref="chart" id="container"></div>
+    <p class="label">近15日生产曲线</p>
+    <div class="chart-wrapper">
+      <div ref="chart" id="container"></div>
+    </div>
   </div>
 </template>
 
@@ -34,28 +36,37 @@ const changeMonth = (type) => {
 
 onMounted(() => {
   month = date.getMonth() + 1
-  myChart = echarts.init(chart.value)
   setTimeout(() => {
-    chartMonthStore.getChartData(myChart, monthValue.value)
-  }, 1600)
-  window.addEventListener('resize', () => {
-    myChart.resize()
-  })
+    myChart = echarts.init(chart.value)
+
+    chartMonthStore.getChartData(myChart, 'product')
+  }, 500)
 })
 </script>
 <style scoped lang="less">
 .chart-wrapper {
   width: 100%;
-  height: 50%;
+  height: 47%;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   flex-direction: column;
   position: relative;
-
-  #container {
-    width: 90%;
-    height: 90%;
+  .label {
+    font-size: 28px;
+    font-weight: 600;
+    color: #000;
+  }
+  .chart-wrapper {
+    width: 100%;
+    height: 80%;
+    background-color: #fff;
+    box-shadow: 7px 7px 14px #00000029;
+    border-radius: 15px;
+    #container {
+      width: 90%;
+      height: 100%;
+    }
   }
 }
 </style>

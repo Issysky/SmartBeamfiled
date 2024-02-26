@@ -26,9 +26,10 @@
         <el-icon><Bell /></el-icon>
       </button>
       <!-- 设置 -->
-      <button class="setting btn" @click="showSettingMenu()">
+      <button class="setting btn" @click="showSettingScreenMenu()">
         <el-icon><Tools /></el-icon>
       </button>
+      <!-- 在线状态 -->
       <div
         class="online"
         v-html="online ? '在线' : '离线'"
@@ -54,7 +55,7 @@ import { onMounted, ref } from 'vue'
 import { usetopBarStore } from '../stores/topBar.js'
 import { useUserStore } from '../stores/user.js'
 import { useRouter,useRoute } from 'vue-router'
-import {useSettingMenuStore} from '../stores/settingMenu.js'
+import {useSettingScreenMenuStore} from '../stores/settingScreenMenu.js'
 
 const router = useRouter()
 const route = useRoute()
@@ -62,7 +63,7 @@ const route = useRoute()
 // 引入store，内含顶部栏的关闭，最小化，最大化，还原事件
 const topBarStore = usetopBarStore()
 const userStore = useUserStore()
-const settingMenuStore = useSettingMenuStore()
+const SettingScreenMenuStore = useSettingScreenMenuStore()
 
 // 导航路由数组
 let navArr = userStore.getFirstRouter()
@@ -152,8 +153,8 @@ const pingInter = async () => {
 }
 
 // 展示设置弹窗
-const showSettingMenu = () => {
-  settingMenuStore.getCurrentPath(route.path)
+const showSettingScreenMenu = () => {
+  SettingScreenMenuStore.getCurrentPath(route.path)
   router.push('/home/setting_menu')
 }
 onMounted(() => {
@@ -251,6 +252,7 @@ onMounted(() => {
     justify-content: space-around;
     align-items: center;
     color: var(--HeaderFontColor);
+    margin-right: 15px;
     .btn {
       width: 30px;
       height: 30px;

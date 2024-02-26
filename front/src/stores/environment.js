@@ -194,14 +194,14 @@ export const useEnvStore = defineStore('env', () => {
   //   获取环境数据
   const getEnvData = async (chart, type) => {
     getEnvDataFromLocalStorage(chart, type)
-    console.log(envParams, 'envParams')
+    // console.log(envParams, 'envParams')
     // 在线状态存储数据
     if (online) {
       const res = await axiox.get(url, {
         params: { name:envParams.name,type: envParams.type },
         headers: { Authorization: localStorage.getItem('token') }
       })
-      console.log(res,'envres')
+      // console.log(res,'envres')
       getOption(res.data[0])
       if (type == 'air') {
         chartSetOption(chart, airOption.option)
@@ -220,7 +220,7 @@ export const useEnvStore = defineStore('env', () => {
   }
   //   图表渲染
   const chartSetOption = (chart, option) => {
-    console.log('渲染图表')
+    // console.log('渲染图表')
     chart.setOption(option)
   }
   // 更改图表option

@@ -28,7 +28,7 @@
           :title="item.beam_name"
           :style="{ width: formBeamStore.tableData.width[0] }"
         >
-          {{ item.beam_code }}
+          {{ item.beam_name }}
         </div>
         <div
           class="data2"

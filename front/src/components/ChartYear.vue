@@ -12,7 +12,9 @@
         <el-icon><ArrowRightBold /></el-icon>
       </button>
     </div>
-    <div ref="chart" id="container"></div>
+    <div class="chart-wrapper">
+      <div ref="chart" id="container"></div>
+    </div>
   </div>
 </template>
 
@@ -42,33 +44,30 @@ const changeYear = (type) => {
 const chartYearStore = useChartYearStore()
 onMounted(() => {
   year = date.getFullYear()
-  myChart = echarts.init(chart.value)
-  chartYearStore.getChartData(myChart, year)
-  window.addEventListener('resize', () => {
-    myChart.resize()
-  })
+  setTimeout(() => {
+    myChart = echarts.init(chart.value)
+    chartYearStore.getChartData(myChart, yearValue.value)
+  }, 500)
 })
 </script>
 <style scoped lang="less">
 .chart-wrapper {
   width: 100%;
-  height: 44%;
+  height: 47%;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   flex-direction: column;
   position: relative;
-  .label{
+  .label {
     font-size: 28px;
     font-weight: 600;
     color: #000;
-    margin: 0;
-    margin-bottom: 5%;
   }
   .year-select {
     position: absolute;
     right: 4%;
-    top: 18%;
+    top: 28%;
     z-index: 3;
     width: 20%;
     height: 10%;
@@ -94,13 +93,20 @@ onMounted(() => {
         background-color: #33333366;
       }
     }
-    p{
+    p {
       margin: 0;
     }
   }
-  #container {
+  .chart-wrapper {
     width: 100%;
     height: 80%;
+    background-color: #fff;
+    box-shadow: 7px 7px 14px #00000029;
+    border-radius: 15px;
+    #container {
+      width: 90%;
+      height: 100%;
+    }
   }
 }
 </style>

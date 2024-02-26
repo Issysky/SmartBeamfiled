@@ -26,7 +26,9 @@ export const useChartYearStore = defineStore('chartYear', () => {
         )
       }
     },
-    legend: {},
+    legend: {
+      top: 30, // 将图例放在底部
+    },
     grid: {
       left: '3%',
       right: '4%',
@@ -41,7 +43,7 @@ export const useChartYearStore = defineStore('chartYear', () => {
       },
       {
         type: 'value',
-        show: false,
+        show: false
       }
     ],
     yAxis: [
@@ -53,9 +55,14 @@ export const useChartYearStore = defineStore('chartYear', () => {
       {
         name: '未完成',
         type: 'bar',
-
         emphasis: {
           focus: 'series'
+        },
+        lineStyle: {
+          color: '#34b2f7'
+        },
+        itemStyle: {
+          color: '#34b2f7'
         },
         data: []
       },
@@ -67,12 +74,24 @@ export const useChartYearStore = defineStore('chartYear', () => {
         emphasis: {
           focus: 'series'
         },
+        lineStyle: {
+          color: '#34b2f7'
+        },
+        itemStyle: {
+          color: '#34b2f7'
+        },
         smooth: true
       },
       {
         name: '已完成',
         type: 'bar',
         data: [],
+        lineStyle: {
+          color: '#f5bc16'
+        },
+        itemStyle: {
+          color: '#f5bc16'
+        },
         emphasis: {
           focus: 'series'
         }
@@ -84,6 +103,12 @@ export const useChartYearStore = defineStore('chartYear', () => {
         xAxisIndex: 1,
         emphasis: {
           focus: 'series'
+        },
+        lineStyle: {
+          color: '#f5bc16'
+        },
+        itemStyle: {
+          color: '#f5bc16'
         },
         smooth: true
       }
@@ -112,7 +137,7 @@ export const useChartYearStore = defineStore('chartYear', () => {
     十二月: 10
   }
   //   获取图表数据
-  const getChartData = async (myChart, year) => {
+  const getChartData = async (myChart, year, type) => {
     await axios
       .get(url, {
         params: {
@@ -125,7 +150,7 @@ export const useChartYearStore = defineStore('chartYear', () => {
       .then((res) => {
         getSeriesData(res.data)
         getxAxisData(res.data)
-        chartSetOption(myChart)
+        chartSetOption(myChart, type)
       })
       .catch((err) => {
         console.log(err, '请求错误')

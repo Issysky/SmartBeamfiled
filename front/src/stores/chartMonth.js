@@ -31,7 +31,8 @@ export const useChartMonthStore = defineStore('chartMonth', () => {
       right: '1',
       textStyle: {
         color: '#fafafadd'
-      }
+      },
+      top: 50 // 将图例放在底部
     },
     grid: {
       left: '0%',
@@ -113,6 +114,7 @@ export const useChartMonthStore = defineStore('chartMonth', () => {
       }
     ]
   })
+
   // 定义已完成数据
   let resData = {}
   let chartMonthData = reactive({
@@ -128,7 +130,23 @@ export const useChartMonthStore = defineStore('chartMonth', () => {
     myChart.setOption(option)
   }
   //   获取图表数据
-  const getChartData = async (myChart) => {
+  const getChartData = async (myChart, type) => {
+    if (type === 'product') {
+      option.legend = {
+        textStyle: {
+          color: '#000'
+        },
+        top: 50 // 将图例放在底部
+      }
+    } else {
+      option.legend = {
+        right: '1',
+        textStyle: {
+          color: '#fafafadd'
+        },
+        top: 50 // 将图例放在底部
+      }
+    }
     getChartDataFromLocalStorage(myChart)
     if (online) {
       console.log('chartMonth在线')

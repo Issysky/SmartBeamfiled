@@ -8,9 +8,9 @@
     </div>
     <!-- 导航 -->
     <div class="nav-wrapper">
-      <!-- <div class="label">{{ userStore.secRouter.name }}</div> -->
       <div
         class="leftnav"
+        :class="{ active: index === userStore.secRouterActive }"
         @click="handleClick(index)"
         v-for="(item, index) in userStore.secRouter.children"
         :key="index"
@@ -35,19 +35,14 @@ const userStore = useUserStore()
 const equipSteamStore = useEquipSteamStore()
 // 点击跳转不同三级路由
 const handleClick = async (index) => {
-  const leftnav = Array.from(document.querySelectorAll('.leftnav'))
-  // 判断是否有左侧导航
-  if (leftnav.length !== 0) {
-    leftnav.forEach((item) => {
-      item.classList.remove('active')
-    })
-    leftnav[index].classList.add('active')
+  userStore.changeSecActive(index)
+  if (userStore.secRouter.children) {
     const path =
       '/home/' +
       userStore.secRouter.router_name +
       '/' +
-      userStore.secRouter.children[index].router_name
-    console.log('目标path', path)
+      userStore.secRouter.children[index]?.router_name
+    console.log('path', path)
     router.push({ path })
   }
 }

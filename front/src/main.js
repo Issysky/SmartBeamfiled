@@ -14,6 +14,8 @@ import axios from 'axios'
 import App from './App.vue'
 import router from './router'
 
+import { useUserStore } from './stores/user.js'
+
 const app = createApp(App)
 
 app.use(createPinia())
@@ -25,7 +27,7 @@ for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
 }
 // 设置 Element Plus+ 组件库语言为中文
 app.use(ElementPlus, {
-  locale: zhCn,
+  locale: zhCn
 })
 // 设置全局颜色变量
 app.config.globalProperties.$color = {
@@ -37,4 +39,18 @@ app.config.globalProperties.$color = {
 }
 
 axios.defaults.baseURL = 'https://api.ihmeng.cn'
+
+app.directive('permission', {
+  mounted: (el, binding) => {
+    const userStore = useUserStore()
+    const { value } = binding
+    if (value[0]) {
+      if (value[1] === 'remove') {
+        if (!userStore.userData.permission.includes(value[0])) {
+          el.style.display = 'none'
+        }
+      }
+    }
+  }
+})
 app.mount('#app')

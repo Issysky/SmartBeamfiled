@@ -61,7 +61,7 @@ import { useAITalkStore } from '/src/stores/AItalk'
 import homeViewText from '/src/assets/json/homeView.json'
 import avator from '/src/assets/avator.png'
 import logo from '/public/logo.png'
-import { exportExcel } from '/src/excelConfig.js'
+import { exportExcel } from '/src/utils/excelConfig.js'
 
 // 用户和回复头像的路径
 const avatorArr = ref([avator, logo])
@@ -147,7 +147,7 @@ onMounted(() => {})
   align-items: center;
   // background-color: #bfc;
   position: relative;
-  color: var(--font-level-2);
+  color: var(--font-level-13);
   button{
     position: absolute;
     top: 50%;

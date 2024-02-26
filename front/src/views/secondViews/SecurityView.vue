@@ -1,5 +1,7 @@
 <template>
-  <div class="security-wrapper">安全</div>
+  <div class="security-wrapper">
+    <router-view></router-view>
+  </div>
 </template>
 
 <script setup lang="js"></script>

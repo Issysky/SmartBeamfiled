@@ -76,6 +76,11 @@ const router = createRouter({
               component: () => import('../views/thirdViews/EquipMixView.vue')
             },
             {
+              path:'equip__gas',
+              name:'equip__gas',
+              component: () => import('../views/thirdViews/EquipGasView.vue')
+            },
+            {
               path: 'locked',
               name: 'locked',
               component: () => import('../views/LockedView.vue')
@@ -117,9 +122,9 @@ const router = createRouter({
           component: () => import('../views/secondViews/SecurityView.vue'),
           children: [
             {
-              path: 'alarm__chart',
-              name: 'alarm__chart',
-              component: () => import('../views/thirdViews/AlarmChartView.vue')
+              path: 'security__ai_camera',
+              name: 'security__ai_camera',
+              component: () => import('../views/thirdViews/SecurityCameraView.vue')
             },
             {
               path: 'locked',
@@ -140,6 +145,11 @@ const router = createRouter({
               component: () => import('../views/thirdViews/AIProductionView.vue')
             },
             {
+              path: 'ai__knowledge',
+              name: 'ai__knowledge',
+              component: () => import('../views/thirdViews/AIProductionView.vue')
+            },
+            {
               path: 'locked',
               name: 'locked',
               component: () => import('../views/LockedView.vue')
@@ -157,11 +167,16 @@ const router = createRouter({
               name: 'set_base__screen',
               component: () => import('../views/thirdViews/SetBaseScreenView.vue')
             },
-            // {
-            //   path:'set_equip__template',
-            //   name:'set_equip__template',
-            //   component:()=>import('../views/thirdViews/SetEquipTemplateView.vue')
-            // }
+            {
+              path: 'set_equip__template',
+              name: 'set_equip__template',
+              component: () => import('../views/thirdViews/SetEquipTemplateView.vue')
+            },
+            {
+              path:'set_equip__steam',
+              name:'set_equip__steam',
+              component: () => import('../views/thirdViews/SetEquipSteamView.vue')
+            }
           ]
         }
       ]
@@ -176,8 +191,8 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
   const userStore = useUserStore()
   const path = to.path.split('/')
-  console.log(userStore.userData.locked_menu_list, '锁定路由列表')
-  console.log('path', path)
+  // console.log(userStore.userData.locked_menu_list, '锁定路由列表')
+  // console.log('path', path)
   // 检查即将进入的路由是否是受限的
   if (userStore.userData.locked_menu_list.includes(path[3])) {
     const lockedPath = '/' + path[1] + '/' + path[2] + '/locked'
@@ -186,7 +201,7 @@ router.beforeEach((to, from, next) => {
     next(lockedPath)
   } else {
     // 如果不是，正常导航
-    console.log('正常导航')
+    // console.log('正常导航')
     next()
   }
 })

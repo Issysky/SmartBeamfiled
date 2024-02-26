@@ -8,7 +8,7 @@
 <script setup lang="js"></script>
 <style scoped lang="less">
 .main-wrapper {
-  height: 90vh;
+  height: 90%;
   flex: 1;
   background-size: contain;
   background-repeat:no-repeat ;

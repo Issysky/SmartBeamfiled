@@ -12,63 +12,21 @@ export const useEquipSteamStore = defineStore('equipSteam', () => {
   const option = reactive({
     tooltip: {
       trigger: 'axis'
-      // formatter: function (params) {
-      //   //定义显示内容
-      //   const text =
-      //     params[0].name +
-      //     '<br/>' +
-      //     params[0].marker +
-      //     params[0].seriesName +
-      //     ' : ' +
-      //     params[0].value +
-      //     '℃<br/>' +
-      //     params[1].marker +
-      //     params[1].seriesName +
-      //     ' : ' +
-      //     params[1].value +
-      //     '℃<br/>' +
-      //     params[2].marker +
-      //     params[2].seriesName +
-      //     ' : ' +
-      //     params[2].value +
-      //     '℃<br/>' +
-      //     params[3].marker +
-      //     params[3].seriesName +
-      //     ' : ' +
-      //     params[3].value +
-      //     '%RH<br/>' +
-      //     params[4].marker +
-      //     params[4].seriesName +
-      //     ' : ' +
-      //     params[4].value +
-      //     '%RH<br/>' +
-      //     params[5].marker +
-      //     params[5].seriesName +
-      //     ' : ' +
-      //     params[5].value +
-      //     '%RH<br/>'
-      //   return text
-      // }
     },
-    legend: {
-      data: ['温度1', '温度2', '温度3', '湿度1', '湿度2', '湿度3'],
-      itemHeight: 0,
-      itemWidth: 15,
-      textStyle: {
-        fontSize: 10 // 设置图例的字体大小
-      }
-    },
+    // legend: {
+    //   data: ['温度1', '温度2', '温度3', '湿度1', '湿度2', '湿度3'],
+    //   itemHeight: 0,
+    //   itemWidth: 15,
+    //   textStyle: {
+    //     fontSize: 10 // 设置图例的字体大小
+    //   }
+    // },
     grid: {
-      top: '15%',
-      left: '3%',
-      right: '4%',
-      bottom: '3%',
+      top: '5%',
+      left: '5%',
+      right: '5%',
+      bottom: '0%',
       containLabel: true
-    },
-    toolbox: {
-      feature: {
-        // saveAsImage: {}
-      }
     },
     xAxis: {
       type: 'category',
@@ -84,35 +42,29 @@ export const useEquipSteamStore = defineStore('equipSteam', () => {
   const equipSreamUrl = '/beam/steam_room/'
 
   // 色彩生成器
-  function* colorGenerator(colorType,init_color) {
+  function* colorGenerator(colorType, init_color) {
     while (colorType == 'tem') {
-      yield `hsl(50,${100-init_color}%,50%)`
+      yield `hsl(50,${100 - init_color}%,50%)`
       init_color += 20
     }
     while (colorType == 'hum') {
-      yield `hsl(200,${100-init_color}%,50%)`
+      yield `hsl(200,${100 - init_color}%,50%)`
       init_color += 20
     }
   }
-  const colorGen1 = colorGenerator('tem',5)
-  const colorGen2 = colorGenerator('hum',5)
 
   // 获取最新蒸养数据
   const getEquipSteamData = async (requestData) => {
-    await axios
+    const res = await axios
       .get(equipSreamUrl, {
         params: requestData,
         headers: {
           Authorization: localStorage.getItem('token')
         }
       })
-      .then((response) => {
-        console.log('获取设备数据成功，返回res', response.data)
-        equipSteamData.value = response.data
-      })
-      .catch((error) => {
-        console.error('获取设备数据失败，error', error.response)
-      })
+      equipSteamData.value = res.data
+      console.log('获取设备数据成功，返回res', res)
+      return res.data
   }
 
   // 获取温湿度数据用于绘图
@@ -137,6 +89,8 @@ export const useEquipSteamStore = defineStore('equipSteam', () => {
   }
   // 获取option的series数据
   const getSeriesData = (responseData) => {
+    const colorGen1 = colorGenerator('tem', 5)
+    const colorGen2 = colorGenerator('hum', 5)
     let seriesData = []
     responseData.forEach((item, index) => {
       item.data.forEach((i, k) => {
@@ -163,7 +117,6 @@ export const useEquipSteamStore = defineStore('equipSteam', () => {
   const getxAxisData = (responseData) => {
     let xAxisData = []
     responseData.forEach((item) => {
-
       xAxisData.push(item.time.substring(5, 16).split('T').join(''))
     })
     option.xAxis.data = xAxisData

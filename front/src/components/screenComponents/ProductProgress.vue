@@ -3,7 +3,7 @@
   <div class="product-process-wrapper" :style="{ left: show ? '2%' : '-40%' }">
     <Line class="line" :width="'80%'" :label="'制梁进度'"></Line>
     <div class="chart-wrapper">
-      <ChartMonth class="chart"></ChartMonth>
+      <ChartBeam class="chart"></ChartBeam>
     </div>
   </div>
 </template>
@@ -11,7 +11,7 @@
 <script setup lang="js">
 import { ref, onMounted, onBeforeMount, reactive } from 'vue'
 import Line from '../Line.vue'
-import ChartMonth from '../../components/ChartMonth.vue'
+import ChartBeam from './ChartBeam.vue'
 
 let show = ref(false)
 onMounted(() => {

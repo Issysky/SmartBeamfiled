@@ -9,10 +9,15 @@ export const useProductionPlanStore = defineStore('productionPlan', () => {
   // 定义时间
   let time = ref('2024-01-02')
   // 已计划生产列表
-  const planedList = reactive({})
+  const planedList = reactive({
+    data: {
+      rest_beam: {}
+    }
+  })
   // 已计划生产列表的请求地址
   const planedUrl = '/beam/plan/'
-
+  // 本月计划生产片数
+  const curMonthPlaned = ref(0)
   // 日历显示信息
   let calenderPlan = reactive({
     events: [
@@ -25,18 +30,29 @@ export const useProductionPlanStore = defineStore('productionPlan', () => {
   })
   // 获取已计划生产列表
   const getPlanedList = async () => {
-    await axios
-      .get(planedUrl, {
-        params: {
-          that_day: time.value
-        },
-        headers: {
-          Authorization: localStorage.getItem('token')
-        }
-      })
-      .then((res) => {
-        planedList.value = res.data
-      })
+    const res = await axios.get(planedUrl, {
+      params: {
+        that_day: time.value
+      },
+      headers: {
+        Authorization: localStorage.getItem('token')
+      }
+    })
+    planedList.data = res.data
+    console.log(planedList.data)
+  }
+  // 获取本月计划生产片数
+  const getCurMonthPlaned = async (month) => {
+    const res = await axios.get(planedUrl, {
+      params: {
+        query_month: month
+      },
+      headers: {
+        Authorization: localStorage.getItem('token')
+      }
+    })
+    // 本月计划生产片数
+    curMonthPlaned.value= res.data.total_count
   }
   // 删除已计划生产列表的数据
   const delPlanedList = async (id) => {
@@ -48,11 +64,13 @@ export const useProductionPlanStore = defineStore('productionPlan', () => {
       })
       .then((res) => {
         console.log('删除已计划生产列表的数据成功')
+        getPlanedList()
+        getCalenderPlan()
       })
       .catch((error) => {
         console.error('删除已计划生产列表的数据失败', error.response)
       })
-    planedList.value.results = planedList.value.results.filter((item) => {
+    planedList.data.results = planedList.data.results.filter((item) => {
       return item.id !== id
     })
   }
@@ -66,6 +84,8 @@ export const useProductionPlanStore = defineStore('productionPlan', () => {
       })
       .then((res) => {
         console.log('新增生产列表数据成功')
+        getPlanedList()
+        getCalenderPlan()
       })
       .catch((error) => {
         console.error('新增生产列表数据失败', error.response)
@@ -116,6 +136,8 @@ export const useProductionPlanStore = defineStore('productionPlan', () => {
     changeShow,
     changeTime,
     calenderPlan,
-    getCalenderPlan
+    getCalenderPlan,
+    curMonthPlaned,
+    getCurMonthPlaned
   }
 })

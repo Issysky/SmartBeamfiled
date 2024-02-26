@@ -12,7 +12,6 @@
   width: 100%;
   height: 100%;
   background-color: var(--MainContentBgColor);
-  // box-shadow: 7px 7px 30px #1f1f1f;
   border-radius: 15px;
   h1{
     height: 8%;

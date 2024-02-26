@@ -3,7 +3,7 @@
   <div class="label-wrapper">
     <div class="label">
       <p class="text">{{ label }}</p>
-      <p class="eng">MixStationData</p>
+      <p class="eng">{{eng}}</p>
     </div>
   </div>
 </template>
@@ -14,6 +14,9 @@ import { defineProps, ref, onMounted } from 'vue'
 const props = defineProps({
   label: {
     default: '标题'
+  },
+  eng: {
+    default: 'title'
   }
 })
 

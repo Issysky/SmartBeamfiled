@@ -3,7 +3,7 @@
   <div class="monitor-wrapper">
     <div class="mask"></div>
     <div class="video">
-      <button class="close" @click="monitorStore.hideMonitor">X</button>
+      <button class="close" @click="monitorStore.hideMonitor">关闭</button>
       <img :src="monitorStore.getImgurl()" alt="" />
     </div>
   </div>
@@ -22,7 +22,6 @@ const rtsp_url = 'rtsp://admin:ly1029384756@192.168.31.100:554/h264/Streaming/Ch
 const url = 'http://127.0.0.1:5000/video_feed'
 
 onMounted(() => {
-  console.log('监控弹窗mounted')
 })
 </script>
 <style scoped lang="less">
@@ -46,17 +45,25 @@ onMounted(() => {
     height: 60%;
     background-color: transparent;
     position: absolute;
-    top: 50%;
-    left: 50%;
+    top: 40%;
+    left: 55%;
     transform: translate(-50%, -50%);
     .close {
-      width: 30px;
+      width: 80px;
       height: 30px;
       position: absolute;
-      right: 10px;
+      background-color: var(--color-danger);
+      right: 50%;
+      bottom: -40px;
       cursor: pointer;
       border: none;
-      color: red;
+      color: var(--font-level-1);
+      letter-spacing: 2px;
+      border-radius: 5px;
+      transform: translateX(50%);
+      &:hover {
+        background-color: var(--color-danger-hover);
+      }
     }
     img {
       width: 100%;

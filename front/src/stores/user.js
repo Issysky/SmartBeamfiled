@@ -9,12 +9,14 @@ export const useUserStore = defineStore('user', () => {
   const userData = ref({
     name: 'admin',
     locked_menu_list: [],
-    status:500,
+    status: 500
   })
   // 二级路由
   let secRouter = ref({
     name: '1'
   })
+  // 二级路由激活状态
+  let secRouterActive = ref(0)
   // 设置二级路由
   let settingSecRouter = ref({
     name: '1'
@@ -42,7 +44,7 @@ export const useUserStore = defineStore('user', () => {
           localStorage.setItem('token', 'Bearer ' + userData.value.token)
           localStorage.setItem('userData', JSON.stringify(response.data))
           // 修改baseurl,对应用户的app_url
-          axios.defaults.baseURL = 'https://api.ihmeng.cn/'+userData.value.app_url;
+          axios.defaults.baseURL = 'https://api.ihmeng.cn/' + userData.value.app_url
         })
         .catch((error) => {
           console.error('登陆失败，error', error)
@@ -104,14 +106,14 @@ export const useUserStore = defineStore('user', () => {
       let firstRouter = []
       for (let key in userData.value.menu) {
         // 如果是设置菜单就跳过
-        if(userData.value.menu[key].is_setting_menu) continue
+        if (userData.value.menu[key].is_setting_menu) continue
         // 正常菜单就push
         firstRouter.push(userData.value.menu[key])
       }
       firstRouter.sort((a, b) => {
         return a.sort - b.sort
       })
-      console.log(firstRouter,'firstRouter')
+      console.log(firstRouter, 'firstRouter')
       return firstRouter
     }
   }
@@ -131,7 +133,8 @@ export const useUserStore = defineStore('user', () => {
 
   // 根据一级路由修改二级路由 二级路由通过store获取
   const changeSecondRouter = (router_name) => {
-   
+    // 重置二级路由激活状态,默认为0
+    secRouterActive.value = 0
     for (let key in userData.value.menu) {
       if (userData.value.menu[key].router_name === router_name) {
         secRouter.value = userData.value.menu[key]
@@ -147,8 +150,12 @@ export const useUserStore = defineStore('user', () => {
     })
     console.log(secRouter.value, 'secRouter')
   }
+  // 改变二级路由激活状态
+  const changeSecActive = (index) => {
+    secRouterActive.value = index
+  }
+  // 设置页面根据一级路由修改二级路由 二级路由通过store获取
   const changeSettingSecondRouter = (router_name) => {
-   
     for (let key in userData.value.menu) {
       if (userData.value.menu[key].router_name === router_name) {
         settingSecRouter.value = userData.value.menu[key]
@@ -177,6 +184,8 @@ export const useUserStore = defineStore('user', () => {
     changeLogoutAlert,
     logoutAlert,
     getSettingFirstRouter,
-    changeSettingSecondRouter
+    changeSettingSecondRouter,
+    secRouterActive,
+    changeSecActive
   }
 })

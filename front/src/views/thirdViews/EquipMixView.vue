@@ -1,7 +1,7 @@
 <!-- 拌合站数据三级路由,从属二级路由设备管理 -->
 <template>
   <div class="equip-mix-wrapper">
-    <LabelType1 label="拌合站数据" />
+    <LabelType1 label="拌合站数据" eng="MixStation" />
     <TableType1 />
     <!-- 图表的详情弹窗 -->
     <CardType3 v-if="equipMixStore.detailDialogVisible" :detailData="equipMixStore.mixDetailData.data"/>

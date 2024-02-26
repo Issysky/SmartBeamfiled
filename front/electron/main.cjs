@@ -9,14 +9,6 @@ const { readYamlFile, writeYamlFile } = require('./rwYaml.cjs')
 let win
 // 在 Electron 的主线程中调用 Python 脚本
 spawn('python', ['py/main.py'])
-// 判断是否联网
-// dns.resolve('www.baidu.com', function(err) {
-//   if (err) {
-//     console.log("No connection");
-//   } else {限公司
-//     console.log("Connected");
-//   }
-// });
 const createWindow = () => {
   win = new BrowserWindow({
     width: 400,
@@ -39,6 +31,7 @@ const createWindow = () => {
   })
 
   win.loadURL('http://localhost:5173/')
+  // win.loadFile(path.join(__dirname, '../dist/index.html'))
 }
 
 app.whenReady().then(() => {
@@ -65,7 +58,7 @@ app.whenReady().then(() => {
       let timer = null
       timer = setTimeout(() => {
         resolve(false)
-      }, 3000)
+      }, 8000)
       dns.resolve('www.ihmeng.cn', function (err, addresses) {
         if (err) {
           resolve(false)

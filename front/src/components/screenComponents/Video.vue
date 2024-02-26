@@ -4,7 +4,7 @@
     <div class="video">
       <div class="left"></div>
       <div class="content">
-        <video ref="videoPlayer" :src="settingMenuStore.screenVideoUrl" controls></video>
+        <video ref="videoPlayer" :src="SettingScreenMenuStore.screenVideoUrl" controls></video>
       </div>
       <div class="right"></div>
     </div>
@@ -13,27 +13,20 @@
 
 <script setup lang="js">
 import { onMounted, ref } from 'vue'
-import { useSettingMenuStore } from '../../stores/settingMenu.js'
+import { useSettingScreenMenuStore } from '../../stores/settingScreenMenu.js'
 
 const videoPlayer = ref(null)
 
 let show = ref(false)
 
 // 引入store
-const settingMenuStore = useSettingMenuStore()
+const SettingScreenMenuStore = useSettingScreenMenuStore()
 
-// 选择播放视频
-function handleFileChange(event) {
-  const file = event.target.files[0]
-  if (file) {
-    const url = URL.createObjectURL(file)
-    videoPlayer.value.src = url
-  }
-}
 onMounted(() => {
   setTimeout(() => {
     show.value = true
   }, 1000)
+  SettingScreenMenuStore.getVideoUrlFromLocalStorage()
 })
 </script>
 

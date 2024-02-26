@@ -34,22 +34,24 @@
     <div class="env-setting">
       <p class="title">环境监测</p>
       <div class="content">
-        <p class="label">监测点名称:</p>
-        <input type="text" class="input" v-model="envName" />
+        <div class="input-wrapper">
+          <p class="label">监测点名称:</p>
+          <input type="text" class="input" v-model="envName" />
+        </div>
+        <button class="confirm" @click="confirmEnv">提交</button>
       </div>
-      <button class="confirm" @click="confirmEnv">提交</button>
     </div>
     <!-- 大屏视频选择 -->
     <div class="video-setting">
       <p class="title">视频选择</p>
       <div class="select">
-        <input
-          type="file"
-          id="fileInput"
-          accept="video/*"
-          @change="settingMenuStore.getScreenVideoUrl"
-        />
-        <label for="fileInput" class="custom-file-upload">选择视频</label>
+        <div class="content">
+          <div class="input-wrapper">
+            <p class="label">视频名称:</p>
+            <input class="input" id="fileInput" v-model="url" />
+          </div>
+          <button class="confirm" @click="confirmVideo">提交</button>
+        </div>
       </div>
     </div>
   </div>
@@ -57,12 +59,12 @@
 
 <script setup lang="js">
 import { ref } from 'vue'
-import { useSettingMenuStore } from '../../stores/settingMenu.js'
+import { useSettingScreenMenuStore } from '../../stores/settingScreenMenu.js'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import { useEnvStore } from '../../stores/environment.js'
 
 // 引入store
-const settingMenuStore = useSettingMenuStore()
+const SettingScreenMenuStore = useSettingScreenMenuStore()
 const envStore = useEnvStore()
 
 // 定义数据
@@ -78,6 +80,7 @@ const info3_img = ref('address')
 
 const envName = ref('测试一号机')
 
+const url = ref('')
 //   提交概况修改
 const confirmOverview = () => {
   const body = {
@@ -92,17 +95,17 @@ const confirmOverview = () => {
     info3_img: info3_img.value
   }
   ElMessage.success('提交成功')
-  settingMenuStore.changeScreenInfo(body)
+  SettingScreenMenuStore.changeScreenInfo(body)
   //   清空输入框
-//   info1_title.value = ''
-//   info1_content.value = ''
-//   info1_img.value = ''
-//   info2_title.value = ''
-//   info2_content.value = ''
-//   info2_img.value = ''
-//   info3_title.value = ''
-//   info3_content.value = ''
-//   info3_img.value = ''
+  //   info1_title.value = ''
+  //   info1_content.value = ''
+  //   info1_img.value = ''
+  //   info2_title.value = ''
+  //   info2_content.value = ''
+  //   info2_img.value = ''
+  //   info3_title.value = ''
+  //   info3_content.value = ''
+  //   info3_img.value = ''
 }
 
 // 提交环境监测修改
@@ -110,6 +113,17 @@ const confirmEnv = () => {
   envStore.changeEnvParams(envName.value)
   ElMessage.success('提交成功')
   envName.value = ''
+}
+
+// 提交视频修改
+const confirmVideo = () => {
+  ElMessageBox.confirm('是否确认提交视频？', '提示', {
+    confirmButtonText: '确定',
+    cancelButtonText: '取消',
+    type: 'warning'
+  }).then(() => {
+    SettingScreenMenuStore.getScreenVideoUrl(url.value)
+  })
 }
 </script>
 <style scoped lang="less">
@@ -119,18 +133,19 @@ const confirmEnv = () => {
   display: flex;
   flex-direction: column;
   overflow-y: auto;
+  color: var(--font-level-1);
   .overview-setting {
     width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    border-bottom: 1px solid #ccc;
     padding-bottom: 30px;
     margin-bottom: 15px;
     .title {
       width: 30%;
-      font-size: 20px;
+      font-size: 1em;
+      font-weight: 600;
       margin-bottom: 20px;
       text-align: center;
     }
@@ -142,12 +157,23 @@ const confirmEnv = () => {
       margin-bottom: 20px;
       .label {
         text-align: right;
+        font-size: 0.7em;
         margin-right: 20px;
       }
       .input {
         width: 130px;
-        height: 30px;
+        height: 20px;
+        padding: 4px 7px;
         margin-right: 10px;
+        background-color: #171d25;
+        color: var(--font-level-3);
+        border: 1px solid #616264;
+        border-radius: 5px;
+        &:focus {
+          border: 1px solid var(--color-primary);
+          outline: none;
+          color: var(--font-level-1);
+        }
       }
     }
     .confirm {
@@ -166,11 +192,13 @@ const confirmEnv = () => {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    margin-bottom: 15px;
     .title {
       width: 30%;
       font-size: 20px;
       margin-bottom: 20px;
       text-align: center;
+      font-weight: 600;
     }
     .content {
       width: 100%;
@@ -178,23 +206,41 @@ const confirmEnv = () => {
       align-items: center;
       justify-content: center;
       margin-bottom: 20px;
-      .label {
-        text-align: right;
-        margin-right: 20px;
+      .input-wrapper {
+        width: 70%;
+        display: flex;
+        align-items: center;
+        .label {
+          width: 15%;
+          text-align: left;
+          margin-right: 20px;
+          font-size: 0.7em;
+        }
+        .input {
+          width: 75%;
+          height: 20px;
+          padding: 4px 7px;
+          margin-right: 10px;
+          background-color: #171d25;
+          color: var(--font-level-3);
+          border: 1px solid #616264;
+          border-radius: 5px;
+          &:focus {
+            border: 1px solid var(--color-primary);
+            outline: none;
+            color: var(--font-level-1);
+          }
+        }
       }
-      .input {
-        width: 200px;
+      .confirm {
+        width: 100px;
         height: 30px;
+        background-color: var(--color-primary);
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
       }
-    }
-    .confirm {
-      width: 100px;
-      height: 30px;
-      background-color: var(--color-primary);
-      color: #fff;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
     }
   }
   .video-setting {
@@ -208,6 +254,7 @@ const confirmEnv = () => {
       font-size: 20px;
       margin-bottom: 20px;
       text-align: center;
+      font-weight: 600;
     }
     .select {
       width: 100%;
@@ -215,8 +262,48 @@ const confirmEnv = () => {
       align-items: center;
       justify-content: center;
       margin-bottom: 20px;
-      input {
-        // display: none;
+      flex-direction: column;
+      .content {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 20px;
+        .input-wrapper {
+          width: 70%;
+          display: flex;
+          align-items: center;
+          .label {
+            width: 15%;
+            text-align: left;
+            margin-right: 20px;
+            font-size: 0.7em;
+          }
+          .input {
+            width: 75%;
+            height: 20px;
+            padding: 4px 7px;
+            margin-right: 10px;
+            background-color: #171d25;
+            color: var(--font-level-3);
+            border: 1px solid #616264;
+            border-radius: 5px;
+            &:focus {
+              border: 1px solid var(--color-primary);
+              outline: none;
+              color: var(--font-level-1);
+            }
+          }
+        }
+        .confirm {
+          width: 100px;
+          height: 30px;
+          background-color: var(--color-primary);
+          color: #fff;
+          border: none;
+          border-radius: 5px;
+          cursor: pointer;
+        }
       }
       .custom-file-upload {
         width: 140px;
